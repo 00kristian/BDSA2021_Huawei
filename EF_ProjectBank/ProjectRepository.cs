@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EF_PB;
 
@@ -31,6 +33,11 @@ public class ProjectRepository : IProjectRepository
     public IReadOnlyCollection<string> ReadAllNames()
     {
         return _context.projects.Select(p => p.Name).ToList();
+    }
+
+    public async Task<IReadOnlyCollection<string>> ReadAllNamesAsync()
+    {
+        return await _context.projects.Select(p => p.Name).ToListAsync();
     }
 
     public void DELETE_ALL_PROJECTS_TEMPORARY() {

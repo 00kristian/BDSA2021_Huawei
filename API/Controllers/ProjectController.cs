@@ -1,3 +1,4 @@
+using EF_PB;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -7,23 +8,26 @@ namespace API.Controllers;
 public class ProjectController : ControllerBase
 {
     private readonly ILogger<ProjectController> _logger;
+    private ProjectRepository _repo;
 
     public ProjectController(ILogger<ProjectController> logger)
     {
         _logger = logger;
+        var db = new ProjectBankContext();
+        
+        _repo = new ProjectRepository(db);
+        
     }
 
     [HttpGet(Name = "GetProject")]
-    public IEnumerable<string> Get()
+    public async Task<IEnumerable<string>> Get()
     {
-        // using (var db = new ProjectBankContext())
-        // {
-        //     Console.WriteLine($"Database path: {db.DbPath}.");
-            
-        //     var PR = new ProjectRepository(db);
+        return await _repo.ReadAllNamesAsync(); 
+    }
 
-        //     return PR.ReadAllNames();   
-        // }
-        return new string[] {"hallo", "hej"};
+    //
+    [HttpPost("{name}")]
+    public void Post(string name) {
+        _repo.Create(name);
     }
 }
