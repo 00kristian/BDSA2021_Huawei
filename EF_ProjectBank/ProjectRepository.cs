@@ -40,6 +40,11 @@ public class ProjectRepository : IProjectRepository
         return await _context.projects.Select(p => p.Name).ToListAsync();
     }
 
+    public async Task<IReadOnlyCollection<ProjectDTO>> ReadAllAsync()
+    {
+        return await _context.projects.Select(p => new ProjectDTO{Name = p.Name}).ToListAsync();
+    }
+
     public void DELETE_ALL_PROJECTS_TEMPORARY() {
         _context.projects.RemoveRange(_context.projects);
         _context.SaveChanges();

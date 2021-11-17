@@ -4,7 +4,7 @@
 <PageTitle> Projects </PageTitle>
 
 <h1>Look here to see the projects</h1>
-<p>This demonstrates 420 blazing letssss gooo</p>
+<p>This demonstrates 420 blazing lessss gooo</p>
 
 @if (projects == null)
 {
@@ -27,25 +27,45 @@ else
             }
 
         </tbody>
-
+        <div>
+            <input @bind="newProject"/>
+            <button @onclick="AddProject"> Add project </button>  
+        </div>
 
     </table>
 }
 
 @code {
     private Project[]? projects;
+
+    private string? newProject;
     
     protected override async Task OnInitializedAsync()
     {
-        projects = await Http.GetFromJsonAsync<Project[]>("sample-data/project.json");
+        //projects = await Http.GetFromJsonAsync<Project[]>("sample-data/project.json");
+        await UpdateProjects();
     }
+
+    private async Task UpdateProjects() {
+        HttpClient client = new HttpClient {
+            BaseAddress = new Uri("https://localhost:7089/")
+        };
+
+        projects = await client.GetFromJsonAsync<Project[]>($"Project");
+    }
+
+    private async Task AddProject() {
+        HttpClient client = new HttpClient {
+            BaseAddress = new Uri("https://localhost:7089/Project/")
+        };
+        var post = client.PostAsJsonAsync(newProject, newProject);
+        await post;
+        post.Wait();
+        await UpdateProjects();
+    } 
 
     public class Project
     {
         public string? name {get; set;}
-    
     }
-
-
-
 }

@@ -20,12 +20,11 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet(Name = "GetProject")]
-    public async Task<IEnumerable<string>> Get()
+    public async Task<IEnumerable<ProjectDTO>> Get()
     {
-        return await _repo.ReadAllNamesAsync(); 
+        return await _repo.ReadAllAsync(); 
     }
 
-    //
     [HttpPost("{name}")]
     public void Post(string name) {
         _repo.Create(name);
