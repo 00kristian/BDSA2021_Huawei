@@ -28,7 +28,8 @@ public class ProjectBankContext : DbContext
 
 //Temporary
 public class Project {
-    public int ProjectId { get; set; }
+    [Key]
+    public int ProjectID { get; set; }
 
     [Required]
     [StringLength(20)]

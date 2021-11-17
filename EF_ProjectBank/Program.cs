@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 
-namespace EF_PB;
+namespace EF_PB {
 internal class Program
 {
     private static void Main()
@@ -10,16 +9,22 @@ internal class Program
         {
             Console.WriteLine($"Database path: {db.DbPath}.");
             
-            // Create
-            Console.WriteLine("Inserting a new project");
-            db.projects.Add(new Project{Name = "p1"});
-            db.SaveChanges();
+            var PR = new ProjectRepository(db);
 
-            // Read
-            Console.WriteLine("Querying for a project");
-            var p = db.projects
-                .First();
-            System.Console.WriteLine(p.Name);
+            PR.DELETE_ALL_PROJECTS_TEMPORARY();
+
+            string inputName;
+            while ((inputName = Console.ReadLine()) != null) {
+                System.Console.WriteLine("Input project name to be created");
+                var ID = PR.Create(inputName);
+                System.Console.WriteLine(inputName + " created, ID: " + ID + "\n");
+                System.Console.WriteLine("All Projects in database: ");
+                foreach (var name in PR.ReadAllNames())
+                {
+                    System.Console.WriteLine(name);
+                }
+            }
         }
     }
+}
 }
