@@ -20,16 +20,19 @@ main {
     height: 3.5rem;
     display: flex;
     align-items: center;
+
 }
 
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
         margin-left: 1.5rem;
         text-decoration: none;
+        color: #EAE6E5;
     }
 
     .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
         text-decoration: underline;
+        color: #EAE6E5;
     }
 
     .top-row ::deep a:first-child {
