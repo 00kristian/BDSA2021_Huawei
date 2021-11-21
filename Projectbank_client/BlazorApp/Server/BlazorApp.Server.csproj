@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>BlazorApp.Server-3537E59E-AEC2-45E4-AEC5-B4D36EC7066D</UserSecretsId>
+    <UserSecretsId>BlazorApp.Server-4D65CDDE-E11C-4FD6-8382-24E6F644567B</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
   </PropertyGroup>
 

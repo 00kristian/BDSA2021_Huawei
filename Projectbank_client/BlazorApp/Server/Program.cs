@@ -9,6 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
+
+builder.Services.Configure<JwtBearerOptions>(
+    JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.TokenValidationParameters.NameClaimType = "name";
+    });
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -33,6 +41,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+/* These methods below ensures that:
+The app attempts to parse and validate tokens on incoming requests.
+Any request attempting to access a protected resource without proper credentials fails.
+*/
 app.UseAuthentication();
 app.UseAuthorization();
 
