@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     background-color:#EAE6E5 ;
+
 }
 
 main {
@@ -16,11 +17,11 @@ main {
 .top-row {
     background-color: #3A4E48;
     border-bottom: 1px solid #3A4E48 ;
+
     justify-content: flex-end;
     height: 3.5rem;
     display: flex;
     align-items: center;
-
 }
 
     .top-row ::deep a, .top-row ::deep .btn-link {
@@ -28,6 +29,7 @@ main {
         margin-left: 1.5rem;
         text-decoration: none;
         color: #EAE6E5;
+
     }
 
     .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
