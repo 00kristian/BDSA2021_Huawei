@@ -2,6 +2,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color:#EAE6E5 ;
+
 }
 
 main {
@@ -9,12 +11,13 @@ main {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, #3A4E48 0%, #6A7B76 100%);
 }
 
 .top-row {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
+    background-color: #3A4E48;
+    border-bottom: 1px solid #3A4E48 ;
+
     justify-content: flex-end;
     height: 3.5rem;
     display: flex;
@@ -25,10 +28,13 @@ main {
         white-space: nowrap;
         margin-left: 1.5rem;
         text-decoration: none;
+        color: #EAE6E5;
+
     }
 
     .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
         text-decoration: underline;
+        color: #EAE6E5;
     }
 
     .top-row ::deep a:first-child {
