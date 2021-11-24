@@ -1,57 +1,64 @@
 ﻿@page "/fetchdata"
-@using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using BlazorApp.Shared
-@attribute [Authorize]
 @inject HttpClient Http
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle> Projects </PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>Look here to see the projects</h1>
+<p>This demonstrates 420 blazing lessss gooo</p>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-@if (forecasts == null)
+@if (projects == null)
 {
-    <p><em>Loading...</em></p>
-}
+    <p><em> Loading...</em></p>
+} 
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th> Name:</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var project in projects)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td> @project.name </td>
                 </tr>
             }
+
         </tbody>
+        <div>
+            <input @bind="newProject"/>
+            <button @onclick="AddProject"> Add project </button>  
+        </div>
+
     </table>
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private Project[]? projects;
 
+    private string? newProject;
+    
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            exception.Redirect();
-        }
+        //projects = await Http.GetFromJsonAsync<Project[]>("sample-data/project.json");
+        await UpdateProjects();
+    }
+
+    private async Task UpdateProjects() {
+        projects = await Http.GetFromJsonAsync<Project[]>($"Project");
+    }
+
+    private async Task AddProject() {
+        var post = Http.PostAsJsonAsync(newProject, newProject);
+        await post;
+        post.Wait();
+        await UpdateProjects();
+    } 
+
+    public class Project
+    {
+        public string? name {get; set;}
     }
 }
