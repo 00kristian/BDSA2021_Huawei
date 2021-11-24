@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
+using Shared;
 
 namespace EF_PB;
 
 public class ProjectBankContext : DbContext
 {
-    public DbSet<Project> projects { get; set; }
+    public DbSet<IProject> projects { get; set; }
 
     public string DbPath { get; private set; }
 
@@ -24,14 +25,4 @@ public class ProjectBankContext : DbContext
     // special "local" folder for your platform.
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
-}
-
-//Temporary
-public class Project {
-    [Key]
-    public int ProjectID { get; set; }
-
-    [Required]
-    [StringLength(20)]
-    public string Name { get; set; }
 }

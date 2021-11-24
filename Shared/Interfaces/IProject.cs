@@ -14,7 +14,6 @@ namespace Shared{
         ISet<WorkDay> WorkDays{get;set;}
         ISet<Location> Locations{get;set;}
         bool isThesis{get;set;}
-
     }
     //TODO: eventuel sætte annotations på  
 }
