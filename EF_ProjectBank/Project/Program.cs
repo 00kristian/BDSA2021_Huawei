@@ -1,11 +1,15 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace EF_PB {
 internal class Program
 {
     private static void Main()
     {
-        using (var db = new ProjectBankContext())
+        
+        var builder = new DbContextOptionsBuilder<ProjectBankContext>();
+        
+        using (var db = new ProjectBankContext(builder.Options))
         {
             Console.WriteLine($"Database path: {db.DbPath}.");
             

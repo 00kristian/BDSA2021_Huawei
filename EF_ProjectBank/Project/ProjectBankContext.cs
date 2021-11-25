@@ -13,7 +13,7 @@ public class ProjectBankContext : DbContext
 
     public string DbPath { get; private set; }
 
-    public ProjectBankContext()
+    public ProjectBankContext(DbContextOptions<ProjectBankContext> options)
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);

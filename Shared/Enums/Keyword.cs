@@ -1,6 +1,6 @@
 public enum Keyword{
     Java,
-    Ai,
+    AI,
     MachineLearning, 
     Python,
     CSharp,
