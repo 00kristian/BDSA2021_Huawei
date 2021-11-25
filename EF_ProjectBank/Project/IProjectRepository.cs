@@ -11,7 +11,7 @@ public interface IProjectRepository
         IProject Read(int id);
         void Update(IProject project);
 
-        void Delete(IProject project);
+        void Delete(int id);
 
 
     }

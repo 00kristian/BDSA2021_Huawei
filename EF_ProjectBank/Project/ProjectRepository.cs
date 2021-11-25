@@ -57,7 +57,7 @@ namespace EF_PB
         }
         public void Update(IProject project){}
 
-        public void Delete(IProject project){}
+        public void Delete(int id){}
 
         public IReadOnlyCollection<IProject> ReadAllNames()
         {
