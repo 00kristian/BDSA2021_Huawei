@@ -38,7 +38,22 @@ namespace EF_PB
         }
 
         public IProject Read(int id){
-            throw new NotImplementedException();
+            Project project = (Project)_context.projects.Single(p => p.Id == id);
+
+            return new Project{
+                Name = project.Name,
+                Id = project.Id,
+                Description = project.Description,
+                DueDate = project.DueDate,
+                IntendedWorkHours = project.IntendedWorkHours,
+                Language = project.Language,
+                Keywords = project.Keywords,
+                SkillRequirementDescription = project.SkillRequirementDescription,
+                Supervisor = project.Supervisor,
+                WorkDays = project.WorkDays,
+                Locations = project.Locations,
+                isThesis = project.isThesis
+            };
         }
         public void Update(IProject project){}
 
