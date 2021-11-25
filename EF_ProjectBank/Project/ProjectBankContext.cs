@@ -9,7 +9,7 @@ namespace EF_PB;
 
 public class ProjectBankContext : DbContext
 {
-    public DbSet<IProject> projects { get; set; }
+    public DbSet<Project> projects { get; set; }
 
     public string DbPath { get; private set; }
 
