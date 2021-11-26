@@ -38,6 +38,17 @@ public class ProjectBankContext : DbContext
             .HasMaxLength(50)
             .HasConversion(new EnumToStringConverter<KeywordEnum>());
 
+        modelBuilder.Entity<Project>()
+            .HasMany<ProjectKeyword>(project => project.Keywords)
+            .WithOne(keyword => keyword.Project);
+
+        modelBuilder.Entity<ProjectKeyword>()
+            .HasOne<Keyword>(pk =>pk.Keyword)
+            .WithMany(keyword => keyword.Projects);
+        
+        /*modelBuilder.Entity<Project>()
+            .HasMany<KeywordEnum>()*/
+
         modelBuilder
             .Entity<Project>()
             .Property(p => p.WorkDays)

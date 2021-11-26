@@ -4,5 +4,5 @@ public class Keyword
 {
   public int Id {get; set;}
   public string Str {get; set;}
-  public ICollection Projects {get; set;}
+  public ICollection<ProjectKeyword> Projects {get; set;}
 }
