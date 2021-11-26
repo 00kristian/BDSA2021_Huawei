@@ -47,11 +47,11 @@ else
     }
 
     private async Task UpdateProjects() {
-        projects = await Http.GetFromJsonAsync<Project[]>($"Project");
+        projects = await Http.GetFromJsonAsync<Project[]>("api/Project");
     }
 
     private async Task AddProject() {
-        var post = Http.PostAsJsonAsync(newProject, newProject);
+        var post = Http.PostAsJsonAsync("api/" + newProject, newProject);
         await post;
         post.Wait();
         await UpdateProjects();
