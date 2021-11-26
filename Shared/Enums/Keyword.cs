@@ -1,3 +1,4 @@
+[Flags]
 public enum Keyword{
     Java,
     AI,

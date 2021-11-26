@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Shared
 {
 
@@ -9,11 +11,15 @@ namespace Shared
         public DateTime DueDate { get; set; }
         public int IntendedWorkHours { get; set; }
         public Language Language { get; set; }        
-        public ICollection<Keyword> Keywords { get; set; }
+       
+        public ISet<Keyword> Keywords { get; set; }
         public string SkillRequirementDescription { get; set; }
+        
         public ISupervisor Supervisor { get; set; }
-        public ICollection<WorkDay> WorkDays { get; set; }
-        public ICollection<Location> Locations { get; set; }        
+        
+        public ISet<WorkDay> WorkDays { get; set; }
+        
+        public ISet<Location> Locations { get; set; }        
         public bool isThesis { get; set; }
 
     }

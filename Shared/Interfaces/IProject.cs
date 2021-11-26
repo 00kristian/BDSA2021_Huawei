@@ -8,11 +8,11 @@ namespace Shared{
         DateTime DueDate{get;set;}
         int IntendedWorkHours{get;set;}
         Language Language{get;set;}
-        ICollection<Keyword> Keywords{get;set;}
+        ISet<Keyword> Keywords{get;set;}
         string SkillRequirementDescription{get;set;}
         ISupervisor Supervisor{get;set;}
-        ICollection<WorkDay> WorkDays{get;set;}
-        ICollection<Location> Locations{get;set;}
+        ISet<WorkDay> WorkDays{get;set;}
+        ISet<Location> Locations{get;set;}
         bool isThesis{get;set;}
     }
     //TODO: eventuel sætte annotations på  

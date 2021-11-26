@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System;
 using Microsoft.Data.Sqlite;
+using Shared;
 
 namespace Model.Tests{
 
@@ -15,26 +16,26 @@ namespace Model.Tests{
         public ProjectRepositoryTests(){
             
             var connection = new SqliteConnection("Filename=:memory:");
-            connection.Open();
             var builder = new DbContextOptionsBuilder<ProjectBankContext>();
             builder.UseSqlite(connection);
 
 
             var context = new ProjectBankContext(builder.Options);
             context.Database.EnsureCreated();
+            connection.Open();
             
-            var project1 = new Shared.Project{
+            var project1 = new Project{
                 Name = "AI-Project",
                 Id = 1,
                 Description = "If you like artificial intelligence this project is for you",
                 DueDate = new System.DateTime(2021,12,30),
                 IntendedWorkHours = 50,
                 Language = Language.English,
-                Keywords = new List<Keyword>{Keyword.AI},
+                Keywords = new HashSet<Keyword>{Keyword.AI},
                 SkillRequirementDescription = "Intro to AI",
                 Supervisor = new Shared.Supervisor(),
-                WorkDays = new List<WorkDay>{WorkDay.Monday, WorkDay.Tuesday, WorkDay.Friday},
-                Locations = new List<Location>{Location.Onsite},
+                WorkDays = new HashSet<WorkDay>{WorkDay.Monday, WorkDay.Tuesday, WorkDay.Friday},
+                Locations = new HashSet<Location>{Location.Onsite},
                 isThesis = false
             };
 
@@ -45,11 +46,11 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 100,
                 Language = Language.English,
-                Keywords = new List<Keyword>{Keyword.Algorithms, Keyword.Python},
+                Keywords = new HashSet<Keyword>{Keyword.Algorithms, Keyword.Python},
                 SkillRequirementDescription = "Intro to algorithms",
                 Supervisor = new Shared.Supervisor(),
-                WorkDays = new List<WorkDay>{WorkDay.Tuesday},
-                Locations = new List<Location>{Location.Remote},
+                WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday},
+                Locations = new HashSet<Location>{Location.Remote},
                 isThesis = true
             };
 
@@ -73,11 +74,11 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 75,
                 Language = Language.English,
-                Keywords = new List<Keyword>{Keyword.Algorithms, Keyword.Python},
+                Keywords = new HashSet<Keyword>{Keyword.Algorithms, Keyword.Python},
                 SkillRequirementDescription = "Intro to machine learning",
                 Supervisor = new Shared.Supervisor(),
-                WorkDays = new List<WorkDay>{WorkDay.Tuesday, WorkDay.Wednesday},
-                Locations = new List<Location>{Location.Remote},
+                WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday, WorkDay.Wednesday},
+                Locations = new HashSet<Location>{Location.Remote},
                 isThesis = true 
             };
 
@@ -98,11 +99,11 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 100,
                 Language = Language.English,
-                Keywords = new List<Keyword>{Keyword.Algorithms, Keyword.Python},
+                Keywords = new HashSet<Keyword>{Keyword.Algorithms, Keyword.Python},
                 SkillRequirementDescription = "Intro to algorithms",
                 Supervisor = new Shared.Supervisor(),
-                WorkDays = new List<WorkDay>{WorkDay.Tuesday},
-                Locations = new List<Location>{Location.Remote},
+                WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday},
+                Locations = new HashSet<Location>{Location.Remote},
                 isThesis = true
             };
 
@@ -110,7 +111,7 @@ namespace Model.Tests{
             var actual = _repo.Read(2);
 
             //Assert
-            Assert.Equal(expected,actual);
+            Assert.Equal(expected, actual);
         }
         [Fact]
         public void can_Update_Name(){
@@ -122,11 +123,11 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 100,
                 Language = Language.English,
-                Keywords = new List<Keyword>{Keyword.Algorithms, Keyword.Python},
+                Keywords = new HashSet<Keyword>{Keyword.Algorithms, Keyword.Python},
                 SkillRequirementDescription = "Intro to algorithms",
                 Supervisor = new Shared.Supervisor(),
-                WorkDays = new List<WorkDay>{WorkDay.Tuesday},
-                Locations = new List<Location>{Location.Remote},
+                WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday},
+                Locations = new HashSet<Location>{Location.Remote},
                 isThesis = true
             };
 
