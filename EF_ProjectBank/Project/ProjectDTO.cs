@@ -25,7 +25,7 @@ public record struct ProjectDTO(
     [Required]
     Language language,
 
-    [Required]
+    
     ISet<Keyword> Keywords,
     
     [Required]

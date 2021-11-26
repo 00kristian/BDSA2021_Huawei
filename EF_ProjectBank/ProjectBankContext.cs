@@ -6,12 +6,13 @@ using Microsoft.Data.Sqlite;
 using Shared;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EF_PB;
+namespace EF_PB{
 
 public class ProjectBankContext : DbContext
 {
     public DbSet<Project> projects { get; set; }
     public DbSet<Student> students {get;set;}
+    public DbSet<Keyword> keywords {get;set;}
 
     public string DbPath { get; private set; }
 
@@ -35,7 +36,7 @@ public class ProjectBankContext : DbContext
             .Entity<Project>()
             .Property(p => p.Keywords)
             .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<Keyword>());
+            .HasConversion(new EnumToStringConverter<KeywordEnum>());
 
         modelBuilder
             .Entity<Project>()
@@ -54,4 +55,5 @@ public class ProjectBankContext : DbContext
     // special "local" folder for your platform.
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
+}
 }

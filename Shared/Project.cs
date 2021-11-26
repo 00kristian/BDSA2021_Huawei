@@ -12,7 +12,7 @@ namespace Shared
         public int IntendedWorkHours { get; set; }
         public Language Language { get; set; }        
        
-        public ISet<Keyword> Keywords { get; set; }
+        public ICollection<Keyword> Keywords { get; set; }
         public string SkillRequirementDescription { get; set; }
         
         public ISupervisor Supervisor { get; set; }

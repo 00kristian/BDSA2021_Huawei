@@ -1,5 +1,5 @@
 [Flags]
-public enum Keyword{
+public enum KeywordEnum{
     Java,
     AI,
     MachineLearning, 
