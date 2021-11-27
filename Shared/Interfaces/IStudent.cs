@@ -4,7 +4,7 @@ namespace Shared{
         //Properties 
         Degree Degree{get;set;}
         
-        IPreferences Preferences{get; set;}
+        IPreferences? Preferences{get; set;}
 
         void ApplyForProject(IProject p);
         
