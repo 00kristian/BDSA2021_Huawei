@@ -26,11 +26,19 @@ public class ProjectsController : ControllerBase
     }
 
     //[Authorize]
-    [HttpPut("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
+    [HttpPut("{id}")]
     public void Put(int id, [FromBody] ProjectDTO proj) {
         _repo.Update(id, proj);
+    }
+
+    //[Authorize]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(typeof(ProjectDTO), 200)]
+    [HttpGet("{id}")]
+    public ProjectDTO GetProject(int id) {
+        return _repo.Read(id);
     }
     
     //Er ikke i vores vertical slice

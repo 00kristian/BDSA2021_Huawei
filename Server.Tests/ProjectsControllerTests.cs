@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using API.Controllers;
 using EF_PB;
@@ -27,20 +28,38 @@ public class ProjectsControllerTests
     }
 
     [Fact]
-    public async Task Update_changes_Project_in_repo()
+    public void Get_given_existing_id_returns_Project()
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var project = new ProjectDTO("newProject");
+        var expected = new ProjectDTO("Project1");
         var repository = new Mock<IProjectRepository>();
-        repository.Setup(m => m.Update(1, project));
+        repository.Setup(m => m.Read(1)).Returns(expected);
         var controller = new ProjectsController(logger.Object, repository.Object);
 
-        // // Act
-        // var response = await controller.Put(1, project);
+        // Act
+        var actual = controller.GetProject(1);
+
+        // Assert
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void Update_changes_Project_in_repo()
+    {
+        //Arrange
+        var logger = new Mock<ILogger<ProjectsController>>();
+        var project = new ProjectDTO("Project");
+        var update = new ProjectDTO("NewName");
+        var repository = new Mock<IProjectRepository>();
+        repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name);
+        var controller = new ProjectsController(logger.Object, repository.Object);
+
+        // Act
+        controller.Put(1, update);
 
         // // Assert
-        // Assert.IsType<NoContentResult>(response);
+        Assert.Equal(project, update);
     }
 }
 }
