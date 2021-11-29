@@ -8,7 +8,7 @@ namespace Shared{
         DateTime DueDate{get;set;}
         int IntendedWorkHours{get;set;}
         Language Language{get;set;}
-        ICollection<ProjectKeyword>? Keywords{get;set;}
+        ISet<KeywordEnum>? Keywords{get;set;}
         string? SkillRequirementDescription{get;set;}
         ISupervisor? Supervisor{get;set;}
         ISet<WorkDay>? WorkDays{get;set;}

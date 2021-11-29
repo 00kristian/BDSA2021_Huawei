@@ -39,7 +39,7 @@ namespace Model.Tests{
                 isThesis = false
             };
 
-            var project2 = new Shared.Project{
+            var project2 = new Project{
                 Name = "Algorithms-Thesis",
                 Id = 2,
                 Description = "If you like Algorithms this thesis is for you",
@@ -67,14 +67,14 @@ namespace Model.Tests{
         [Fact]
         public void can_Create_New_Project(){
             //Arrange
-            var expected = new Shared.Project{
-            Name = "Machine Learning project",
+            var expected = new ProjectDTO{
+                Name = "Machine Learning project",
                 Id = 3,
                 Description = "If you like Machine Learning this project is for you",
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 75,
                 Language = Language.English,
-                //Keywords = new HashSet<Keyword>{Keyword.Algorithms, Keyword.Python},
+                Keywords = new HashSet<KeywordEnum>{KeywordEnum.MachineLearning, KeywordEnum.Python},
                 SkillRequirementDescription = "Intro to machine learning",
                 Supervisor = new Shared.Supervisor(),
                 WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday, WorkDay.Wednesday},
@@ -92,7 +92,7 @@ namespace Model.Tests{
         public void read_given_2_Get_Project2()
         {
             //Arrange
-            var expected = new Shared.Project{
+            var expected = new ProjectDTO{
                 Name = "Algorithms-Project",
                 Id = 2,
                 Description = "If you like Algorithms this project is for you",
@@ -116,7 +116,7 @@ namespace Model.Tests{
         [Fact]
         public void can_Update_Name(){
             //Arrange
-            var project = new Shared.Project{
+            var project = new ProjectDTO{
                 Name = "Algorithms-Thesis/Project",
                 Id = 2,
                 Description = "If you like Algorithms this thesis is for you",

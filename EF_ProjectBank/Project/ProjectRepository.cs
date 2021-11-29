@@ -16,7 +16,7 @@ namespace EF_PB
             _context = context;
         }
 
-        public int Create(IProject project)
+        public int Create(ProjectDTO project)
         {
             foreach (var p in _context.projects)
             {
@@ -37,29 +37,32 @@ namespace EF_PB
             return 0;
         }
 
-        public IProject Read(int id){
-            Project project = (Project)_context.projects.Single(p => p.Id == id);
+        public ProjectDTO Read(int projectId)
+    {
+        var projects = from p in _context.projects
+                         where p.Id == projectId
+                         select new ProjectDTO(
+                             p.Name,
+                             p.Id,
+                             p.Description,
+                             p.DueDate,
+                             p.IntendedWorkHours,
+                             p.Language,
+                             p.Keywords,
+                             p.SkillRequirementDescription,
+                             p.Supervisor,
+                             p.WorkDays,
+                             p.Locations,
+                             p.isThesis
+                         );
 
-            return new Project{
-                Name = project.Name,
-                Id = project.Id,
-                Description = project.Description,
-                DueDate = project.DueDate,
-                IntendedWorkHours = project.IntendedWorkHours,
-                Language = project.Language,
-                Keywords = project.Keywords,
-                SkillRequirementDescription = project.SkillRequirementDescription,
-                Supervisor = project.Supervisor,
-                WorkDays = project.WorkDays,
-                Locations = project.Locations,
-                isThesis = project.isThesis
-            };
-        }
-        public void Update(IProject project){}
+        return projects.FirstOrDefault();
+    }
+        public void Update(ProjectDTO project){}
 
         public void Delete(int id){}
 
-        public IReadOnlyCollection<IProject> ReadAllNames()
+        public IReadOnlyCollection<ProjectDTO> ReadAllNames()
         {
              throw new NotImplementedException();
         }

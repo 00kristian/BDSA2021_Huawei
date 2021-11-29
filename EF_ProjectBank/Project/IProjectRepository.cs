@@ -5,11 +5,11 @@ using Shared;
 namespace EF_PB {
 public interface IProjectRepository
     {
-        int Create(IProject project);
-        IReadOnlyCollection<IProject> ReadAllNames();
+        int Create(ProjectDTO project);
+        IReadOnlyCollection<ProjectDTO> ReadAllNames();
 
-        IProject Read(int id);
-        void Update(IProject project);
+        ProjectDTO Read(int id);
+        void Update(ProjectDTO project);
 
         void Delete(int id);
 

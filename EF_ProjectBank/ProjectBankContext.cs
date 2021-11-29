@@ -16,7 +16,7 @@ public class ProjectBankContext : DbContext
 
     public string DbPath { get; private set; }
 
-    public ProjectBankContext(DbContextOptions<ProjectBankContext> options)
+    public ProjectBankContext(DbContextOptions<ProjectBankContext> options): base(options)
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
@@ -38,9 +38,9 @@ public class ProjectBankContext : DbContext
             .HasMaxLength(50)
             .HasConversion(new EnumToStringConverter<KeywordEnum>());
 
-        modelBuilder.Entity<Project>()
+        /*modelBuilder.Entity<Project>()
             .HasMany<ProjectKeyword>(project => project.Keywords)
-            .WithOne(keyword => keyword.Project);
+            .WithOne(keyword => keyword.Project);*/
 
         modelBuilder.Entity<ProjectKeyword>()
             .HasOne<Keyword>(pk =>pk.Keyword)

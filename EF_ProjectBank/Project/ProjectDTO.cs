@@ -11,7 +11,7 @@ public record struct ProjectDTO(
     string Name,
 
     [Required]
-    int id,
+    int Id,
 
     [Required]
     string Description,
@@ -23,10 +23,10 @@ public record struct ProjectDTO(
     int IntendedWorkHours,
     
     [Required]
-    Language language,
+    Language Language,
 
     
-    ISet<Keyword> Keywords,
+    ISet<KeywordEnum> Keywords,
     
     [Required]
     string SkillRequirementDescription,
