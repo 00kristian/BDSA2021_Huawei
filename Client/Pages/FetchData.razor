@@ -51,7 +51,7 @@ else
     }
 
     private async Task AddProject() {
-        var post = Http.PostAsJsonAsync("api/" + newProject, newProject);
+        var post = Http.PostAsJsonAsync("api/Projects/" + newProject, newProject);
         await post;
         post.Wait();
         await UpdateProjects();
