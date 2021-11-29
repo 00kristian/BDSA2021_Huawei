@@ -1,4 +1,5 @@
-/*using EF_PB;
+using Core;
+using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -29,4 +30,4 @@ public class ProjectController : ControllerBase
     public void Post(string name) {
         _repo.Create(name);
     }
-}*/
+}

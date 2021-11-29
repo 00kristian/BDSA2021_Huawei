@@ -1,4 +1,4 @@
-namespace Shared{
+namespace Infrastructure{
     public interface IStudent: IPerson
     {
         //Properties 

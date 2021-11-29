@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Shared{
+namespace Core{
 
     public class ProjectBankContextFactory : IDesignTimeDbContextFactory<ProjectBankContext>
     {

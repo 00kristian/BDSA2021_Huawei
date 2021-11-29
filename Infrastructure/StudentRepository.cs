@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Shared;
 
-namespace EF_PB
+namespace Infrastructure
 {
 
     public class StudentRepository : IStudentRepository

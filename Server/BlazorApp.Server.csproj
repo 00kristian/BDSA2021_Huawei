@@ -14,8 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\BlazorApp.Client.csproj" />
-    <ProjectReference Include="..\Shared\BlazorApp.Shared.csproj" />
-    <ProjectReference Include="..\EF_ProjectBank\EF_PB.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

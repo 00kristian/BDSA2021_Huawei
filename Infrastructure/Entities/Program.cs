@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace Shared {
+namespace Core {
 internal class Program
 {
     private static void Main()

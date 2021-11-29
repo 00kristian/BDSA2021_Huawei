@@ -1,8 +1,7 @@
 
 using System.Collections.Generic;
-using Shared;
 
-namespace EF_PB {
+namespace Core {
 public interface IProjectRepository
     {
         int Create(ProjectDTO project);

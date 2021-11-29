@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shared
+namespace Core
 {
 
     public class Project : IProject

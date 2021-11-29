@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Shared{
+namespace Core{
 
 public class ProjectBankContext : DbContext
 {

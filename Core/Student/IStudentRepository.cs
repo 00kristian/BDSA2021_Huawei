@@ -1,8 +1,8 @@
 
 using System.Collections.Generic;
-using Shared;
+using Infrastructure;
 
-namespace EF_PB {
+namespace Core {
 public interface IStudentRepository
     {
         int Create(IStudent student);
