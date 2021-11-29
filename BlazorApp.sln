@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp.Client", "Client\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model.Tests", "Model.Tests\Model.Tests.csproj", "{66BCB50F-FF77-42CA-932B-C323176F5D60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{AF4BDEAC-87F8-4E37-BBD1-80B7570E1F26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\BlazorApp.Core.csproj", "{AF4BDEAC-87F8-4E37-BBD1-80B7570E1F26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B256B404-6A85-4B9E-A6A5-6869A298A534}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\BlazorApp.Infrastructure.csproj", "{B256B404-6A85-4B9E-A6A5-6869A298A534}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

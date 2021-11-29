@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Infrastructure;
 
 namespace Core{
 
@@ -10,8 +9,8 @@ namespace Core{
         [Required]
         Degree Degree,
 
-        [Required]
-        IPreferences Preference,
+        //[Required]
+        //IPreferences Preference,
 
         [Required, StringLength(30)]
         string Name,

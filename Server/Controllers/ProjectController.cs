@@ -1,33 +1,33 @@
-using Core;
-using Infrastructure;
-using Microsoft.AspNetCore.Mvc;
+/* using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class ProjectController : ControllerBase
-{
-    private readonly ILogger<ProjectController> _logger;
-    private ProjectRepository _repo;
+namespace Server{
 
-    public ProjectController(ILogger<ProjectController> logger)
+    [ApiController]
+    [Route("[controller]")]
+    public class ProjectController : ControllerBase
     {
-        _logger = logger;
-        var db = new ProjectBankContext();
-        
-        _repo = new ProjectRepository(db);
-        
-    }
+        private readonly ILogger<ProjectController> _logger;
+        private ProjectRepository _repo;
 
-    [HttpGet(Name = "GetProject")]
-    public async Task<IEnumerable<ProjectDTO>> Get()
-    {
-        return await _repo.ReadAllAsync(); 
-    }
+        public ProjectController(ILogger<ProjectController> logger)
+        {
+            _logger = logger;
+            var db = new ProjectBankContext();
+            
+            _repo = new ProjectRepository(db);
+            
+        }
 
-    [HttpPost("{name}")]
-    public void Post(string name) {
-        _repo.Create(name);
+        [HttpGet(Name = "GetProject")]
+        public async Task<IEnumerable<ProjectDTO>> Get()
+        {
+            return await _repo.ReadAllAsync(); 
+        }
+
+        [HttpPost("{name}")]
+        public void Post(string name) {
+            _repo.Create(name);
+        }
     }
-}
+} */

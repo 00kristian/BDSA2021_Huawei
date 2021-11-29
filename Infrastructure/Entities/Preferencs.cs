@@ -1,3 +1,5 @@
+using Infrastructure;
+
 namespace Core
 {
     public class Preferences : IPreferences

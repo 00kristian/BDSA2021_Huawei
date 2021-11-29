@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Shared;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Core{

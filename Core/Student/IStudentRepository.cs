@@ -1,15 +1,14 @@
 
 using System.Collections.Generic;
-using Infrastructure;
 
 namespace Core {
 public interface IStudentRepository
     {
-        int Create(IStudent student);
-        IReadOnlyCollection<IStudent> ReadAllNames();
+        int Create(StudentDTO student);
+        IReadOnlyCollection<StudentDTO> ReadAllNames();
 
-        IStudent Read(int id);
-        void Update(IStudent student);
+        StudentDTO Read(int id);
+        void Update(StudentDTO student);
 
         void Delete(int id);
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
@@ -46,6 +47,26 @@ namespace Infrastructure
         {
             _context.students.RemoveRange(_context.students);
             _context.SaveChanges();
+        }
+
+        public int Create(StudentDTO student)
+        {
+            throw new NotImplementedException();
+        }
+
+        IReadOnlyCollection<StudentDTO> IStudentRepository.ReadAllNames()
+        {
+            throw new NotImplementedException();
+        }
+
+        StudentDTO IStudentRepository.Read(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(StudentDTO student)
+        {
+            throw new NotImplementedException();
         }
     }
 }
