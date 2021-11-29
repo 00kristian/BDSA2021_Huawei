@@ -1,4 +1,4 @@
-using EF_PB;
+/* using EF_PB;
 using Xunit;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,30),
                 IntendedWorkHours = 50,
                 Language = Language.English,
-                //Keywords = new HashSet<Keyword>{Keyword.AI},
+                Keywords = new HashSet<KeywordEnum>{KeywordEnum.AI},
                 SkillRequirementDescription = "Intro to AI",
                 Supervisor = new Shared.Supervisor(),
                 WorkDays = new HashSet<WorkDay>{WorkDay.Monday, WorkDay.Tuesday, WorkDay.Friday},
@@ -46,14 +46,14 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 100,
                 Language = Language.English,
-                //Keywords = new HashSet<KeywordEnum>{KeywordEnum.Algorithms, KeywordEnum.Python},
+                Keywords = new HashSet<KeywordEnum>{KeywordEnum.Algorithms, KeywordEnum.Python},
                 SkillRequirementDescription = "Intro to algorithms",
                 Supervisor = new Shared.Supervisor(),
                 WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday},
                 Locations = new HashSet<Location>{Location.Remote},
                 isThesis = true
             };
-
+            
             context.projects.AddRange(
                 project1,
                 project2
@@ -99,7 +99,7 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 100,
                 Language = Language.English,
-                //Keywords = new HashSet<Keyword>{Keyword.Algorithms, Keyword.Python},
+                Keywords = new HashSet<KeywordEnum>{KeywordEnum.Algorithms, KeywordEnum.Python},
                 SkillRequirementDescription = "Intro to algorithms",
                 Supervisor = new Shared.Supervisor(),
                 WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday},
@@ -123,7 +123,7 @@ namespace Model.Tests{
                 DueDate = new System.DateTime(2021,12,25),
                 IntendedWorkHours = 100,
                 Language = Language.English,
-                //Keywords = new HashSet<Keyword>{Keyword.Algorithms, Keyword.Python},
+                Keywords = new HashSet<KeywordEnum>{KeywordEnum.Algorithms, KeywordEnum.Python},
                 SkillRequirementDescription = "Intro to algorithms",
                 Supervisor = new Shared.Supervisor(),
                 WorkDays = new HashSet<WorkDay>{WorkDay.Tuesday},
@@ -151,3 +151,4 @@ namespace Model.Tests{
         }
     }
 }
+ */

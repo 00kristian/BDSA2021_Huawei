@@ -22,23 +22,23 @@ public record struct ProjectDTO(
     [Required]
     int IntendedWorkHours,
     
-    [Required]
-    Language Language,
+    //[Required]
+    //Language Language,
 
     
-    ISet<KeywordEnum> Keywords,
+    //ISet<KeywordEnum> Keywords,
     
     [Required]
     string SkillRequirementDescription,
 
-    [Required]
-    ISupervisor Supervisor,
+    //[Required]
+    //ISupervisor Supervisor,
 
-    [Required]
-    ISet<WorkDay> WorkDays,
+    //[Required]
+    //ISet<WorkDay> WorkDays,
 
-    [Required]
-    ISet<Location> Locations,
+    //[Required]
+    //ISet<Location> Locations,
 
     [Required]
     bool isThesis

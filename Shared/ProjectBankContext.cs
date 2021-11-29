@@ -2,17 +2,16 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.Sqlite;
 using Shared;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EF_PB{
+namespace Shared{
 
 public class ProjectBankContext : DbContext
 {
     public DbSet<Project> projects { get; set; }
     public DbSet<Student> students {get;set;}
-    public DbSet<Keyword> keywords {get;set;}
+    //public DbSet<Keyword> keywords {get;set;}
 
     public string DbPath { get; private set; }
 
@@ -26,30 +25,30 @@ public class ProjectBankContext : DbContext
 
      protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
+        /*modelBuilder
             .Entity<Project>()
             .Property(p => p.Language)
             .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<Language>());
+            .HasConversion(new EnumToStringConverter<Language>());*/
 
-        modelBuilder
+        /*modelBuilder
             .Entity<Project>()
             .Property(p => p.Keywords)
             .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<KeywordEnum>());
+            .HasConversion(new EnumToStringConverter<KeywordEnum>());*/
 
         /*modelBuilder.Entity<Project>()
             .HasMany<ProjectKeyword>(project => project.Keywords)
             .WithOne(keyword => keyword.Project);*/
 
-        modelBuilder.Entity<ProjectKeyword>()
+        /*modelBuilder.Entity<ProjectKeyword>()
             .HasOne<Keyword>(pk =>pk.Keyword)
-            .WithMany(keyword => keyword.Projects);
+            .WithMany(keyword => keyword.Projects);*/
         
         /*modelBuilder.Entity<Project>()
             .HasMany<KeywordEnum>()*/
 
-        modelBuilder
+        /*modelBuilder
             .Entity<Project>()
             .Property(p => p.WorkDays)
             .HasMaxLength(50)
@@ -59,12 +58,13 @@ public class ProjectBankContext : DbContext
             .Entity<Project>()
             .Property(p => p.Locations)
             .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<Location>());
+            .HasConversion(new EnumToStringConverter<Location>());*/
     }
 
+    
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
+        => options.UseSqlServer($"Data Source={DbPath}");
 }
 }

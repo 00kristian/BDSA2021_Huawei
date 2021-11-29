@@ -47,12 +47,12 @@ namespace EF_PB
                              p.Description,
                              p.DueDate,
                              p.IntendedWorkHours,
-                             p.Language,
-                             p.Keywords,
+                             //p.Language,
+                             //p.Keywords,
                              p.SkillRequirementDescription,
-                             p.Supervisor,
-                             p.WorkDays,
-                             p.Locations,
+                             //p.Supervisor,
+                             //p.WorkDays,
+                             //p.Locations,
                              p.isThesis
                          );
 

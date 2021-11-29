@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace EF_PB {
+namespace Shared {
 internal class Program
 {
     private static void Main()
@@ -13,7 +13,7 @@ internal class Program
         {
             Console.WriteLine($"Database path: {db.DbPath}.");
             
-            var PR = new ProjectRepository(db);
+            /*var PR = new ProjectRepository(db);
 
             PR.DELETE_ALL_PROJECTS_TEMPORARY();
 
@@ -27,7 +27,7 @@ internal class Program
                 {
                     System.Console.WriteLine(name);
                 }
-            }
+            }*/
         }
     }
 }

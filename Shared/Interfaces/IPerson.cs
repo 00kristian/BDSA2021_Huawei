@@ -6,7 +6,7 @@ namespace Shared{
         int Id { get; set; }
         string? Email { get; set; }
         DateTime DOB {get;set;}
-        University University{get;set;}
+        //University University{get;set;}
 
     }
     //TODO: eventuel sætte annotations på  

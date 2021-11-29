@@ -2,9 +2,9 @@ namespace Shared{
     public interface IStudent: IPerson
     {
         //Properties 
-        Degree Degree{get;set;}
+        //Degree Degree{get;set;}
         
-        IPreferences? Preferences{get; set;}
+        //IPreferences? Preferences{get; set;}
 
         void ApplyForProject(IProject p);
         
