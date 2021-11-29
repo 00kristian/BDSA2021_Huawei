@@ -1,3 +1,4 @@
+using EF_PB;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -16,7 +17,8 @@ builder.Services.Configure<JwtBearerOptions>(
     {
         options.TokenValidationParameters.NameClaimType = "name";
     });
-
+builder.Services.AddScoped<ProjectBankContext>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

@@ -13,8 +13,9 @@ public class ProjectRepository : IProjectRepository
         _context = context;
     }
 
-    public int Create(string name)
+    public int Create(ProjectDTO project)
     {
+        var name = project.Name;
         foreach (var p in _context.projects) {
             if (p.Name == name) {
                 return (p.ProjectID);
@@ -40,7 +41,7 @@ public class ProjectRepository : IProjectRepository
         return await _context.projects.Select(p => p.Name).ToListAsync();
     }
 
-    public async Task<IReadOnlyCollection<ProjectDTO>> ReadAllAsync()
+    public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
     {
         return await _context.projects.Select(p => new ProjectDTO{Name = p.Name}).ToListAsync();
     }
@@ -48,5 +49,20 @@ public class ProjectRepository : IProjectRepository
     public void DELETE_ALL_PROJECTS_TEMPORARY() {
         _context.projects.RemoveRange(_context.projects);
         _context.SaveChanges();
+    }
+
+    public ProjectDTO Read(int id)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Update(int id, ProjectDTO project)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Delete(int id)
+    {
+        throw new System.NotImplementedException();
     }
 }
