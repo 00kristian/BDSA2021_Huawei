@@ -1,4 +1,6 @@
-public enum Location{
-    Remote, 
-    Onsite
+namespace Core{
+    public enum Location{
+        Remote, 
+        Onsite
+    }
 }

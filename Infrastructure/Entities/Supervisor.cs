@@ -1,6 +1,6 @@
 using Infrastructure;
 
-namespace Core
+namespace Infrastructure
 {
 
     public class Supervisor : ISupervisor

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core {
+namespace Infrastructure {
 internal class Program
 {
     private static void Main()

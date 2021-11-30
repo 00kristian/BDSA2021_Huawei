@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Infrastructure;
 
-namespace Core
+namespace Infrastructure
 {
 
     public class Project : IProject
