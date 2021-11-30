@@ -5,6 +5,7 @@ using Microsoft.Identity.Web.Resource;
 
 namespace ProjectBank.Server.Controllers;
 
+//[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase
@@ -18,14 +19,12 @@ public class ProjectsController : ControllerBase
         _repo = repo;
     }
 
-    //[Authorize]
     [HttpGet(Name = "GetProject")]
     public async Task<IEnumerable<ProjectDTO>> Get()
     {
         return await _repo.ReadAll(); 
     }
 
-    //[Authorize]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpPut("{id}")]
@@ -33,7 +32,6 @@ public class ProjectsController : ControllerBase
         _repo.Update(id, proj);
     }
 
-    //[Authorize]
     [ProducesResponseType(404)]
     [ProducesResponseType(typeof(ProjectDTO), 200)]
     [HttpGet("{id}")]

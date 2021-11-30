@@ -4,7 +4,7 @@ using Microsoft.Identity.Web.Resource;
 
 namespace ProjectBank.Server.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
@@ -17,7 +17,6 @@ public class StudentsController : ControllerBase
         _logger = logger;
     }
 
-    //[Authorize]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpGet("{id}")]
@@ -25,13 +24,11 @@ public class StudentsController : ControllerBase
         throw new NotImplementedException();
     }
 
-    //[Authorize]
     [HttpPost]
     public void Post([FromBody] StudentDTO student) {
         throw new NotImplementedException();
     }
 
-    //[Authorize]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpPut("{id}")]

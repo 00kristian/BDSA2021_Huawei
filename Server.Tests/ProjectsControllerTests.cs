@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using API.Controllers;
 using EF_PB;
 using Microsoft.Extensions.Logging;
 using Moq;
+using ProjectBank.Server.Controllers;
 using Xunit;
 
 namespace Server.Tests {
