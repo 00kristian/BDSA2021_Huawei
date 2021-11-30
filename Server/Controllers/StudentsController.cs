@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
-using BlazorApp.Shared;
 
-namespace BlazorApp.Server.Controllers;
+namespace ProjectBank.Server.Controllers;
 
 [Authorize]
 [ApiController]

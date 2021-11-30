@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 
-namespace API.Controllers;
+namespace ProjectBank.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
