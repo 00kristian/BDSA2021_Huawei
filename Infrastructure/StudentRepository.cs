@@ -33,14 +33,9 @@ namespace Infrastructure
              throw new NotImplementedException();
         }
 
-        public async Task<IReadOnlyCollection<string>> ReadAllNamesAsync()
+        public Task<IReadOnlyCollection<StudentDTO>> ReadAll()
         {
-            return await _context.students.Select(s => s.Name).ToListAsync();
-        }
-
-        public async Task<IReadOnlyCollection<StudentDTO>> ReadAllAsync()
-        {
-            return await _context.students.Select(s => new StudentDTO { Name = s.Name }).ToListAsync();
+            throw new NotImplementedException();
         }
 
         public void DELETE_ALL_STUDENTS_TEMPORARY()

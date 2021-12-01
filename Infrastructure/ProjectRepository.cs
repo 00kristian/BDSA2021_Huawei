@@ -16,25 +16,25 @@ namespace Infrastructure
             _context = context;
         }
 
-        public int Create(ProjectDTO project)
+        //Ikke i vores vertical slice
+        public int Create(string name)
         {
             foreach (var p in _context.projects)
             {
-                if (p.Name == project.Name)
+                if (p.Name == name)
                 {
                     return (p.Id);
                 }
             }
 
-            /*var proj = new Project
+            var proj = new Project
             {
-                Name = project.Name
+                Name = name
             };
             _context.projects.Add(proj);
             _context.SaveChanges();
 
-            return proj.ProjectID;*/
-            return 0;
+            return proj.Id;
         }
 
         public ProjectDTO Read(int projectId)
@@ -42,14 +42,14 @@ namespace Infrastructure
         var projects = from p in _context.projects
                          where p.Id == projectId
                          select new ProjectDTO(
-                             p.Name,
+                             p.Name!,
                              p.Id,
-                             p.Description,
+                             p.Description!,
                              p.DueDate,
                              p.IntendedWorkHours,
                              //p.Language,
                              //p.Keywords,
-                             p.SkillRequirementDescription,
+                             p.SkillRequirementDescription!,
                              //p.Supervisor,
                              //p.WorkDays,
                              //p.Locations,
@@ -69,13 +69,13 @@ namespace Infrastructure
 
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
         {
-            return await _context.projects.Select(p => new ProjectDTO(p.Name, p.Id, p.Description, p.DueDate,
-            p.IntendedWorkHours, p.SkillRequirementDescription, p.isThesis)).ToListAsync();
+            return await _context.projects.Select(p => new ProjectDTO(p.Name!, p.Id, p.Description!, p.DueDate,
+            p.IntendedWorkHours, p.SkillRequirementDescription!, p.isThesis)).ToListAsync();
         }
 
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAllAsync()
         {
-            return await _context.projects.Select(p => new ProjectDTO { Name = p.Name }).ToListAsync();
+            return await _context.projects.Select(p => new ProjectDTO { Name = p.Name! }).ToListAsync();
         }
 
         public void DELETE_ALL_PROJECTS_TEMPORARY()

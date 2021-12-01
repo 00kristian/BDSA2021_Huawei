@@ -3,6 +3,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 
@@ -20,6 +21,7 @@ builder.Services.Configure<JwtBearerOptions>(
     });
 //Dependency injection magic
 //Change LiteProjectBankContext to ProjectBankContext to use real database
+builder.Services.AddDbContext<LiteProjectBankContext>();
 builder.Services.AddScoped<IProjectBankContext, LiteProjectBankContext>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 

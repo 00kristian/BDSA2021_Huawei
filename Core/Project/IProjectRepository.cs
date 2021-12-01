@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Core {
 public interface IProjectRepository
     {
-        int Create(ProjectDTO project);
+        int Create(string name); //Ikke i vores vertical slice ifølge min menig - Lukas
         Task<IReadOnlyCollection<ProjectDTO>> ReadAll();
 
         ProjectDTO Read(int id);

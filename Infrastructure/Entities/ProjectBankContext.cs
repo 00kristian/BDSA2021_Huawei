@@ -8,8 +8,8 @@ namespace Infrastructure {
 
 public class ProjectBankContext : DbContext, IProjectBankContext
 {
-    public DbSet<Project> projects { get; set; }
-    public DbSet<Student> students {get;set;}
+    public DbSet<Project> projects { get; set; } = null!;
+    public DbSet<Student> students {get;set;} = null!;
     //public DbSet<Keyword> keywords {get;set;}
 
     public string DbPath { get; private set; }
