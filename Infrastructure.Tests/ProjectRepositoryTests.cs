@@ -6,7 +6,7 @@ using System;
 using Microsoft.Data.Sqlite;
 using Shared;
 
-namespace Model.Tests{
+namespace Infrastructure.Tests{
 
     public class ProjectRepositoryTests
     {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared;
 using Xunit;
 
-namespace Model.Tests{
+namespace Infrastructure.Tests{
 
     public class StudentRepositoryTests
     {
