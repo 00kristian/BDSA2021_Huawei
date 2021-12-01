@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Core;
 using Microsoft.Extensions.Logging;
 using Moq;
-using ProjectBank.Server.Controllers;
+using Server.Controllers;
 using Xunit;
 
 namespace Server.Tests {

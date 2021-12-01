@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Server\ProjectBank.Server.csproj" />
-    <ProjectReference Include="..\Core\BlazorApp.Core.csproj" />
+    <ProjectReference Include="..\Server\Server.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>
