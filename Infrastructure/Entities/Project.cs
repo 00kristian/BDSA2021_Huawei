@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Core;
 using Infrastructure;
 
 namespace Infrastructure
@@ -22,6 +23,5 @@ namespace Infrastructure
         
         //public ISet<Location>? Locations { get; set; }        
         public bool isThesis { get; set; }
-
     }
 }

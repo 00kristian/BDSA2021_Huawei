@@ -1,4 +1,5 @@
-using EF_PB;
+
+using Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
@@ -40,8 +41,8 @@ public class ProjectsController : ControllerBase
     }
     
     //Er ikke i vores vertical slice
-    [HttpPost("{name}")]
-    public void Post(string name) {
-        _repo.Create(new ProjectDTO(name));
-    }
+    // [HttpPost("{name}")]
+    // public void Post(string name) {
+    //     _repo.Create(new ProjectDTO(name));
+    // }
 }

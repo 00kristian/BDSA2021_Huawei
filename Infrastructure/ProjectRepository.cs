@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Core;
 
 namespace Infrastructure
 {
@@ -57,7 +58,7 @@ namespace Infrastructure
 
         return projects.FirstOrDefault();
     }
-        public void Update(ProjectDTO project){}
+        public void Update(int id, ProjectDTO project){}
 
         public void Delete(int id){}
 
@@ -66,9 +67,10 @@ namespace Infrastructure
              throw new NotImplementedException();
         }
 
-        public async Task<IReadOnlyCollection<string>> ReadAllNamesAsync()
+        public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
         {
-            return await _context.projects.Select(p => p.Name).ToListAsync();
+            return await _context.projects.Select(p => new ProjectDTO(p.Name, p.Id, p.Description, p.DueDate,
+            p.IntendedWorkHours, p.SkillRequirementDescription, p.isThesis)).ToListAsync();
         }
 
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAllAsync()

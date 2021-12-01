@@ -1,14 +1,15 @@
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core {
 public interface IProjectRepository
     {
         int Create(ProjectDTO project);
-        IReadOnlyCollection<ProjectDTO> ReadAllNames();
+        Task<IReadOnlyCollection<ProjectDTO>> ReadAll();
 
         ProjectDTO Read(int id);
-        void Update(ProjectDTO project);
+        void Update(int id, ProjectDTO project);
 
         void Delete(int id);
 

@@ -1,3 +1,5 @@
+using Core;
+
 namespace Infrastructure{
 
     public interface IPreferences

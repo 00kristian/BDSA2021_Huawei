@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using EF_PB;
+using Core;
 using Microsoft.Extensions.Logging;
 using Moq;
 using ProjectBank.Server.Controllers;
@@ -10,12 +10,15 @@ namespace Server.Tests {
 
 public class ProjectsControllerTests
 {
+    static readonly ProjectDTO p1 = new ProjectDTO("Project1", 1, "The first project ever", DateTime.MinValue, 8, "Many skills", false);
+    static readonly ProjectDTO p2 = new ProjectDTO("Project2", 2, "The first thesis", DateTime.MinValue, 20, "Many skills", true);
+
     [Fact]
     public async Task Get_returns_Projects_from_repo()
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var expected = new ProjectDTO[]{new ProjectDTO("Project1"), new ProjectDTO("Project2")};
+        var expected = new ProjectDTO[]{p1, p2};
         var repository = new Mock<IProjectRepository>();
         repository.Setup(m => m.ReadAll()).ReturnsAsync(expected);
         var controller = new ProjectsController(logger.Object, repository.Object);
@@ -32,9 +35,9 @@ public class ProjectsControllerTests
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var expected = new ProjectDTO("Project1");
+        var expected = p1;
         var repository = new Mock<IProjectRepository>();
-        repository.Setup(m => m.Read(1)).Returns(expected);
+        repository.Setup(m => m.Read(1)).Returns(p1);
         var controller = new ProjectsController(logger.Object, repository.Object);
 
         // Act
@@ -49,8 +52,8 @@ public class ProjectsControllerTests
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var project = new ProjectDTO("Project");
-        var update = new ProjectDTO("NewName");
+        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8, "Many skills", false);;
+        var update = p1;
         var repository = new Mock<IProjectRepository>();
         repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name);
         var controller = new ProjectsController(logger.Object, repository.Object);
