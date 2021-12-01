@@ -2,8 +2,6 @@
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.0.0
 MinimumVisualStudioVersion = 16.0.0.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp.Server", "Server\BlazorApp.Server.csproj", "{5A930442-C5A1-4A41-8E41-34DCB287FAF6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp.Client", "Client\BlazorApp.Client.csproj", "{2BAE23D1-EC76-4A39-B2D8-B900C046F6CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model.Tests", "Model.Tests\Model.Tests.csproj", "{66BCB50F-FF77-42CA-932B-C323176F5D60}"
@@ -11,6 +9,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\BlazorApp.Core.csproj", "{AF4BDEAC-87F8-4E37-BBD1-80B7570E1F26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\BlazorApp.Infrastructure.csproj", "{B256B404-6A85-4B9E-A6A5-6869A298A534}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectBank.Server", "Server\ProjectBank.Server.csproj", "{3DD680E4-F057-425C-BAAE-CCC264BAC0DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Tests", "Server.Tests\Server.Tests.csproj", "{A2262C47-4333-4219-BD37-0E3A6B92C118}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

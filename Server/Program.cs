@@ -1,7 +1,9 @@
+using EF_PB;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Identity.Web;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,16 +17,28 @@ builder.Services.Configure<JwtBearerOptions>(
     {
         options.TokenValidationParameters.NameClaimType = "name";
     });
-
+builder.Services.AddScoped<ProjectBankContext>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjectBank.Server", Version = "v1" });
+    c.UseInlineDefinitionsForEnums();
+});
+
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    
+    app.UseDeveloperExceptionPage();
     app.UseWebAssemblyDebugging();
 }
 else
