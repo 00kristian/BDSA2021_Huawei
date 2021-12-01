@@ -18,7 +18,9 @@ builder.Services.Configure<JwtBearerOptions>(
     {
         options.TokenValidationParameters.NameClaimType = "name";
     });
-builder.Services.AddScoped<ProjectBankContext>();
+//Dependency injection magic
+//Change LiteProjectBankContext to ProjectBankContext to use real database
+builder.Services.AddScoped<IProjectBankContext, LiteProjectBankContext>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 builder.Services.AddControllersWithViews();

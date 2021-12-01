@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure{
+namespace Infrastructure {
 
-public class ProjectBankContext : DbContext
+public class ProjectBankContext : DbContext, IProjectBankContext
 {
     public DbSet<Project> projects { get; set; }
     public DbSet<Student> students {get;set;}
