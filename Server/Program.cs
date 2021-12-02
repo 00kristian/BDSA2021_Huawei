@@ -1,7 +1,11 @@
+using Core;
+using Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,16 +19,31 @@ builder.Services.Configure<JwtBearerOptions>(
     {
         options.TokenValidationParameters.NameClaimType = "name";
     });
-
+//Dependency injection magic
+//Change LiteProjectBankContext to ProjectBankContext to use real database
+builder.Services.AddDbContext<LiteProjectBankContext>();
+builder.Services.AddScoped<IProjectBankContext, LiteProjectBankContext>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjectBank.Server", Version = "v1" });
+    c.UseInlineDefinitionsForEnums();
+});
+
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    
+    app.UseDeveloperExceptionPage();
     app.UseWebAssemblyDebugging();
 }
 else

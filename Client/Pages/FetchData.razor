@@ -1,4 +1,4 @@
-﻿@page "/fetchdata"
+@page "/fetchdata"
 @inject HttpClient Http
 
 <PageTitle> Projects </PageTitle>
@@ -47,11 +47,11 @@ else
     }
 
     private async Task UpdateProjects() {
-        projects = await Http.GetFromJsonAsync<Project[]>($"Project");
+        projects = await Http.GetFromJsonAsync<Project[]>("api/Projects");
     }
 
     private async Task AddProject() {
-        var post = Http.PostAsJsonAsync(newProject, newProject);
+        var post = Http.PostAsJsonAsync("api/Projects/" + newProject, newProject);
         await post;
         post.Wait();
         await UpdateProjects();
