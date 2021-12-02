@@ -37,7 +37,7 @@ public class ProjectsControllerTests
         var logger = new Mock<ILogger<ProjectsController>>();
         var expected = p1;
         var repository = new Mock<IProjectRepository>();
-        repository.Setup(m => m.Read(1)).Returns(p1);
+        repository.Setup(m => m.Read(1)).Returns((Status.Found, p1));
         var controller = new ProjectsController(logger.Object, repository.Object);
 
         // Act

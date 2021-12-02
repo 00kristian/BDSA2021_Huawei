@@ -37,7 +37,7 @@ public class ProjectsController : ControllerBase
     [ProducesResponseType(typeof(ProjectDTO), 200)]
     [HttpGet("{id}")]
     public ProjectDTO GetProject(int id) {
-        return _repo.Read(id);
+        return _repo.Read(id).Item2;
     }
     
     //Er ikke i vores vertical slice

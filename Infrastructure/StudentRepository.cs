@@ -16,50 +16,27 @@ namespace Infrastructure
             _context = context;
         }
 
-        public int Create(IStudent student)
+        public (Status, int id) Create(StudentDTO student)
         {
             throw new NotImplementedException();
         }
 
-        public IStudent Read(int id){
-            throw new NotImplementedException();
-        }
-        public void Update(IStudent student){}
-
-        public void Delete(int id){}
-
-        public IReadOnlyCollection<IStudent> ReadAllNames()
-        {
-             throw new NotImplementedException();
-        }
-
-        public Task<IReadOnlyCollection<StudentDTO>> ReadAll()
+        public Status Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void DELETE_ALL_STUDENTS_TEMPORARY()
-        {
-            _context.students.RemoveRange(_context.students);
-            _context.SaveChanges();
-        }
-
-        public int Create(StudentDTO student)
+        public (Status, StudentDTO) Read(int id)
         {
             throw new NotImplementedException();
         }
 
-        IReadOnlyCollection<StudentDTO> IStudentRepository.ReadAllNames()
+        public IReadOnlyCollection<StudentDTO> ReadAllNames()
         {
             throw new NotImplementedException();
         }
 
-        StudentDTO IStudentRepository.Read(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(StudentDTO student)
+        public Status Update(StudentDTO student)
         {
             throw new NotImplementedException();
         }

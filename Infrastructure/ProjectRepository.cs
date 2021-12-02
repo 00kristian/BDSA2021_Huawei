@@ -37,10 +37,16 @@ namespace Infrastructure
             return proj.Id;
         }
 
-        public ProjectDTO Read(int projectId)
-    {
-        var projects = from p in _context.projects
-                         where p.Id == projectId
+        public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
+        {
+            return await _context.projects.Select(p => new ProjectDTO(p.Name!, p.Id, p.Description!, p.DueDate,
+            p.IntendedWorkHours, p.SkillRequirementDescription!, p.isThesis)).ToListAsync();
+        }
+
+        (Status, ProjectDTO) IProjectRepository.Read(int id)
+        {
+            var projects = from p in _context.projects
+                         where p.Id == id
                          select new ProjectDTO(
                              p.Name!,
                              p.Id,
@@ -56,26 +62,14 @@ namespace Infrastructure
                              p.isThesis
                          );
 
-        return projects.FirstOrDefault();
-    }
-        public void Update(int id, ProjectDTO project){}
+            var project = projects.FirstOrDefault();
 
-        public void Delete(int id){}
-
-        public IReadOnlyCollection<ProjectDTO> ReadAllNames()
-        {
-             throw new NotImplementedException();
+            return project == default(ProjectDTO) ? (Status.NotFound, project) : (Status.Found, project);
         }
 
-        public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
+        public Status Update(int id, ProjectDTO project)
         {
-            return await _context.projects.Select(p => new ProjectDTO(p.Name!, p.Id, p.Description!, p.DueDate,
-            p.IntendedWorkHours, p.SkillRequirementDescription!, p.isThesis)).ToListAsync();
-        }
-
-        public async Task<IReadOnlyCollection<ProjectDTO>> ReadAllAsync()
-        {
-            return await _context.projects.Select(p => new ProjectDTO { Name = p.Name! }).ToListAsync();
+            throw new NotImplementedException();
         }
 
         public void DELETE_ALL_PROJECTS_TEMPORARY()
