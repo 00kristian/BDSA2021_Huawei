@@ -27,13 +27,13 @@ namespace Core{
         Language Language,
 
         
-        ISet<KeywordEnum> Keywords,
+        ISet<string> Keywords,
         
         [Required]
         string SkillRequirementDescription,
 
         [Required]
-        int SupervisorId,
+        string SupervisorName,
 
         [Required]
         ISet<WorkDay> WorkDays,

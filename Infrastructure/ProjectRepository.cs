@@ -37,7 +37,7 @@ namespace Infrastructure
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
         {
             return await _context.projects.Select(p => new ProjectDTO(p.Name!, p.Id, p.Description!, p.DueDate,
-            p.IntendedWorkHours, p.Language, p.Keywords, p.SkillRequirementDescription!, p.SupervisorId, p.WorkDays,p.Location, p.isThesis)).ToListAsync();
+            p.IntendedWorkHours, p.Language, p.Keywords!, p.SkillRequirementDescription!, p.SupervisorName!, p.WorkDays!,p.Location, p.isThesis)).ToListAsync();
         }
 
         (Status, ProjectDTO) IProjectRepository.Read(int id)
@@ -51,10 +51,10 @@ namespace Infrastructure
                              p.DueDate,
                              p.IntendedWorkHours,
                              p.Language,
-                             p.Keywords,
+                             p.Keywords!,
                              p.SkillRequirementDescription!,
-                             p.SupervisorId,
-                             p.WorkDays,
+                             p.SupervisorName!,
+                             p.WorkDays!,
                              p.Location,
                              p.isThesis
                          );

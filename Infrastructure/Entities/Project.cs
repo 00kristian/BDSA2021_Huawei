@@ -5,7 +5,7 @@ using Infrastructure;
 namespace Infrastructure
 {
 
-    public class Project : IProject
+    public class Project
     {
         public string? Name {get; set;}
         public int Id {get;set;}
@@ -14,10 +14,10 @@ namespace Infrastructure
         public int IntendedWorkHours { get; set; }
         public Language Language { get; set; }        
        
-        public ISet<KeywordEnum>? Keywords { get; set; }
+        public ISet<string>? Keywords { get; set; }
         public string? SkillRequirementDescription { get; set; }
         
-        public int SupervisorId { get; set; }
+        public string? SupervisorName { get; set; }
         
         public ISet<WorkDay>? WorkDays { get; set; }
         

@@ -12,8 +12,8 @@ namespace Server.Tests {
 
 public class ProjectsControllerTests
 {
-    static readonly ProjectDTO p1 = new ProjectDTO("Project1", 1, "The first project ever", DateTime.MinValue, 8, Language.Danish, new HashSet<KeywordEnum>{KeywordEnum.AI, KeywordEnum.Python},"Many skills", 10, new HashSet<WorkDay>{WorkDay.Monday}, Location.Onsite,false);
-    static readonly ProjectDTO p2 = new ProjectDTO("Project2", 2, "The first thesis", DateTime.MinValue, 20, Language.English, new HashSet<KeywordEnum>{KeywordEnum.CSharp, KeywordEnum.MachineLearning}, "Many skills",15,new HashSet<WorkDay>{WorkDay.Tuesday}, Location.Remote, true);
+    static readonly ProjectDTO p1 = new ProjectDTO("Project1", 1, "The first project ever", DateTime.MinValue, 8, Language.Danish, new HashSet<string>{"AI", "Python"},"Many skills", "Jens Jensen", new HashSet<WorkDay>{WorkDay.Monday}, Location.Onsite,false);
+    static readonly ProjectDTO p2 = new ProjectDTO("Project2", 2, "The first thesis", DateTime.MinValue, 20, Language.English, new HashSet<string>{"CSharp", "Machine Learning"}, "Many skills","Hans Hansen",new HashSet<WorkDay>{WorkDay.Tuesday}, Location.Remote, true);
 
     [Fact]
     public async Task Get_returns_Projects_from_repo()
@@ -54,7 +54,7 @@ public class ProjectsControllerTests
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8, Language.Danish, new HashSet<KeywordEnum>{KeywordEnum.AI, KeywordEnum.Python},"Many skills", 10, new HashSet<WorkDay>{WorkDay.Monday}, Location.Onsite,false);;
+        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8, Language.Danish, new HashSet<string>{"AI", "Python"},"Many skills", "Jens Jensen", new HashSet<WorkDay>{WorkDay.Monday}, Location.Onsite,false);;
         var update = p1;
         var repository = new Mock<IProjectRepository>();
         repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name);
