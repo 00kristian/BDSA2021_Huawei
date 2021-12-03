@@ -10,7 +10,8 @@ namespace Infrastructure{
         //Language Language{get;set;}
         //ISet<KeywordEnum>? Keywords{get;set;}
         string? SkillRequirementDescription{get;set;}
-        //ISupervisor? Supervisor{get;set;}
+        
+        int SupervisorId{get;set;}
         //ISet<WorkDay>? WorkDays{get;set;}
         //ISet<Location>? Locations{get;set;}
         bool isThesis{get;set;}

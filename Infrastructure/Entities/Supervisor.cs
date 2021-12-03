@@ -5,8 +5,8 @@ namespace Infrastructure
 
     public class Supervisor : ISupervisor
     {
-        public ISet<Position>? Positions {get; set;}
-        public ISet<IProject>? Projects {get; set;}
+        
+        public Position? Position { get; set;}
         public string? Name {get; set;}
         public int Id {get; set;}        
         public string? Email {get; set;}

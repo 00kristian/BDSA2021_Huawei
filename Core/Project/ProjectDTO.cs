@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BlazorApp.Core;
+using Core;
 
 namespace Core{
 
@@ -21,23 +23,23 @@ namespace Core{
         [Required]
         int IntendedWorkHours,
         
-        //[Required]
-        //Language Language,
+        [Required]
+        Language Language,
 
         
-        //ISet<KeywordEnum> Keywords,
+        ISet<KeywordEnum> Keywords,
         
         [Required]
         string SkillRequirementDescription,
 
-        //[Required]
-        //ISupervisor Supervisor,
+        [Required]
+        int SupervisorId,
 
-        //[Required]
-        //ISet<WorkDay> WorkDays,
+        [Required]
+        ISet<WorkDay> WorkDays,
 
-        //[Required]
-        //ISet<Location> Locations,
+        [Required]
+        Location Location,
 
         [Required]
         bool isThesis
