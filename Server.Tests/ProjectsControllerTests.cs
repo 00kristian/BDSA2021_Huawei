@@ -54,7 +54,7 @@ public class ProjectsControllerTests
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8,"Many skills", "Sennep" ,false);;
+        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8,"inshallah", "Poul" ,false);;
         var update = p1;
         var repository = new Mock<IProjectRepository>();
         repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name);
