@@ -33,7 +33,7 @@ namespace Core{
         string SkillRequirementDescription,
 
         [Required]
-        int SupervisorId,
+        string SupervisorName,
 
         //[Required]
         //ISet<string> WorkDays,

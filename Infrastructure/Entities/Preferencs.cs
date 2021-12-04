@@ -3,7 +3,7 @@ using Core;
 
 namespace Infrastructure
 {
-    public class Preferences : IPreferences
+    public class Preferences 
     {
         public ISet<Language>? Languages {get;set;}
         public ISet<WorkDay>? WorkDays {get;set;}

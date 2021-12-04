@@ -12,8 +12,8 @@ namespace Server.Tests {
 
 public class ProjectsControllerTests
 {
-    static readonly ProjectDTO p1 = new ProjectDTO("Project1", 1, "The first project ever", DateTime.MinValue, 8, "inshallah", 10, false);
-    static readonly ProjectDTO p2 = new ProjectDTO("Project2", 2, "The first thesis", DateTime.MinValue, 20, "Many skills",15, true);
+    static readonly ProjectDTO p1 = new ProjectDTO("Project1", 1, "The first project ever", DateTime.MinValue, 8, "inshallah", "Poul", false);
+    static readonly ProjectDTO p2 = new ProjectDTO("Project2", 2, "The first thesis", DateTime.MinValue, 20, "Many skills", "Sennep", true);
 
     [Fact]
     public async Task Get_returns_Projects_from_repo()
@@ -54,7 +54,7 @@ public class ProjectsControllerTests
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8,"Many skills", 10,false);;
+        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8,"Many skills", "Sennep" ,false);;
         var update = p1;
         var repository = new Mock<IProjectRepository>();
         repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name);
