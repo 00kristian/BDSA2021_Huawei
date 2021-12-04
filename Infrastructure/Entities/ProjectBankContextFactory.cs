@@ -8,13 +8,17 @@ namespace Infrastructure{
     {
         public ProjectBankContext CreateDbContext(string[] args)
         {
-            
-            var connectionString = "User ID=postgres;Password=bdsa;Host=localhost;Port=1433;Database=BDSAExam;";
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddUserSecrets<Program>()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var connectionString = configuration.GetConnectionString("ProjectBankDB");
             var optionBuilder = new DbContextOptionsBuilder<ProjectBankContext>()
                 .UseSqlServer(connectionString);
 
             return new ProjectBankContext(optionBuilder.Options);
         }
-
     }
 }

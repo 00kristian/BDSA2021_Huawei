@@ -23,11 +23,11 @@ namespace Core{
         [Required]
         int IntendedWorkHours,
         
-        [Required]
-        Language Language,
+        //[Required]
+        //Language Language,
 
         
-        ISet<KeywordEnum> Keywords,
+        //ISet<string> Keywords,
         
         [Required]
         string SkillRequirementDescription,
@@ -35,11 +35,11 @@ namespace Core{
         [Required]
         int SupervisorId,
 
-        [Required]
-        ISet<WorkDay> WorkDays,
+        //[Required]
+        //ISet<string> WorkDays,
 
-        [Required]
-        Location Location,
+        //[Required]
+        //Location Location,
 
         [Required]
         bool isThesis

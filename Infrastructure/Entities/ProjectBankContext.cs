@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,11 @@ public class ProjectBankContext : DbContext, IProjectBankContext
     public DbSet<Student> students {get;set;} = null!;
     //public DbSet<Keyword> keywords {get;set;}
 
-    public string DbPath { get; private set; }
+    public string DbPath { get; private set; } = null!;
 
-    public ProjectBankContext(DbContextOptions<ProjectBankContext> options): base(options)
-    {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}projectBank.db";
-        Database.EnsureCreated();
-    }
+    public ProjectBankContext(DbContextOptions<ProjectBankContext> options): base(options) { }
 
-     protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         /*modelBuilder
             .Entity<Project>()
@@ -59,11 +54,4 @@ public class ProjectBankContext : DbContext, IProjectBankContext
             .HasMaxLength(50)
             .HasConversion(new EnumToStringConverter<Location>());*/
     }
-
-    
-    // The following configures EF to create a Sqlite database file in the
-    // special "local" folder for your platform.
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlServer($"Data Source={DbPath}");
-}
-}
+}}
