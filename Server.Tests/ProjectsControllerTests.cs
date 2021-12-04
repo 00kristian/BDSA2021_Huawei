@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BlazorApp.Core;
 using Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Server.Controllers;
@@ -46,25 +47,57 @@ public class ProjectsControllerTests
         var actual = controller.GetProject(1);
 
         // Assert
-        Assert.Equal(expected, actual);
+        Assert.Equal(expected, actual.Value);
     }
 
     [Fact]
-    public void Update_changes_Project_in_repo()
+    public void Get_given_non_existing_id_returns_NotFound()
+    {
+        //Arrange
+        var logger = new Mock<ILogger<ProjectsController>>();
+        var repository = new Mock<IProjectRepository>();
+        repository.Setup(m => m.Read(999)).Returns((Status.NotFound, default(ProjectDTO)));
+        var controller = new ProjectsController(logger.Object, repository.Object);
+
+        // Act
+        var actual = controller.GetProject(999);
+
+        // Assert
+        Assert.IsType<NotFoundResult>(actual.Result);
+    } 
+
+    [Fact]
+    public void Put_changes_Project_in_repo()
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
         var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8,"inshallah", "Poul" ,false);;
         var update = p1;
         var repository = new Mock<IProjectRepository>();
-        repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name);
+        repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name).Returns(Status.Updated);
         var controller = new ProjectsController(logger.Object, repository.Object);
 
         // Act
         controller.Put(1, update);
 
         // // Assert
-        Assert.Equal(project, update);
+        Assert.Equal(update, project);
+    }
+
+    [Fact]
+    public void Put_given_non_existing_returns_NotFound()
+    {
+        //Arrange
+        var logger = new Mock<ILogger<ProjectsController>>();
+        var repository = new Mock<IProjectRepository>();
+        repository.Setup(m => m.Update(999, p2)).Returns((Status.NotFound));
+        var controller = new ProjectsController(logger.Object, repository.Object);
+
+        // Act
+        var actual = controller.Put(999, p2);
+
+        // Assert
+        Assert.IsType<NotFoundResult>(actual);
     }
 }
 }

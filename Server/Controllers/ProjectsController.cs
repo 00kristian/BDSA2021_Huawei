@@ -20,6 +20,7 @@ public class ProjectsController : ControllerBase
         _repo = repo;
     }
 
+    [ProducesResponseType(200)]
     [HttpGet(Name = "GetProject")]
     public async Task<IEnumerable<ProjectDTO>> Get()
     {
@@ -29,15 +30,20 @@ public class ProjectsController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] ProjectDTO proj) {
-        _repo.Update(id, proj);
+    public IActionResult Put(int id, [FromBody] ProjectDTO proj) {
+        return _repo.Update(id, proj).ToActionResult();
     }
 
     [ProducesResponseType(404)]
     [ProducesResponseType(typeof(ProjectDTO), 200)]
     [HttpGet("{id}")]
-    public ProjectDTO GetProject(int id) {
-        return _repo.Read(id).Item2;
+    public ActionResult<ProjectDTO> GetProject(int id) {
+        var res = _repo.Read(id);
+        if (res.Item1 == Status.NotFound) {
+            return res.Item1.ToActionResult();
+        } else {
+            return new ActionResult<ProjectDTO>(res.Item2);
+        }
     }
     
     //Er ikke i vores vertical slice
