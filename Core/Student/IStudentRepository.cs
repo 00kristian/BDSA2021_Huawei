@@ -8,7 +8,7 @@ public interface IStudentRepository
         IReadOnlyCollection<StudentDTO> ReadAllNames();
 
         (Status, StudentDTO) Read(int id);
-        Status Update(StudentDTO student);
+        Status Update(int id, StudentDTO student);
 
         Status Delete(int id);
     }

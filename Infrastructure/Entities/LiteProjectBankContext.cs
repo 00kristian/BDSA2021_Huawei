@@ -18,6 +18,7 @@ public class LiteProjectBankContext : DbContext, IProjectBankContext
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}liteProjectBank.db";
+        Database.EnsureDeleted();
         if (Database.EnsureCreated()) {
             projects.Add(new Project
                 {

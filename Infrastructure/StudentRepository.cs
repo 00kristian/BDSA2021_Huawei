@@ -36,7 +36,7 @@ namespace Infrastructure
             throw new NotImplementedException();
         }
 
-        public Status Update(StudentDTO student)
+        public Status Update(int id, StudentDTO student)
         {
             throw new NotImplementedException();
         }
