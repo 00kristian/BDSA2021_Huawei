@@ -22,8 +22,8 @@ builder.Services.Configure<JwtBearerOptions>(
     });
 //Dependency injection magic
 //Change LiteProjectBankContext to ProjectBankContext to use real database
-builder.Services.AddDbContext<LiteProjectBankContext>();//(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBankDB")));
-builder.Services.AddScoped<IProjectBankContext, LiteProjectBankContext>();
+builder.Services.AddDbContext<ProjectBankContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBankDB")));
+builder.Services.AddScoped<IProjectBankContext, ProjectBankContext>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
