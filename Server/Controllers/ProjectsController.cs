@@ -30,14 +30,14 @@ public class ProjectsController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] ProjectDTO proj) =>
-    _repo.Update(id, proj).ToActionResult();
+    public async Task<IActionResult> Put(int id, [FromBody] ProjectDTO proj) =>
+    (await _repo.Update(id, proj)).ToActionResult();
 
     [ProducesResponseType(404)]
     [ProducesResponseType(typeof(ProjectDTO), 200)]
     [HttpGet("{id}")]
-    public ActionResult<ProjectDTO> GetProject(int id) {
-        var res = _repo.Read(id);
+    public async Task<ActionResult<ProjectDTO>> GetProject(int id) {
+        var res = await _repo.Read(id);
         if (res.Item1 == Status.NotFound) {
             return res.Item1.ToActionResult();
         } else {

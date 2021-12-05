@@ -24,8 +24,8 @@ public class StudentsController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpGet("{id}")]
-    public ActionResult<StudentDTO> Get(int id) {
-        var res = _repo.Read(id);
+    public async Task<ActionResult<StudentDTO>> Get(int id) {
+        var res = await _repo.Read(id);
         if (res.Item1 == Status.NotFound) {
             return res.Item1.ToActionResult();
         } else {
@@ -35,8 +35,8 @@ public class StudentsController : ControllerBase
 
     [ProducesResponseType(201)]
     [HttpPost]
-    public IActionResult Post([FromBody] StudentDTO student) {
-        var created = _repo.Create(student);
+    public async Task<IActionResult> Post([FromBody] StudentDTO student) {
+        var created = await _repo.Create(student);
 
         return CreatedAtAction(nameof(Get), new { created.id }, created);
     }
@@ -44,6 +44,6 @@ public class StudentsController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] StudentDTO student) =>
-        _repo.Update(id, student).ToActionResult();
+    public async Task<IActionResult> Put(int id, [FromBody] StudentDTO student) =>
+        (await _repo.Update(id, student)).ToActionResult();
 }

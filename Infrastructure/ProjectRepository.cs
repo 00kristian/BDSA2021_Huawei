@@ -14,7 +14,7 @@ namespace Infrastructure
         }
 
         //Ikke i vores vertical slice
-        public int Create(string name)
+        public async Task<int> Create(string name)
         {
             foreach (var p in _context.projects)
             {
@@ -29,7 +29,7 @@ namespace Infrastructure
                 Name = name
             };
             _context.projects.Add(proj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return proj.Id;
         }
@@ -40,7 +40,7 @@ namespace Infrastructure
             p.IntendedWorkHours, /*p.Language, p.Keywords, */p.SkillRequirementDescription!, p.SupervisorName!, /*p.WorkDays, p.Location,*/ p.isThesis)).ToListAsync();
         }
 
-        (Status, ProjectDTO) IProjectRepository.Read(int id)
+        public async Task<(Status, ProjectDTO)> Read(int id)
         {
             var projects = from p in _context.projects
                          where p.Id == id
@@ -59,12 +59,12 @@ namespace Infrastructure
                              p.isThesis
                          );
 
-            var project = projects.FirstOrDefault();
+            var project = await projects.FirstOrDefaultAsync();
 
             return project == default(ProjectDTO) ? (Status.NotFound, project) : (Status.Found, project);
         }
 
-        public Status Update(int id, ProjectDTO project)
+        public async Task<Status> Update(int id, ProjectDTO project)
         {
             throw new NotImplementedException();
         }
