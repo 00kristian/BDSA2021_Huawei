@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
@@ -40,7 +37,7 @@ namespace Infrastructure
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
         {
             return await _context.projects.Select(p => new ProjectDTO(p.Name!, p.Id, p.Description!, p.DueDate,
-            p.IntendedWorkHours, p.SkillRequirementDescription!, p.isThesis)).ToListAsync();
+            p.IntendedWorkHours, /*p.Language, p.Keywords, */p.SkillRequirementDescription!, p.SupervisorName!, /*p.WorkDays, p.Location,*/ p.isThesis)).ToListAsync();
         }
 
         (Status, ProjectDTO) IProjectRepository.Read(int id)
@@ -56,9 +53,9 @@ namespace Infrastructure
                              //p.Language,
                              //p.Keywords,
                              p.SkillRequirementDescription!,
-                             //p.Supervisor,
+                             p.SupervisorName!,
                              //p.WorkDays,
-                             //p.Locations,
+                             //p.Location,
                              p.isThesis
                          );
 

@@ -2,7 +2,6 @@ using Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Server.Model;
-
 public static class Extensions
 {
     public static IActionResult ToActionResult(this Status status) => status switch
