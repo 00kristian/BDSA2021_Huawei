@@ -16,27 +16,22 @@ namespace Infrastructure
             _context = context;
         }
 
-        public (Status, int id) Create(StudentDTO student)
+        public async Task<(Status, int id)> Create(StudentDTO student)
         {
             throw new NotImplementedException();
         }
 
-        public Status Delete(int id)
+        public async Task<Status> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public (Status, StudentDTO) Read(int id)
+        public async Task<(Status, StudentDTO)> Read(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IReadOnlyCollection<StudentDTO> ReadAllNames()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Status Update(StudentDTO student)
+        public async Task<Status> Update(int id, StudentDTO student)
         {
             throw new NotImplementedException();
         }

@@ -4,12 +4,10 @@ using System.Collections.Generic;
 namespace Core {
 public interface IStudentRepository
     {
-        (Status, int id) Create(StudentDTO student);
-        IReadOnlyCollection<StudentDTO> ReadAllNames();
+        Task<(Status, int id)> Create(StudentDTO student);
+        Task<(Status, StudentDTO)> Read(int id);
+        Task<Status> Update(int id, StudentDTO student);
 
-        (Status, StudentDTO) Read(int id);
-        Status Update(StudentDTO student);
-
-        Status Delete(int id);
+        Task<Status> Delete(int id);
     }
 }

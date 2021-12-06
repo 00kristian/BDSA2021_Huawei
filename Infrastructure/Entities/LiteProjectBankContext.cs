@@ -18,6 +18,7 @@ public class LiteProjectBankContext : DbContext, IProjectBankContext
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}liteProjectBank.db";
+        Database.EnsureDeleted();
         if (Database.EnsureCreated()) {
             projects.Add(new Project
                 {
@@ -27,7 +28,8 @@ public class LiteProjectBankContext : DbContext, IProjectBankContext
                     DueDate = new DateTime(2022, 4, 22),
                     IntendedWorkHours = 15,
                     SkillRequirementDescription = "Den studerende skal have bestået et tidligere kursus om kunstig intelligens.",
-                    isThesis = true
+                    isThesis = true,
+                    SupervisorName = "Flemming"
                 }
             );
             projects.Add(new Project
@@ -38,7 +40,8 @@ public class LiteProjectBankContext : DbContext, IProjectBankContext
                     DueDate = new DateTime(2024, 6, 30),
                     IntendedWorkHours = 15,
                     SkillRequirementDescription = "The student should have prior experience in both java and algorithms",
-                    isThesis = true
+                    isThesis = true,
+                    SupervisorName = "Bob"
                 }
             );
             SaveChanges();
