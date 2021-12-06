@@ -27,14 +27,9 @@ namespace Core{
         [Required]
         DateTime DOB,   
 
-        [Required]
-
         string University,
 
         ICollection<int> AppliedProjects
-
-        string University
-
     );
 }
     
