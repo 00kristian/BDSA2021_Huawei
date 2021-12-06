@@ -8,7 +8,7 @@ namespace Infrastructure
     public class ProjectRepository : IProjectRepository
     {
         IProjectBankContext _context;
-        public ProjectRepository(IProjectBankContext context)
+         public ProjectRepository(IProjectBankContext context)
         {
             _context = context;
         }

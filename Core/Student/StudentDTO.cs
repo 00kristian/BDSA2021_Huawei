@@ -28,7 +28,7 @@ namespace Core{
         [Required]
         string University,
 
-        ICollection<ProjectDTO> AppliedProjects
+        ICollection<int> AppliedProjects
     );
 }
     

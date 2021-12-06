@@ -25,27 +25,14 @@ namespace Infrastructure
         {
             var s = await _context.students.Where(s => s.Id == id).Select(s => new StudentDTO(){
                 Degree = s.Degree.ToString(),
-                PreferenceId = s.Preferences!.Id,
+                PreferenceId = s.PreferenceId,
                 Name = s.Name!,
                 Id = s.Id,
                 Email = s.Email!,
                 DOB = s.DOB,
                 University = s.University.ToString(),
-                //Dette er den grimmeste kode nogensinde, fix den
-                AppliedProjects = (System.Collections.Generic.ICollection<Core.ProjectDTO>) s.AppliedProjects.Select(p => new ProjectDTO(){
-                    Name = p.Name!,
-                    Id = p.Id,
-                    Description = p.Description!,
-                    DueDate = p.DueDate,
-                    IntendedWorkHours = p.IntendedWorkHours,
-                    Language = p.Language,
-                    SkillRequirementDescription = p.SkillRequirementDescription!,
-                    SupervisorName = p.SupervisorName!,
-                    Location = p.Location!.Str,
-                    IsThesis = p.IsThesis,
-                    Keywords = p.Keywords!.Select(k => k.Str).ToList()!
-                })
-            }).FirstOrDefaultAsync();
+                AppliedProjects = s.AppliedProjects}).FirstOrDefaultAsync();
+;
 
             if (s == default(StudentDTO)) return (Status.NotFound, s);
             else return (Status.Found, s);
@@ -53,7 +40,22 @@ namespace Infrastructure
 
         public async Task<Status> Update(int id, StudentDTO student)
         {
-            throw new NotImplementedException();
-        } 
+            var s = await _context.students.Where(s => s.Id == id).FirstOrDefaultAsync();
+
+            if (s == default(Student)) return Status.NotFound;
+
+                s.Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true);
+                s.PreferenceId = student.PreferenceId;
+                s.Name = student.Name!;
+                s.Id = student.Id;
+                s.Email = student.Email!;
+                s.DOB = student.DOB;
+                s.University = (University) Enum.Parse(typeof(University), student.University, true);
+                s.AppliedProjects = student.AppliedProjects;
+
+            _context.SaveChanges();
+
+            return Status.Updated;
+        }
     }
 }
