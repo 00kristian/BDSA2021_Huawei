@@ -21,25 +21,29 @@ namespace Infrastructure
             foreach (Student stud in _context.students) {
                 if (stud.Email == student.Email) return (Status.Conflict, -1);
             }
+            try {
+                var entity = new Student
+                {
+                    Name = student.Name!,
+                    Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true),
+                    PreferenceId = student.PreferenceId,
+                    Id = student.Id,
+                    Email = student.Email!,
+                    DOB = student.DOB,
+                    University = (University) Enum.Parse(typeof(University), student.University, true),
+                    AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
+                };
 
-            var entity = new Student
-            {
-                Name = student.Name!,
-                Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true),
-                PreferenceId = student.PreferenceId,
-                Id = student.Id,
-                Email = student.Email!,
-                DOB = student.DOB,
-                University = (University) Enum.Parse(typeof(University), student.University, true),
-                AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
-            };
+                _context.students.Add(entity);
 
-        _context.students.Add(entity);
+                await _context.SaveChangesAsync();
 
-        await _context.SaveChangesAsync();
-
-        return (Status.Created, entity.Id);
-    }
+                return (Status.Created, entity.Id);
+            } catch (Exception e) {
+                System.Console.WriteLine(e.StackTrace);
+                return (Status.Conflict, -1);
+            }
+        }
 
         public async Task<(Status, StudentDTO)> Read(int id)
         {

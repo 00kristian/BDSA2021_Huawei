@@ -23,7 +23,7 @@ namespace Core{
         int IntendedWorkHours,
         
         [Required]
-        LanguageEnum? Language,
+        LanguageEnum Language,
         
         string SkillRequirementDescription,
 
