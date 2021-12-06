@@ -43,9 +43,24 @@ public class ProjectBankContext : DbContext, IProjectBankContext
             .HasMany<KeywordEnum>()*/
 
         modelBuilder
-            .Entity<Project>()
-            .Property(p => p.Language)
-            .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<LanguageEnum>());
+        .Entity<Project>()
+        .Property(p => p.Language)
+        .HasConversion(
+            v => v.ToString(),
+            v => (LanguageEnum)Enum.Parse(typeof(LanguageEnum), v));
+
+        modelBuilder
+        .Entity<Student>()
+        .Property(s => s.Degree)
+        .HasConversion(
+            v => v.ToString(),
+            v => (Degree)Enum.Parse(typeof(Degree), v));
+
+        modelBuilder
+        .Entity<Student>()
+        .Property(s => s.University)
+        .HasConversion(
+            v => v.ToString(),
+            v => (University)Enum.Parse(typeof(University), v));
     }
 }}

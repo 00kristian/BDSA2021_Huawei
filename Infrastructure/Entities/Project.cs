@@ -12,7 +12,7 @@ namespace Infrastructure
         public string? Description { get; set; }       
         public DateTime DueDate { get; set; }
         public int IntendedWorkHours { get; set; }
-        public LanguageEnum? Language { get; set; }               
+        public LanguageEnum Language { get; set; }               
         public string? SkillRequirementDescription { get; set; }
         public string? SupervisorName { get; set; }
         public Location? Location { get; set; }        
