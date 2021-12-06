@@ -36,32 +36,12 @@ namespace Infrastructure
 
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
         {
-            return await _context.projects.Select(p => new ProjectDTO(p.Name!, p.Id, p.Description!, p.DueDate,
-            p.IntendedWorkHours, /*p.Language, p.Keywords, */p.SkillRequirementDescription!, p.SupervisorName!, /*p.WorkDays, p.Location,*/ p.isThesis)).ToListAsync();
+            throw new NotImplementedException();
         }
 
         public async Task<(Status, ProjectDTO)> Read(int id)
         {
-            var projects = from p in _context.projects
-                         where p.Id == id
-                         select new ProjectDTO(
-                             p.Name!,
-                             p.Id,
-                             p.Description!,
-                             p.DueDate,
-                             p.IntendedWorkHours,
-                             //p.Language,
-                             //p.Keywords,
-                             p.SkillRequirementDescription!,
-                             p.SupervisorName!,
-                             //p.WorkDays,
-                             //p.Location,
-                             p.isThesis
-                         );
-
-            var project = await projects.FirstOrDefaultAsync();
-
-            return project == default(ProjectDTO) ? (Status.NotFound, project) : (Status.Found, project);
+            throw new NotImplementedException(); 
         }
 
         public async Task<Status> Update(int id, ProjectDTO project)

@@ -13,9 +13,30 @@ namespace Server.Tests {
 
 public class ProjectsControllerTests
 {
-    static readonly ProjectDTO p1 = new ProjectDTO("Project1", 1, "The first project ever", DateTime.MinValue, 8, "inshallah", "Poul", false);
-    static readonly ProjectDTO p2 = new ProjectDTO("Project2", 2, "The first thesis", DateTime.MinValue, 20, "Many skills", "Sennep", true);
-
+    static readonly ProjectDTO p1 = new ProjectDTO{
+        Name = "AI-Project",
+        Id = 1,
+        Description = "If you like artificial intelligence this project is for you",
+        DueDate = new System.DateTime(2021,12,30),
+        IntendedWorkHours = 50,
+        Language = LanguageEnum.English,
+        Keywords = new List<string>{"Machine Learning", "Python"},
+        SkillRequirementDescription = "Intro to machine learning",
+        SupervisorName = "Kåre",
+        Location = "On site",
+        isThesis = true 
+    };
+    static readonly ProjectDTO p2 = new ProjectDTO{
+        Name = "Projecgegih",
+        Id = 2,
+        Description = "I am veregy drunk arintb now htis is ja aa a prohec abotuhb maken the fijsr evert mavnhie leanrin algonroljn fojr dsf sibt goealfgelne",
+        DueDate = new System.DateTime(2022,8,1),
+        IntendedWorkHours = 50,
+        Language = LanguageEnum.English,
+        Keywords = new List<string>{"splat"},
+        SupervisorName = "Flemming",
+        isThesis = false
+    };
     [Fact]
     public async void Get_returns_Projects_from_repo()
     {
@@ -71,17 +92,30 @@ public class ProjectsControllerTests
     {
         //Arrange
         var logger = new Mock<ILogger<ProjectsController>>();
-        var project = new ProjectDTO("oldProject", 1, "The first project ever", DateTime.MinValue, 8,"inshallah", "Poul" ,false);;
-        var update = p1;
+        var update = new ProjectDTO{
+            Name = "Sorry i was drunk",
+            Id = 2,
+            Description = "I am very sorry about my behavior last night i got way to drunk",
+            DueDate = new System.DateTime(2022,8,1),
+            IntendedWorkHours = 50,
+            Language = LanguageEnum.English,
+            Keywords = new List<string>{"splat"},
+            SupervisorName = "Flemming",
+            isThesis = false
+        };
+        var project = p2;
         var repository = new Mock<IProjectRepository>();
-        repository.Setup(m => m.Update(1, update)).Callback(() => project.Name = update.Name).ReturnsAsync(Status.Updated);
+        repository.Setup(m => m.Update(1, update)).Callback(() => {project.Name = update.Name;
+        project.Description = update.Description;
+    }).ReturnsAsync(Status.Updated);
         var controller = new ProjectsController(logger.Object, repository.Object);
 
         // Act
         await controller.Put(1, update);
 
         // // Assert
-        Assert.Equal(update, project);
+        Assert.Equal(update.Name, project.Name);
+        Assert.Equal(update.Description, project.Description);
     }
 
     [Fact]

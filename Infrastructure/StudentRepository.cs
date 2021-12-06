@@ -21,11 +21,6 @@ namespace Infrastructure
             throw new NotImplementedException();
         }
 
-        public async Task<Status> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<(Status, StudentDTO)> Read(int id)
         {
             throw new NotImplementedException();

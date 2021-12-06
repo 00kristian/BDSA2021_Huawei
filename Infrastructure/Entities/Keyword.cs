@@ -7,6 +7,6 @@ public class Keyword
   public string? Str {get; set;}
   public ICollection<Project>? Projects {get; set;}
 
-  public ICollection<Preferences> Students {get;set;}
+  public ICollection<Preferences>? Students {get;set;}
 
 }
