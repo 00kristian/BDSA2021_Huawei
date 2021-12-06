@@ -1,16 +1,14 @@
-﻿@page "/"
-@page "/home"
+﻿@page "/projects"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize]
 @inject NavigationManager NavigationManager
 
+<PageTitle>Projects</PageTitle>
 
-<PageTitle>Home</PageTitle>
+<h1>Your projects</h1>
 
-<AuthorizeView>
-<Authorized>
-<h1>Available Projects</h1>
-
-<p>Here is an overview of all the available projects and theses.</p>
-<p>For a better suited match, go to the Explore page.</p>
+<p>Here you can find the projects and theses that you have applied for.</p>
 
 <table class="table">
     <thead>
@@ -26,12 +24,6 @@
         <td><button class="btn button" @onclick="View">Details</button></td>
     </tbody>
 </table>
-</Authorized>
-<NotAuthorized>
-    <h1>Welcome to the Project Bank</h1>
-    <p>To view the available projects, please log in.</p>
-</NotAuthorized>
-</AuthorizeView>
 
 @code{
     private void View(){

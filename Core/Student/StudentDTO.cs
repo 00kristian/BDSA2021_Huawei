@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,10 +8,12 @@ namespace Core{
 
     public record struct StudentDTO(
         [Required]
-        Degree Degree,
 
-        //[Required]
-        //IPreferences Preference,
+        string Degree,
+
+        [Required]
+
+        int PreferenceId,
 
         [Required, StringLength(30)]
         string Name,
@@ -24,7 +27,9 @@ namespace Core{
         [Required]
         DateTime DOB,   
 
-        [Required]
-        University University
+        string University,
+
+        ICollection<int> AppliedProjects
     );
 }
+    

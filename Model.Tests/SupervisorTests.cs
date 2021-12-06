@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Infrastructure.Tests;
+namespace Model.Tests;
 
 public class SupervisorTests
 {

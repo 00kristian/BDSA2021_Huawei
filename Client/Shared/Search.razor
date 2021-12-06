@@ -1,0 +1,17 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+<AuthorizeView>
+    <Authorized>
+                <form class="search-form">
+					<input type="text" placeholder="Search for a keyword" size="15">
+					<button class="button"type="submit">
+                        <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+                    </button>
+				</form>  
+    </Authorized>
+    <NotAuthorized>
+        
+    </NotAuthorized>
+</AuthorizeView>
+

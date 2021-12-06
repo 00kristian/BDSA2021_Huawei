@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
@@ -11,71 +8,73 @@ namespace Infrastructure
     public class ProjectRepository : IProjectRepository
     {
         IProjectBankContext _context;
-        public ProjectRepository(IProjectBankContext context)
+         public ProjectRepository(IProjectBankContext context)
         {
             _context = context;
         }
 
-        //Ikke i vores vertical slice
-        public int Create(string name)
-        {
-            foreach (var p in _context.projects)
-            {
-                if (p.Name == name)
-                {
-                    return (p.Id);
-                }
-            }
 
-            var proj = new Project
-            {
-                Name = name
-            };
-            _context.projects.Add(proj);
+        public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll() =>
+            await _context.projects.Select(p => new ProjectDTO(){
+                Name = p.Name!,
+                Id = p.Id,
+                Description = p.Description!,
+                DueDate = p.DueDate,
+                IntendedWorkHours = p.IntendedWorkHours,
+                Language = p.Language,
+                SkillRequirementDescription = p.SkillRequirementDescription!,
+                SupervisorName = p.SupervisorName!,
+                Location = p.Location!.Str,
+                IsThesis = p.IsThesis,
+                Keywords = p.Keywords!.Select(k => k.Str).ToList()!
+            }).ToListAsync();
+
+
+        public async Task<(Status, ProjectDTO)> Read(int id)
+        {
+            var p = await _context.projects.Where(p => p.Id == id).Select(p => new ProjectDTO(){
+                Name = p.Name!,
+                Id = p.Id,
+                Description = p.Description!,
+                DueDate = p.DueDate,
+                IntendedWorkHours = p.IntendedWorkHours,
+                Language = p.Language,
+                SkillRequirementDescription = p.SkillRequirementDescription!,
+                SupervisorName = p.SupervisorName!,
+                Location = p.Location!.Str,
+                IsThesis = p.IsThesis,
+                Keywords = p.Keywords!.Select(k => k.Str).ToList()!
+            }).FirstOrDefaultAsync();
+
+            if (p == default(ProjectDTO)) return (Status.NotFound, p);
+            else return (Status.Found, p);
+        }
+
+        //Hey dette virker men det er jo egentlig ikke i vores vertical vvv
+        public async Task<Status> Update(int id, ProjectDTO project)
+
+        {
+            var p = await _context.projects.Where(p => p.Id == id).FirstOrDefaultAsync();
+
+
+            if (p == default(Project)) return Status.NotFound;
+
+            p.Name = project.Name!;
+            p.Id = project.Id;
+            p.Description = project.Description!;
+            p.DueDate = project.DueDate;
+            p.IntendedWorkHours = project.IntendedWorkHours;
+            p.Language = project.Language;
+            p.SkillRequirementDescription = project.SkillRequirementDescription!;
+            p.SupervisorName = project.SupervisorName!;
+            p.Location = new Location() {Str = project.Location};
+            p.IsThesis = project.IsThesis;
+            p.Keywords = project.Keywords!.Select(k => new Keyword(){Str = k}).ToList()!;
+
+
             _context.SaveChanges();
 
-            return proj.Id;
-        }
-
-        public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll()
-        {
-            return await _context.projects.Select(p => new ProjectDTO(p.Name!, p.Id, p.Description!, p.DueDate,
-            p.IntendedWorkHours, p.SkillRequirementDescription!, p.isThesis)).ToListAsync();
-        }
-
-        (Status, ProjectDTO) IProjectRepository.Read(int id)
-        {
-            var projects = from p in _context.projects
-                         where p.Id == id
-                         select new ProjectDTO(
-                             p.Name!,
-                             p.Id,
-                             p.Description!,
-                             p.DueDate,
-                             p.IntendedWorkHours,
-                             //p.Language,
-                             //p.Keywords,
-                             p.SkillRequirementDescription!,
-                             //p.Supervisor,
-                             //p.WorkDays,
-                             //p.Locations,
-                             p.isThesis
-                         );
-
-            var project = projects.FirstOrDefault();
-
-            return project == default(ProjectDTO) ? (Status.NotFound, project) : (Status.Found, project);
-        }
-
-        public Status Update(int id, ProjectDTO project)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DELETE_ALL_PROJECTS_TEMPORARY()
-        {
-            _context.projects.RemoveRange(_context.projects);
-            _context.SaveChanges();
+            return Status.Updated;
         }
     }
 }

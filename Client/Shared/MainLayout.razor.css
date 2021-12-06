@@ -24,9 +24,10 @@ main {
     align-items: center;
 }
 
+
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
-        margin-left: 1.5rem;
+        margin-left: 1rem;
         text-decoration: none;
         color: #EAE6E5;
 

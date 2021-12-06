@@ -5,23 +5,18 @@ using Infrastructure;
 namespace Infrastructure
 {
 
-    public class Project : IProject
+    public class Project
     {
         public string? Name {get; set;}
         public int Id {get;set;}
         public string? Description { get; set; }       
         public DateTime DueDate { get; set; }
         public int IntendedWorkHours { get; set; }
-        //public Language Language { get; set; }        
-       
-        //public ISet<KeywordEnum>? Keywords { get; set; }
+        public LanguageEnum? Language { get; set; }               
         public string? SkillRequirementDescription { get; set; }
-        
-        //public ISupervisor? Supervisor { get; set; }
-        
-        //public ISet<WorkDay>? WorkDays { get; set; }
-        
-        //public ISet<Location>? Locations { get; set; }        
-        public bool isThesis { get; set; }
+        public string? SupervisorName { get; set; }
+        public Location? Location { get; set; }        
+        public bool IsThesis { get; set; }
+        public ICollection<Keyword>? Keywords {get;set;}
     }
 }

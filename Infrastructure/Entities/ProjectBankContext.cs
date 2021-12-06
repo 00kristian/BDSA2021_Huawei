@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,11 @@ public class ProjectBankContext : DbContext, IProjectBankContext
     public DbSet<Student> students {get;set;} = null!;
     //public DbSet<Keyword> keywords {get;set;}
 
-    public string DbPath { get; private set; }
+    public string DbPath { get; private set; } = null!;
 
-    public ProjectBankContext(DbContextOptions<ProjectBankContext> options): base(options)
-    {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}projectBank.db";
-        Database.EnsureCreated();
-    }
+    public ProjectBankContext(DbContextOptions<ProjectBankContext> options): base(options) { }
 
-     protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         /*modelBuilder
             .Entity<Project>()
@@ -47,23 +42,10 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         /*modelBuilder.Entity<Project>()
             .HasMany<KeywordEnum>()*/
 
-        /*modelBuilder
-            .Entity<Project>()
-            .Property(p => p.WorkDays)
-            .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<WorkDay>());
-
         modelBuilder
             .Entity<Project>()
-            .Property(p => p.Locations)
+            .Property(p => p.Language)
             .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<Location>());*/
+            .HasConversion(new EnumToStringConverter<LanguageEnum>());
     }
-
-    
-    // The following configures EF to create a Sqlite database file in the
-    // special "local" folder for your platform.
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlServer($"Data Source={DbPath}");
-}
-}
+}}
