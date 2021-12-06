@@ -23,23 +23,32 @@ namespace Infrastructure
 
         public async Task<(Status, StudentDTO)> Read(int id)
         {
-            var p = await _context.students(s => s.Id == id).Select(s => new Student(TO){
-                Degree = s.Degree,
+            var s = await _context.students.Where(s => s.Id == id).Select(s => new StudentDTO(){
+                Degree = s.Degree.ToString(),
+                PreferenceId = s.Preferences!.Id,
                 Name = s.Name!,
-                Id = p.Id,
-                Description = p.Description!,
-                DueDate = p.DueDate,
-                IntendedWorkHours = p.IntendedWorkHours,
-                Language = p.Language,
-                SkillRequirementDescription = p.SkillRequirementDescription!,
-                SupervisorName = p.SupervisorName!,
-                Location = p.Location!.Str,
-                IsThesis = p.IsThesis,
-                Keywords = p.Keywords!.Select(k => k.Str).ToList()!
+                Id = s.Id,
+                Email = s.Email!,
+                DOB = s.DOB,
+                University = s.University.ToString(),
+                //Dette er den grimmeste kode nogensinde, fix den
+                AppliedProjects = (System.Collections.Generic.ICollection<Core.ProjectDTO>) s.AppliedProjects.Select(p => new ProjectDTO(){
+                    Name = p.Name!,
+                    Id = p.Id,
+                    Description = p.Description!,
+                    DueDate = p.DueDate,
+                    IntendedWorkHours = p.IntendedWorkHours,
+                    Language = p.Language,
+                    SkillRequirementDescription = p.SkillRequirementDescription!,
+                    SupervisorName = p.SupervisorName!,
+                    Location = p.Location!.Str,
+                    IsThesis = p.IsThesis,
+                    Keywords = p.Keywords!.Select(k => k.Str).ToList()!
+                })
             }).FirstOrDefaultAsync();
 
-            if (p == default(ProjectDTO)) return (Status.NotFound, p);
-            else return (Status.Found, p);
+            if (s == default(StudentDTO)) return (Status.NotFound, s);
+            else return (Status.Found, s);
         }
 
         public async Task<Status> Update(int id, StudentDTO student)
