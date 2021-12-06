@@ -59,10 +59,10 @@ namespace Infrastructure.Tests{
                 Name = "Lady Gaga",
                 Id = 0,
                 Degree = "Master",
-                Email = "AlejanThough@gmail.com",
+                Email = "TheLady@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
                 University = "RUC",
-                AppliedProjects = null
+                AppliedProjects = new List<int>()
             };
 
             //Act
@@ -72,7 +72,7 @@ namespace Infrastructure.Tests{
             Assert.Equal(Status.Created, actual.Item1);
             Assert.Equal(3, actual.Item2);
             var mail = _context.students.Where(s => s.Name == "Lady Gaga").Select(s => s.Email).FirstOrDefault();
-            Assert.Equal("Lady@Gaga.com", mail);
+            Assert.Equal("TheLady@gmail.com", mail);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace Infrastructure.Tests{
                 Email = "ItsBritney@bitch.com",
                 DOB = new DateTime(2009, 4, 4),
                 University = "RUC",
-                AppliedProjects = null
+                AppliedProjects = new List<int>()
             };
 
             //Act
@@ -93,7 +93,7 @@ namespace Infrastructure.Tests{
 
             //Assert 
             Assert.Equal(Status.Conflict, actual.Item1);
-            Assert.Equal(3, actual.Item2);
+            Assert.Equal(-1, actual.Item2);
         }
 
         [Fact]
@@ -141,14 +141,14 @@ namespace Infrastructure.Tests{
                 Email = "AlejanThough@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
                 University = "RUC",
-                AppliedProjects = null
+                AppliedProjects = new List<int>()
             };
 
             //Act
             var status = await _repo.Update(1, update);
 
             //Assert
-            var actual = _context.projects.Where(p => p.Id == 1).Select(p => p.Name).FirstOrDefault();
+            var actual = _context.students.Where(p => p.Id == 1).Select(p => p.Name).FirstOrDefault();
             Assert.Equal(Status.Updated, status);
             Assert.Equal("Lady Gaga", actual);
         }

@@ -16,10 +16,30 @@ namespace Infrastructure
             _context = context;
         }
 
-        public async Task<(Status, int id)> Create(StudentDTO student)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<(Status, int id)> Create(StudentDTO student) {
+
+            foreach (Student stud in _context.students) {
+                if (stud.Email == student.Email) return (Status.Conflict, -1);
+            }
+
+            var entity = new Student
+            {
+                Name = student.Name!,
+                Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true),
+                PreferenceId = student.PreferenceId,
+                Id = student.Id,
+                Email = student.Email!,
+                DOB = student.DOB,
+                University = (University) Enum.Parse(typeof(University), student.University, true),
+                AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
+            };
+
+        _context.students.Add(entity);
+
+        await _context.SaveChangesAsync();
+
+        return (Status.Created, entity.Id);
+    }
 
         public async Task<(Status, StudentDTO)> Read(int id)
         {
@@ -31,7 +51,7 @@ namespace Infrastructure
                 Email = s.Email!,
                 DOB = s.DOB,
                 University = s.University.ToString(),
-                AppliedProjects = s.AppliedProjects}).FirstOrDefaultAsync();
+                AppliedProjects = s.AppliedProjects.Count > 0 ? s.AppliedProjects.Select(p => p.Id).ToList() : null!}).FirstOrDefaultAsync();
 ;
 
             if (s == default(StudentDTO)) return (Status.NotFound, s);
@@ -44,16 +64,16 @@ namespace Infrastructure
 
             if (s == default(Student)) return Status.NotFound;
 
-                s.Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true);
-                s.PreferenceId = student.PreferenceId;
-                s.Name = student.Name!;
-                s.Id = student.Id;
-                s.Email = student.Email!;
-                s.DOB = student.DOB;
-                s.University = (University) Enum.Parse(typeof(University), student.University, true);
-                s.AppliedProjects = student.AppliedProjects;
+            s.Name = student.Name!;
+            s.Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true);
+            s.PreferenceId = student.PreferenceId;
+            s.Id = student.Id;
+            s.Email = student.Email!;
+            s.DOB = student.DOB;
+            s.University = (University) Enum.Parse(typeof(University), student.University, true);
+            s.AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync();
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Status.Updated;
         }
