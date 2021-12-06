@@ -8,6 +8,5 @@ public interface IStudentRepository
         Task<(Status, StudentDTO)> Read(int id);
         Task<Status> Update(int id, StudentDTO student);
 
-        Task<Status> Delete(int id);
     }
 }

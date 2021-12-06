@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,31 +18,24 @@ namespace Core{
         [Required]
         string Description,
 
-        [Required]
         DateTime DueDate,
 
-        [Required]
         int IntendedWorkHours,
         
-        //[Required]
-        //Language Language,
-
-        
-        //ISet<string> Keywords,
-        
         [Required]
+        LanguageEnum? Language,
+        
         string SkillRequirementDescription,
 
         [Required]
         string SupervisorName,
 
-        //[Required]
-        //ISet<string> WorkDays,
-
-        //[Required]
-        //Location Location,
+        string? Location,
 
         [Required]
-        bool isThesis
-    );
+        bool IsThesis,
+
+        [Required]
+        ICollection<string> Keywords 
+        );
 }

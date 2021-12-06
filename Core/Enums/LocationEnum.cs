@@ -1,5 +1,5 @@
 namespace Core{
-    public enum Location{
+    public enum LocationEnum {
         Remote, 
         Onsite
     }

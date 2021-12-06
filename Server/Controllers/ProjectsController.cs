@@ -44,10 +44,4 @@ public class ProjectsController : ControllerBase
             return new ActionResult<ProjectDTO>(res.Item2);
         }
     }
-    
-    //Er ikke i vores vertical slice
-    [HttpPost("{name}")]
-    public void Post(string name) {
-        _repo.Create(name);
-    }
 }
