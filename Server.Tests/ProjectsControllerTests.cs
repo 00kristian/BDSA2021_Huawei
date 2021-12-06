@@ -105,17 +105,21 @@ public class ProjectsControllerTests
         };
         var project = p2;
         var repository = new Mock<IProjectRepository>();
+
         repository.Setup(m => m.Update(1, update)).Callback(() => {project.Name = update.Name;
         project.Description = update.Description;
     }).ReturnsAsync(Status.Updated);
+
         var controller = new ProjectsController(logger.Object, repository.Object);
 
         // Act
         await controller.Put(1, update);
 
         // // Assert
+
         Assert.Equal(update.Name, project.Name);
         Assert.Equal(update.Description, project.Description);
+
     }
 
     [Fact]

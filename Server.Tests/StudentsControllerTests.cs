@@ -17,6 +17,7 @@ public class StudentsControllerTests
     
     static readonly StudentDTO s2 = new StudentDTO("Bsc", 3, "Flemming", 1, "flem1999@gmail.com", new DateTime(1999, 8, 1), "The IT University of Copenhagen", null!);
 
+
     [Fact]
     public async void Get_given_existing_id_returns_Student()
     {
@@ -55,8 +56,10 @@ public class StudentsControllerTests
     {
         //Arrange
         var logger = new Mock<ILogger<StudentsController>>();
+
         var update = new StudentDTO("Gud", 2, "Jehova", 1, "jesus@Church.com", new DateTime(1, 12, 24), "The church", null!);
         var student = s1;
+
         var repository = new Mock<IStudentRepository>();
         repository.Setup(m => m.Update(1, update)).Callback(() => student.Name = update.Name).ReturnsAsync(Status.Updated);
         var controller = new StudentsController(logger.Object, repository.Object);
@@ -66,6 +69,7 @@ public class StudentsControllerTests
 
         // // Assert
         Assert.Equal(update.Name, student.Name);
+
     }
 
     [Fact]

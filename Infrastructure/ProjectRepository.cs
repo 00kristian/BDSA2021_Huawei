@@ -13,6 +13,7 @@ namespace Infrastructure
             _context = context;
         }
 
+
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll() =>
             await _context.projects.Select(p => new ProjectDTO(){
                 Name = p.Name!,
@@ -27,6 +28,7 @@ namespace Infrastructure
                 IsThesis = p.IsThesis,
                 Keywords = p.Keywords!.Select(k => k.Str).ToList()!
             }).ToListAsync();
+
 
         public async Task<(Status, ProjectDTO)> Read(int id)
         {
@@ -50,8 +52,10 @@ namespace Infrastructure
 
         //Hey dette virker men det er jo egentlig ikke i vores vertical vvv
         public async Task<Status> Update(int id, ProjectDTO project)
+
         {
             var p = await _context.projects.Where(p => p.Id == id).FirstOrDefaultAsync();
+
 
             if (p == default(Project)) return Status.NotFound;
 
@@ -66,6 +70,7 @@ namespace Infrastructure
             p.Location = new Location() {Str = project.Location};
             p.IsThesis = project.IsThesis;
             p.Keywords = project.Keywords!.Select(k => new Keyword(){Str = k}).ToList()!;
+
 
             _context.SaveChanges();
 
