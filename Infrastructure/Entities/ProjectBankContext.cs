@@ -42,16 +42,10 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         /*modelBuilder.Entity<Project>()
             .HasMany<KeywordEnum>()*/
 
-        /*modelBuilder
-            .Entity<Project>()
-            .Property(p => p.WorkDays)
-            .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<WorkDay>());
-
         modelBuilder
             .Entity<Project>()
-            .Property(p => p.Locations)
+            .Property(p => p.Language)
             .HasMaxLength(50)
-            .HasConversion(new EnumToStringConverter<Location>());*/
+            .HasConversion(new EnumToStringConverter<LanguageEnum>());
     }
 }}

@@ -16,7 +16,7 @@ namespace Infrastructure
         public string? SkillRequirementDescription { get; set; }
         public string? SupervisorName { get; set; }
         public Location? Location { get; set; }        
-        public bool isThesis { get; set; }
+        public bool IsThesis { get; set; }
         public ICollection<Keyword>? Keywords {get;set;}
     }
 }

@@ -23,12 +23,28 @@ namespace Infrastructure
 
         public async Task<(Status, StudentDTO)> Read(int id)
         {
-            throw new NotImplementedException();
+            var p = await _context.students(s => s.Id == id).Select(s => new Student(TO){
+                Degree = s.Degree,
+                Name = s.Name!,
+                Id = p.Id,
+                Description = p.Description!,
+                DueDate = p.DueDate,
+                IntendedWorkHours = p.IntendedWorkHours,
+                Language = p.Language,
+                SkillRequirementDescription = p.SkillRequirementDescription!,
+                SupervisorName = p.SupervisorName!,
+                Location = p.Location!.Str,
+                IsThesis = p.IsThesis,
+                Keywords = p.Keywords!.Select(k => k.Str).ToList()!
+            }).FirstOrDefaultAsync();
+
+            if (p == default(ProjectDTO)) return (Status.NotFound, p);
+            else return (Status.Found, p);
         }
 
         public async Task<Status> Update(int id, StudentDTO student)
         {
             throw new NotImplementedException();
-        }
+        } 
     }
 }

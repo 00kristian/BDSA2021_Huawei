@@ -28,7 +28,7 @@ public class LiteProjectBankContext : DbContext, IProjectBankContext
                     DueDate = new DateTime(2022, 4, 22),
                     IntendedWorkHours = 15,
                     SkillRequirementDescription = "Den studerende skal have bestået et tidligere kursus om kunstig intelligens.",
-                    isThesis = true,
+                    IsThesis = true,
                     SupervisorName = "Flemming"
                 }
             );
@@ -40,7 +40,7 @@ public class LiteProjectBankContext : DbContext, IProjectBankContext
                     DueDate = new DateTime(2024, 6, 30),
                     IntendedWorkHours = 15,
                     SkillRequirementDescription = "The student should have prior experience in both java and algorithms",
-                    isThesis = true,
+                    IsThesis = true,
                     SupervisorName = "Bob"
                 }
             );

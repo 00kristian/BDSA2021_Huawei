@@ -24,7 +24,7 @@ public class ProjectsControllerTests
         SkillRequirementDescription = "Intro to machine learning",
         SupervisorName = "Kåre",
         Location = "On site",
-        isThesis = true 
+        IsThesis = true 
     };
     static readonly ProjectDTO p2 = new ProjectDTO{
         Name = "Projecgegih",
@@ -35,7 +35,7 @@ public class ProjectsControllerTests
         Language = LanguageEnum.English,
         Keywords = new List<string>{"splat"},
         SupervisorName = "Flemming",
-        isThesis = false
+        IsThesis = false
     };
     [Fact]
     public async void Get_returns_Projects_from_repo()
@@ -101,7 +101,7 @@ public class ProjectsControllerTests
             Language = LanguageEnum.English,
             Keywords = new List<string>{"splat"},
             SupervisorName = "Flemming",
-            isThesis = false
+            IsThesis = false
         };
         var project = p2;
         var repository = new Mock<IProjectRepository>();

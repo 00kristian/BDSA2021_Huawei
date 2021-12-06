@@ -23,17 +23,17 @@ namespace Core{
         int IntendedWorkHours,
         
         [Required]
-        LanguageEnum Language,
+        LanguageEnum? Language,
         
         string SkillRequirementDescription,
 
         [Required]
         string SupervisorName,
 
-        string Location,
+        string? Location,
 
         [Required]
-        bool isThesis,
+        bool IsThesis,
 
         [Required]
         ICollection<string> Keywords 

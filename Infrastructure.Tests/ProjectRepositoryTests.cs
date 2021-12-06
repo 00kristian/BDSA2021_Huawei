@@ -23,8 +23,8 @@ namespace Infrastructure.Tests{
             Keywords = new HashSet<Keyword>{new Keyword(){Str = "Machine Learning"}, new Keyword(){Str = "Python"}},
             SkillRequirementDescription = "Intro to AI",
             SupervisorName = "Kåre",
-            Location = new Location(){Day = "On site"},
-            isThesis = false
+            Location = new Location(){Str = "On site"},
+            IsThesis = false
         };
 
         Project project2 = new Project{
@@ -37,8 +37,8 @@ namespace Infrastructure.Tests{
             Keywords = new HashSet<Keyword>{new Keyword(){Str = "Algorithm"}},
             SkillRequirementDescription = "Intro to algorithms",
             SupervisorName = "Marie Dahl Esteban-Pedersen Sigurdsson",
-            Location = new Location(){Day = "Online"},
-            isThesis = true
+            Location = new Location(){Str = "Online"},
+            IsThesis = true
         };
     
         public ProjectRepositoryTests(){
@@ -72,10 +72,10 @@ namespace Infrastructure.Tests{
                 IntendedWorkHours = 50,
                 Language = LanguageEnum.English,
                 Keywords = new List<string>{"Machine Learning", "Python"},
-                SkillRequirementDescription = "Intro to machine learning",
+                SkillRequirementDescription = "Intro to AI",
                 SupervisorName = "Kåre",
                 Location = "On site",
-                isThesis = true 
+                IsThesis = false 
             };
 
             //Act
@@ -83,7 +83,10 @@ namespace Infrastructure.Tests{
 
             //Assert 
             Assert.Equal(Status.Found, actual.Item1);
-            Assert.Equal(expected, actual.Item2);
+            Assert.Equal(expected.Name, actual.Item2.Name);
+            Assert.Equal(expected.DueDate, actual.Item2.DueDate);
+            Assert.Equal(expected.Language, actual.Item2.Language);
+            Assert.Equal(expected.Keywords.Count, actual.Item2.Keywords.Count);
         }
 
         [Fact]
@@ -100,6 +103,18 @@ namespace Infrastructure.Tests{
         }
 
         [Fact]
+        public async void ReadAll_returns_all_projects() {
+            //Arrange
+            var expected = _context.projects.Count();
+
+            //Act
+            var actual = (await _repo.ReadAll()).Count();
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public async void Update_updates_name_given_new_name(){
             //Arrange
             var update = new ProjectDTO{
@@ -112,8 +127,8 @@ namespace Infrastructure.Tests{
                 Keywords = new List<string>{"Machine Learning", "Python"},
                 SkillRequirementDescription = "Intro to machine learning",
                 SupervisorName = "Kåre",
-                Location = "On site",
-                isThesis = true 
+                Location = "OnSite",
+                IsThesis = true 
             };
 
             //Act
