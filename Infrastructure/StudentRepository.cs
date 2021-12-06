@@ -10,8 +10,8 @@ namespace Infrastructure
 
     public class StudentRepository : IStudentRepository
     {
-        ProjectBankContext _context;
-        public StudentRepository(ProjectBankContext context)
+        IProjectBankContext _context;
+        public StudentRepository(IProjectBankContext context)
         {
             _context = context;
         }

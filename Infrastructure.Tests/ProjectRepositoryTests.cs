@@ -81,10 +81,24 @@ namespace Infrastructure.Tests{
             //Act
             var actual = await _repo.Read(1);
 
-            //Assert
+            //Assert 
             Assert.Equal(Status.Found, actual.Item1);
             Assert.Equal(expected, actual.Item2);
         }
+
+        [Fact]
+        public async void Read_given_non_existing_id_returns_NotFound() {
+            //Arrange
+            var expected = default(ProjectDTO);
+
+            //Act
+            var actual = await _repo.Read(80);
+
+            //Assert
+            Assert.Equal(expected, actual.Item2);
+            Assert.Equal(Status.NotFound, actual.Item1);
+        }
+
         [Fact]
         public async void Update_updates_name_given_new_name(){
             //Arrange
@@ -109,7 +123,18 @@ namespace Infrastructure.Tests{
             var actual = _context.projects.Where(p => p.Id == 1).Select(p => p.Name).FirstOrDefault();
             Assert.Equal(Status.Updated, status);
             Assert.Equal("New AI-Project", actual);
+        }
 
+        [Fact]
+        public async void Update_given_non_existing_id_returns_NotFound() {
+            //Arrange
+            var expected = Status.NotFound;
+
+            //Act
+            var actual = await _repo.Update(8999, default(ProjectDTO));
+
+            //Assert
+            Assert.Equal(expected, actual);
         }
     }
 }
