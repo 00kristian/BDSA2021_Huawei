@@ -8,6 +8,40 @@
     background-color: #3A4E48 ;
 }
 
+
+
+
+
+
+.search
+{
+	overflow: auto;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+
+}
+
+.search input[type="text"]
+{
+	border: 0px;
+	width: 67%;
+	padding: 10px 10px;
+}
+
+.search input[type="text"]:focus
+{
+	outline: 0;
+}
+
+
+
+
+
+
+
+
+
 .navbar-brand {
     font-size: 1.1rem;
 }

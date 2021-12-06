@@ -1,0 +1,63 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@page "/userpage"
+@inject NavigationManager NavigationManager
+
+<PageTitle>User Page</PageTitle>
+
+<h1>User Page</h1>
+<br>
+<h3>Your information</h3>
+
+<table style="width:50%">
+  <tr>
+    <th>Name</th>
+    <AuthorizeView>
+        <Authorized>
+            <td>@context.User.Identity?.Name</td>
+        </Authorized>
+    </AuthorizeView>
+  </tr>
+  <tr>
+    <th>ID</th>
+    <td>?</td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td>?</td>
+  </tr>
+  <tr>
+    <th>Date Of Birth</th>
+    <td>?</td>
+  </tr>
+  <tr>
+    <th>University</th>
+    <td>?</td>
+  </tr>
+  <tr>
+    <th>Degree</th>
+    <td>?</td>
+  </tr>
+</table>
+
+<br>
+<button class="btn button" @onclick="Edit">Edit your personal information</button>
+<br>
+
+<br>
+<h3>Your project preferences</h3>
+<p>Click on the button to start creating your preferences</p>
+<button class="btn button" @onclick="Preferences">Start</button>
+
+@code{
+  private void Edit(){
+    var uri = $"{NavigationManager.BaseUri}userpage/personalinfo";
+    NavigationManager.NavigateTo(uri);
+  }
+
+  private void Preferences(){
+    var uri = $"{NavigationManager.BaseUri}userpage/preferences";
+    NavigationManager.NavigateTo(uri);
+  }
+}
