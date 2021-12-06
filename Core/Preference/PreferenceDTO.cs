@@ -5,14 +5,14 @@ namespace BlazorApp.Core{
 
     public record struct PreferenceDTO(
         [Required]
-        Language Language,
+        string Language,
         
         ISet<KeywordEnum> Keywords,
 
         [Required]
-        ISet<WorkDay> WorkDays,
+        ISet<WorkDayEnum> WorkDays,
 
         [Required]
-        ISet<Location> Locations
+        ISet<LocationEnum> Locations
     );
 }
