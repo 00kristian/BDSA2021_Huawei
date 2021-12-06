@@ -1,0 +1,29 @@
+﻿@page "/explore"
+@inject NavigationManager NavigationManager
+
+<PageTitle>Matched Projects</PageTitle>
+
+<h1>Matched Projects</h1>
+<p>Here is an overview of the projects and thesis, that match your preferences best.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Supervisor</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>AI</td>
+        <td>Jens Jensen</td>
+        <td><button  class="btn button" @onclick="View">Details</button></td>
+    </tbody>
+</table>
+
+@code{
+    private void View(){
+        var uri = $"{NavigationManager.BaseUri}details";
+        NavigationManager.NavigateTo(uri);
+    }
+}

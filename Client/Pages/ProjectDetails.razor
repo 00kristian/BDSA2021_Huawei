@@ -1,0 +1,11 @@
+@page "/details"
+@inject NavigationManager NavigationManager
+
+ <button class="btn button" @onclick="Return">Back to projects</button>
+
+ @code{
+     private void Return(){
+         var uri = $"{NavigationManager.BaseUri}home";
+        NavigationManager.NavigateTo(uri);
+     }
+ }

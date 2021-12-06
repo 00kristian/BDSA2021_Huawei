@@ -1,0 +1,47 @@
+@page "/userpage/personalinfo"
+@inject NavigationManager NavigationManager
+
+<h1>Your personal information</h1>
+
+<div class="form-group">
+    <label for="studentID"> Please enter your student ID</label>
+    <input type="text" class="form-control" id="studentID">
+</div>
+<div class="form-group">
+    <label for="studentEmail"> Please enter your preferred e-mail adress</label>
+     <input type="email" class="form-control" id="studentEmail" placeholder="name@example.com">
+</div>
+<div class="form-group">
+    <label for="studentDOB"> Please select your date of birth</label>
+    <input type="date" class="form-control" id="studentDOB">
+</div>
+<div class="form-group">
+    <label for="studentUni">Please select your university</label>
+    <select class="form-control" id="studentUni">
+      <option>ITU</option>
+      <option>KU</option>
+      <option>DTU</option>
+      <option>AU</option>
+      <option>SDU</option>
+      <option>RUC</option>
+      <option>AAU</option>
+      <option>CBS</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="studentDegree">Please select your degree</label>
+    <select class="form-control" id="studentDegree">
+      <option>BSc</option>
+      <option>MSc</option>
+      <option>PH.D</option>
+    </select>
+</div>
+<br>
+<button class="btn button" @onclick="Return">Submit</button>
+
+@code{
+    private void Return(){
+         var uri = $"{NavigationManager.BaseUri}userpage";
+        NavigationManager.NavigateTo(uri);
+    }
+}
