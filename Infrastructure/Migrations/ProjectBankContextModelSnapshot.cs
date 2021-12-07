@@ -96,6 +96,8 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
+                    b.HasIndex("StudentId");
+
                     b.ToTable("projects");
                 });
 
@@ -233,6 +235,11 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Preferences")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.Student", b =>
+                {
+                    b.Navigation("AppliedProjects");
                 });
 #pragma warning restore 612, 618
         }
