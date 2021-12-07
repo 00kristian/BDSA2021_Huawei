@@ -6,9 +6,9 @@ using Microsoft.Identity.Web.Resource;
 namespace Server.Controllers;
 
 //[Authorize]
+//[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
 [ApiController]
 [Route("api/Students/[controller]")]
-[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
 public class PreferencesController : ControllerBase
 {
     private readonly ILogger<StudentsController> _logger;

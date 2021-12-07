@@ -6,9 +6,9 @@ using Microsoft.Identity.Web.Resource;
 namespace Server.Controllers;
 
 //[Authorize]
+//[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
 [ApiController]
 [Route("api/[controller]")]
-[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
 public class StudentsController : ControllerBase
 {
     private readonly ILogger<StudentsController> _logger;
@@ -37,8 +37,8 @@ public class StudentsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] StudentDTO student) {
         var created = await _repo.Create(student);
-
-        return CreatedAtAction(nameof(Get), new { created.id }, created);
+        if (created.Item1 == Status.Conflict) return Status.Conflict.ToActionResult();
+        return CreatedAtAction(nameof(Post), new { created.id }, created.Item2);
     }
 
     [ProducesResponseType(204)]
