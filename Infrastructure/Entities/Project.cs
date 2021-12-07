@@ -15,7 +15,7 @@ namespace Infrastructure
         public LanguageEnum Language { get; set; }               
         public string? SkillRequirementDescription { get; set; }
         public string? SupervisorName { get; set; }
-        public Location? Location { get; set; }        
+        public LocationEnum Location { get; set; }        
         public bool IsThesis { get; set; }
         public ICollection<Keyword>? Keywords {get;set;}
     }

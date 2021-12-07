@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlazorApp.Core;
 using Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,7 +22,7 @@ public class ProjectsControllerTests
         Keywords = new List<string>{"Machine Learning", "Python"},
         SkillRequirementDescription = "Intro to machine learning",
         SupervisorName = "Kåre",
-        Location = "On site",
+        Location = LocationEnum.Onsite,
         IsThesis = true 
     };
     static readonly ProjectDTO p2 = new ProjectDTO{

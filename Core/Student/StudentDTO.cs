@@ -18,7 +18,6 @@ namespace Core{
         [Required, StringLength(30)]
         string Name,
 
-        [Required]
         int Id,
 
         [Required, EmailAddress]

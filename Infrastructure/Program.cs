@@ -17,15 +17,17 @@ var builder = new DbContextOptionsBuilder<ProjectBankContext>();
             {
                 break;
             }
-            var res = await repo.Create(new StudentDTO{
-                Name = line,
-                Id = 0,
-                Degree = "Bachelor",
-                Email = line + "@gmail.com",
-                DOB = new DateTime(2000, 1, 1),
-                University = "ITU",
-                AppliedProjects = new List<int>()
+            var input = line.Split(" ");
+            var res = await repo.UpdatePreferences(4, new PreferencesDTO{
+                // Keywords = input[0].Split("-").ToList(),
+                // Locations = input[1].Split("-").ToList(),
+                // WorkDays = input[2].Split("-").ToList(),
+                // Language = input[3]
+                Keywords = new List<string>(){"AI", "Programming"},
+                Locations = new List<string>(){"OnSite"},
+                WorkDays = new List<string>(){"Monday", "Tuesday", "Friday"},
+                Language = "English"
             });
-            System.Console.WriteLine(res.Item1 == Status.Created ? "Created student, id: " + res.Item2 : "fail");
+            System.Console.WriteLine(res == Status.Updated ? "Succes" : "Fail");
         }
     }

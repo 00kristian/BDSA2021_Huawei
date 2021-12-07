@@ -26,7 +26,6 @@ namespace Infrastructure
                 {
                     Name = student.Name!,
                     Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true),
-                    PreferenceId = student.PreferenceId,
                     Id = student.Id,
                     Email = student.Email!,
                     DOB = student.DOB,
@@ -49,7 +48,6 @@ namespace Infrastructure
         {
             var s = await _context.students.Where(s => s.Id == id).Select(s => new StudentDTO(){
                 Degree = s.Degree.ToString(),
-                PreferenceId = s.PreferenceId,
                 Name = s.Name!,
                 Id = s.Id,
                 Email = s.Email!,
@@ -62,7 +60,6 @@ namespace Infrastructure
             else return (Status.Found, s);
         }
 
-
         public async Task<Status> Update(int id, StudentDTO student)
         {
             var s = await _context.students.Where(s => s.Id == id).FirstOrDefaultAsync();
@@ -71,8 +68,6 @@ namespace Infrastructure
 
             s.Name = student.Name!;
             s.Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true);
-            s.PreferenceId = student.PreferenceId;
-            s.Id = student.Id;
             s.Email = student.Email!;
             s.DOB = student.DOB;
             s.University = (University) Enum.Parse(typeof(University), student.University, true);
@@ -81,6 +76,39 @@ namespace Infrastructure
             await _context.SaveChangesAsync();
 
             return Status.Updated;
+        }
+
+        public Task<(Status, PreferencesDTO)> ReadPreferences(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Status> UpdatePreferences(int id, PreferencesDTO prefs)
+        {   
+            try {
+                var s = await _context.students.Include(s => s.Preferences).FirstAsync(s => s.Id == id);
+
+                s.Preferences.Language = (LanguageEnum) Enum.Parse(typeof(LanguageEnum), prefs.Language, true);
+                s.Preferences.Workdays = prefs.WorkDays.Select(d => (WorkdayEnum) Enum.Parse(typeof(WorkdayEnum), d, true)).ToList();
+                s.Preferences.Locations = prefs.Locations.Select(d => (LocationEnum) Enum.Parse(typeof(LocationEnum), d, true)).ToList();
+                s.Preferences.Keywords = GetKeywords(prefs.Keywords).ToList();
+
+                await _context.SaveChangesAsync();
+                return Status.Updated;
+            } catch (Exception e) {
+                System.Console.WriteLine(e.StackTrace);
+                return Status.BadRequest;
+            }
+        }
+
+        private IEnumerable<Keyword> GetKeywords(IEnumerable<string> keywords)
+        {
+            var existing = _context.keywords.Where(p => keywords.Contains(p.Str)).ToDictionary(p => p.Str);
+
+            foreach (var k in keywords)
+            {
+                yield return existing.TryGetValue(k, out var p) ? p : new Keyword(){Str = k};
+            }
         }
     }
 }
