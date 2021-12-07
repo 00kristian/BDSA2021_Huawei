@@ -8,11 +8,9 @@ namespace Core{
 
     public record struct StudentDTO(
         [Required]
-
-        string Degree,
+        DegreeEnum Degree,
 
         [Required]
-
         int PreferenceId,
 
         [Required, StringLength(30)]
@@ -26,7 +24,7 @@ namespace Core{
         [Required]
         DateTime DOB,   
 
-        string University,
+        UniversityEnum University,
 
         ICollection<int> AppliedProjects
     );

@@ -82,13 +82,13 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         .Property(s => s.Degree)
         .HasConversion(
             v => v.ToString(),
-            v => (Degree)Enum.Parse(typeof(Degree), v));
+            v => (DegreeEnum)Enum.Parse(typeof(DegreeEnum), v));
 
         modelBuilder
         .Entity<Student>()
         .Property(s => s.University)
         .HasConversion(
             v => v.ToString(),
-            v => (University)Enum.Parse(typeof(University), v));
+            v => (UniversityEnum)Enum.Parse(typeof(UniversityEnum), v));
     }
 }}

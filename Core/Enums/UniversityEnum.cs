@@ -1,4 +1,4 @@
-public enum University{
+public enum UniversityEnum{
     ITU, 
     KU,
     DTU,

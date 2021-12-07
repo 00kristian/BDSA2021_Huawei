@@ -12,9 +12,9 @@ namespace Server.Tests {
 
 public class StudentsControllerTests
 {
-    static readonly StudentDTO s1 = new StudentDTO("Søn of god", 2, "Jesus Kristus", 1, "jesus@Church.com", new DateTime(1, 12, 24), "Kirken", null!);
+    static readonly StudentDTO s1 = new StudentDTO(DegreeEnum.PHD, 2, "Jesus Kristus", 1, "jesus@Church.com", new DateTime(1, 12, 24), UniversityEnum.DTU, null!);
     
-    static readonly StudentDTO s2 = new StudentDTO("Bsc", 3, "Flemming", 1, "flem1999@gmail.com", new DateTime(1999, 8, 1), "The IT University of Copenhagen", null!);
+    static readonly StudentDTO s2 = new StudentDTO(DegreeEnum.Bachelor, 3, "Flemming", 1, "flem1999@gmail.com", new DateTime(1999, 8, 1), UniversityEnum.ITU, null!);
 
 
     [Fact]
@@ -56,7 +56,7 @@ public class StudentsControllerTests
         //Arrange
         var logger = new Mock<ILogger<StudentsController>>();
 
-        var update = new StudentDTO("Gud", 2, "Jehova", 1, "jesus@Church.com", new DateTime(1, 12, 24), "The church", null!);
+        var update = new StudentDTO(DegreeEnum.PHD, 2, "Jehova", 1, "jesus@Church.com", new DateTime(1, 12, 24), UniversityEnum.DTU, null!);
         var student = s1;
 
         var repository = new Mock<IStudentRepository>();

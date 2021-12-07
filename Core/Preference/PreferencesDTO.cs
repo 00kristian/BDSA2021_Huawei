@@ -5,14 +5,14 @@ namespace Core{
 
     public record struct PreferencesDTO(
         [Required]
-        string Language,
+        LanguageEnum Language,
         
         List<string> Keywords,
 
         [Required]
-        List<string> WorkDays,
+        List<WorkdayEnum> WorkDays,
 
         [Required]
-        List<string> Locations
+        List<LocationEnum> Locations
     );
 }

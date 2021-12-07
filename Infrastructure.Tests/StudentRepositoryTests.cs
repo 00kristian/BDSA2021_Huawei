@@ -16,20 +16,20 @@ namespace Infrastructure.Tests{
         Student student1 = new Student{
             Name = "Alejandro",
             Id = 1,
-            Degree = Degree.Master,
+            Degree = DegreeEnum.Master,
             Email = "AlejanThough@gmail.com",
             DOB = new DateTime(2009, 4, 4),
-            University = University.RUC,
+            University = UniversityEnum.RUC,
             AppliedProjects = null
         };
 
         Student student2 = new Student{
             Name = "Britney Spears",
             Id = 2,
-            Degree = Degree.PHD,
+            Degree = DegreeEnum.PHD,
             Email = "ItsBritney@bitch.com",
             DOB = new DateTime(1981, 12, 2),
-            University = University.CBS,
+            University = UniversityEnum.CBS,
             AppliedProjects = null
         };
     
@@ -58,10 +58,10 @@ namespace Infrastructure.Tests{
             var create = new StudentDTO{
                 Name = "Lady Gaga",
                 Id = 0,
-                Degree = "Master",
+                Degree = DegreeEnum.Master,
                 Email = "TheLady@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
-                University = "RUC",
+                University = UniversityEnum.RUC,
                 AppliedProjects = new List<int>()
             };
 
@@ -81,10 +81,10 @@ namespace Infrastructure.Tests{
             var create = new StudentDTO{
                 Name = "Lady Gaga",
                 Id = 1,
-                Degree = "Master",
+                Degree = DegreeEnum.Master,
                 Email = "ItsBritney@bitch.com",
                 DOB = new DateTime(2009, 4, 4),
-                University = "RUC",
+                University = UniversityEnum.RUC,
                 AppliedProjects = new List<int>()
             };
 
@@ -103,10 +103,10 @@ namespace Infrastructure.Tests{
             var expected = new StudentDTO{
                 Name = "Alejandro",
                 Id = 1,
-                Degree = "Master",
+                Degree = DegreeEnum.Master,
                 Email = "AlejanThough@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
-                University = "RUC",
+                University = UniversityEnum.RUC,
                 AppliedProjects = null
             };
 
@@ -137,10 +137,10 @@ namespace Infrastructure.Tests{
             var update = new StudentDTO{
                 Name = "Lady Gaga",
                 Id = 1,
-                Degree = "Master",
+                Degree = DegreeEnum.Master,
                 Email = "AlejanThough@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
-                University = "RUC",
+                University = UniversityEnum.RUC,
                 AppliedProjects = new List<int>()
             };
 
@@ -148,9 +148,10 @@ namespace Infrastructure.Tests{
             var status = await _repo.Update(1, update);
 
             //Assert
-            var actual = _context.students.Where(p => p.Id == 1).Select(p => p.Name).FirstOrDefault();
+            var actual = _context.students.Where(p => p.Id == 1).FirstOrDefault();
             Assert.Equal(Status.Updated, status);
-            Assert.Equal("Lady Gaga", actual);
+            Assert.Equal(DegreeEnum.Master, actual.Degree);
+            Assert.Equal("Lady Gaga", actual.Name);
         }
 
         [Fact]

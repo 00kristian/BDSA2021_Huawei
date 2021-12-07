@@ -24,9 +24,9 @@ var builder = new DbContextOptionsBuilder<ProjectBankContext>();
                 // WorkDays = input[2].Split("-").ToList(),
                 // Language = input[3]
                 Keywords = new List<string>(){"AI", "Programming"},
-                Locations = new List<string>(){"OnSite"},
-                WorkDays = new List<string>(){"Monday", "Tuesday", "Friday"},
-                Language = "English"
+                Locations = new List<LocationEnum>(){LocationEnum.Onsite},
+                WorkDays = new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday, WorkdayEnum.Friday},
+                Language = LanguageEnum.English
             });
             System.Console.WriteLine(res == Status.Updated ? "Succes" : "Fail");
         }

@@ -25,11 +25,11 @@ namespace Infrastructure
                 var entity = new Student
                 {
                     Name = student.Name!,
-                    Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true),
+                    Degree = student.Degree,
                     Id = student.Id,
                     Email = student.Email!,
                     DOB = student.DOB,
-                    University = (University) Enum.Parse(typeof(University), student.University, true),
+                    University = student.University,
                     AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
                 };
 
@@ -47,12 +47,12 @@ namespace Infrastructure
         public async Task<(Status, StudentDTO)> Read(int id)
         {
             var s = await _context.students.Where(s => s.Id == id).Select(s => new StudentDTO(){
-                Degree = s.Degree.ToString(),
+                Degree = s.Degree,
                 Name = s.Name!,
                 Id = s.Id,
                 Email = s.Email!,
                 DOB = s.DOB,
-                University = s.University.ToString(),
+                University = s.University,
                 AppliedProjects = s.AppliedProjects.Count > 0 ? s.AppliedProjects.Select(p => p.Id).ToList() : null!}).FirstOrDefaultAsync();
 ;
 
@@ -67,10 +67,10 @@ namespace Infrastructure
             if (s == default(Student)) return Status.NotFound;
 
             s.Name = student.Name!;
-            s.Degree = (Degree) Enum.Parse(typeof(Degree), student.Degree, true);
+            s.Degree = student.Degree;
             s.Email = student.Email!;
             s.DOB = student.DOB;
-            s.University = (University) Enum.Parse(typeof(University), student.University, true);
+            s.University = student.University;
             s.AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync();
 
             await _context.SaveChangesAsync();
@@ -88,9 +88,9 @@ namespace Infrastructure
             try {
                 var s = await _context.students.Include(s => s.Preferences).FirstAsync(s => s.Id == id);
 
-                s.Preferences.Language = (LanguageEnum) Enum.Parse(typeof(LanguageEnum), prefs.Language, true);
-                s.Preferences.Workdays = prefs.WorkDays.Select(d => (WorkdayEnum) Enum.Parse(typeof(WorkdayEnum), d, true)).ToList();
-                s.Preferences.Locations = prefs.Locations.Select(d => (LocationEnum) Enum.Parse(typeof(LocationEnum), d, true)).ToList();
+                s.Preferences.Language = prefs.Language;
+                s.Preferences.Workdays = prefs.WorkDays;
+                s.Preferences.Locations = prefs.Locations;
                 s.Preferences.Keywords = GetKeywords(prefs.Keywords).ToList();
 
                 await _context.SaveChangesAsync();
