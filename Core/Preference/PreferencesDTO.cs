@@ -7,12 +7,12 @@ namespace Core{
         [Required]
         LanguageEnum Language,
         
-        List<string> Keywords,
+        ICollection<string> Keywords,
 
         [Required]
-        List<WorkdayEnum> WorkDays,
+        ICollection<WorkdayEnum> Workdays,
 
         [Required]
-        List<LocationEnum> Locations
+        ICollection<LocationEnum> Locations
     );
 }

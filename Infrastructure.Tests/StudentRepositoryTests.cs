@@ -20,7 +20,13 @@ namespace Infrastructure.Tests{
             Email = "AlejanThough@gmail.com",
             DOB = new DateTime(2009, 4, 4),
             University = UniversityEnum.RUC,
-            AppliedProjects = null
+            AppliedProjects = null,
+            Preferences = new Preferences(){
+                Keywords = new List<Keyword>(){new Keyword(){Str = "AI"}, new Keyword(){Str = "Programming"}},
+                Locations = new List<LocationEnum>(){LocationEnum.Onsite},
+                Workdays = new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday, WorkdayEnum.Friday},
+                Language = LanguageEnum.English
+            }
         };
 
         Student student2 = new Student{
@@ -30,7 +36,13 @@ namespace Infrastructure.Tests{
             Email = "ItsBritney@bitch.com",
             DOB = new DateTime(1981, 12, 2),
             University = UniversityEnum.CBS,
-            AppliedProjects = null
+            AppliedProjects = null,
+            Preferences = new Preferences(){
+                Keywords = new List<Keyword>(){new Keyword(){Str = "Doing it again"}},
+                Locations = new List<LocationEnum>(){LocationEnum.Onsite, LocationEnum.Remote},
+                Workdays = new List<WorkdayEnum>(){WorkdayEnum.Friday, WorkdayEnum.Saturday},
+                Language = LanguageEnum.English
+            }
         };
     
         public StudentRepositoryTests(){
@@ -164,6 +176,82 @@ namespace Infrastructure.Tests{
 
             //Assert
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async void UpdatePreferences_given_Preferences_updates_student() {
+            //Arrange
+            var prefs = new PreferencesDTO(LanguageEnum.Danish,
+            new List<string>(){"AI", "Programming", "Python"},
+            new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday},
+            new List<LocationEnum>(){LocationEnum.Remote});
+
+            //Act
+            var status = await _repo.UpdatePreferences(1, prefs);
+            var student = await _context.students.FirstOrDefaultAsync(s => s.Id == 1);
+
+            //Assert
+            Assert.Equal(Status.Updated, status);
+            Assert.Equal(3, student.Preferences.Keywords.Count);
+            Assert.Equal("Python", student.Preferences.Keywords.Last().Str);
+            Assert.Equal(2, student.Preferences.Workdays.Count);
+            Assert.Equal(1, student.Preferences.Locations.Count);
+            Assert.Equal(LanguageEnum.Danish, student.Preferences.Language);
+
+        }
+
+        [Fact]
+        public async void UpdatePreferences_given_non_existing_id_returns_NOTFOUND() {
+            //Arrange
+            var prefs = new PreferencesDTO(LanguageEnum.Danish,
+            new List<string>(){"AI", "Programming", "Python"},
+            new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday},
+            new List<LocationEnum>(){LocationEnum.Remote});
+
+            //Act
+            var status = await _repo.UpdatePreferences(1093, prefs);
+
+            //Assert
+            Assert.Equal(Status.NotFound, status);
+        }
+
+        [Fact]
+        public async void ReadPreferences_given_existing_id_returns_PreferencesDTO() {
+            //Arrange
+            var expected = new PreferencesDTO() {
+                Keywords = new List<string>(){"Doing it again"},
+                Locations = new List<LocationEnum>(){LocationEnum.Onsite, LocationEnum.Remote},
+                Workdays = new List<WorkdayEnum>(){WorkdayEnum.Friday, WorkdayEnum.Saturday},
+                Language = LanguageEnum.English
+            };
+
+            //Act
+            var res = await _repo.ReadPreferences(2);
+            var status = res.Item1;
+            var prefs = res.Item2;
+
+            //Assert
+            Assert.Equal(Status.Found, status);
+            Assert.Equal(expected.Language, prefs.Language);
+            Assert.Equal(expected.Language, prefs.Language);
+            Assert.True(expected.Keywords.SequenceEqual(prefs.Keywords));
+            Assert.True(expected.Locations.SequenceEqual(prefs.Locations));
+            Assert.True(expected.Workdays.SequenceEqual(prefs.Workdays));
+        }
+
+        [Fact]
+        public async void ReadPreferences_given_non_existing_id_returns_NOTFOUND() {
+            //Arrange
+            var expectedStatus = Status.NotFound;
+            var expectedObject = default(PreferencesDTO);
+
+            //Act
+            var res = await _repo.ReadPreferences(7958);
+            var actualStatus = res.Item1;
+            var actualObject = res.Item2;
+
+            Assert.Equal(expectedStatus, actualStatus);
+            Assert.Equal(expectedObject, actualObject);
         }
     }
 }

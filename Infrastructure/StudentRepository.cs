@@ -78,18 +78,31 @@ namespace Infrastructure
             return Status.Updated;
         }
 
-        public Task<(Status, PreferencesDTO)> ReadPreferences(int id)
+        public async Task<(Status, PreferencesDTO)> ReadPreferences(int id)
         {
-            throw new NotImplementedException();
+            var s = await _context.students.FirstOrDefaultAsync(s => s.Id == id);
+
+            if (s == default(Student)) return (Status.NotFound, default(PreferencesDTO));
+
+            var prefs = new PreferencesDTO() {
+                Language = s.Preferences.Language,
+                Workdays = s.Preferences.Workdays,
+                Locations = s.Preferences.Locations,
+                Keywords = s.Preferences.Keywords!.Select(w => w.Str).ToList()
+            };
+
+            return(Status.Found, prefs);
         }
 
         public async Task<Status> UpdatePreferences(int id, PreferencesDTO prefs)
         {   
             try {
-                var s = await _context.students.Include(s => s.Preferences).FirstAsync(s => s.Id == id);
+                var s = await _context.students.Include(s => s.Preferences).FirstOrDefaultAsync(s => s.Id == id);
+
+                if (s == default(Student)) return Status.NotFound;
 
                 s.Preferences.Language = prefs.Language;
-                s.Preferences.Workdays = prefs.WorkDays;
+                s.Preferences.Workdays = prefs.Workdays;
                 s.Preferences.Locations = prefs.Locations;
                 s.Preferences.Keywords = GetKeywords(prefs.Keywords).ToList();
 
