@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
+<link href="Client/Shared/LoginDisplay.razor.css" rel="stylesheet">
 <AuthorizeView>
     <Authorized>
         <p class="name">Hello, @context.User.Identity?.Name!</p>

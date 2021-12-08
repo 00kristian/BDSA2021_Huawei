@@ -1,29 +1,21 @@
 .navbar-toggler {
 
-    background-color: #3A4E48;
+    background-color: #3B457E;
 }
 
 .top-row {
     height: 3.5rem;
-    background-color: #3A4E48 ;
+    background-color: #3B457E ;
 }
 
-
-
-
-
-
-.search
-{
+.search {
 	overflow: auto;
 	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-
+/* 	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px; */
 }
 
-.search input[type="text"]
-{
+.search input[type="text"] {
 	border: 0px;
 	width: 67%;
 	padding: 10px 10px;
@@ -35,15 +27,14 @@
 }
 
 
-
-
-
-
-
-
-
 .navbar-brand {
-    font-size: 1.1rem;
+    font-size: 1.9rem;
+    font-family: "Carter One";
+    color: #FDE9F4;
+}
+
+.logo {
+    color: #F586C5;
 }
 
 .oi {
@@ -67,7 +58,7 @@
     }
 
     .nav-item ::deep a {
-        color: #EAE6E5;
+        color: #FDE9F4;
         border-radius: 4px;
         height: 3rem;
         display: flex;
@@ -76,12 +67,12 @@
     }
 
 .nav-item ::deep a.active {
-    background-color: #3A4E48;
+    background-color: #F586C5;
     color: BEB0A7;
 }
 
 .nav-item ::deep a:hover {
-    background-color: #3A4E48;
+    background-color: #414C8A;
     color: BEB0A7;
 }
 
