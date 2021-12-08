@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using BlazorApp.Core;
 using Core;
 
 namespace Core{
@@ -12,7 +11,6 @@ namespace Core{
         [Required, StringLength(30)]
         string Name,
 
-        [Required]
         int Id,
 
         [Required]
@@ -23,19 +21,19 @@ namespace Core{
         int IntendedWorkHours,
         
         [Required]
-        LanguageEnum? Language,
+        LanguageEnum Language,
         
         string SkillRequirementDescription,
 
         [Required]
         string SupervisorName,
 
-        string? Location,
+        LocationEnum Location,
 
         [Required]
         bool IsThesis,
 
         [Required]
         ICollection<string> Keywords 
-        );
+    );
 }

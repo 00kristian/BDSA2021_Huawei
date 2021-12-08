@@ -7,6 +7,7 @@ using Microsoft.Identity.Web.Resource;
 namespace Server.Controllers;
 
 //[Authorize]
+//[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
 [ApiController]
 [Route("api/[controller]")]
 public class ProjectsController : ControllerBase

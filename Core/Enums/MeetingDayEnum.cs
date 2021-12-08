@@ -1,4 +1,4 @@
-public enum WorkdayEnum {
+public enum MeetingDayEnum {
 
     Monday,
     Tuesday,
