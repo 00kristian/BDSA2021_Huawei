@@ -14,6 +14,7 @@
     </NotAuthorized>
 </AuthorizeView>
 
+<CascadingAuthenticationState>
 @code{
     private async Task BeginLogout(MouseEventArgs args)
     {
@@ -21,3 +22,4 @@
         Navigation.NavigateTo("authentication/logout");
     }
 }
+</CascadingAuthenticationState>

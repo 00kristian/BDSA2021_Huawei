@@ -21,7 +21,6 @@ namespace Infrastructure
             foreach (Student stud in _context.students) {
                 if (stud.Email == student.Email) return (Status.Conflict, -1);
             }
-            try {
                 var entity = new Student
                 {
                     Name = student.Name!,
@@ -38,10 +37,6 @@ namespace Infrastructure
                 await _context.SaveChangesAsync();
 
                 return (Status.Created, entity.Id);
-            } catch (Exception e) {
-                System.Console.WriteLine(e.StackTrace);
-                return (Status.Conflict, -1);
-            }
         }
 
         public async Task<(Status, StudentDTO)> Read(int id)

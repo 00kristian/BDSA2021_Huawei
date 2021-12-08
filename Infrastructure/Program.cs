@@ -9,26 +9,9 @@ var builder = new DbContextOptionsBuilder<ProjectBankContext>();
     {
         db.Database.EnsureCreated();
         var repo = new StudentRepository(db);
-
-        while (true)
-        {
-            Console.WriteLine("Enter name:");
-            string line = Console.ReadLine()!;
-            if (line == "exit")
-            {
-                break;
-            }
-            var input = line.Split(" ");
-            var res = await repo.UpdatePreferences(4, new PreferencesDTO{
-                // Keywords = input[0].Split("-").ToList(),
-                // Locations = input[1].Split("-").ToList(),
-                // WorkDays = input[2].Split("-").ToList(),
-                // Language = input[3]
-                Keywords = new List<string>(){"AI", "Programming"},
-                Locations = new List<LocationEnum>(){LocationEnum.Onsite},
-                Workdays = new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday, WorkdayEnum.Friday},
-                Language = LanguageEnum.English
-            });
-            System.Console.WriteLine(res == Status.Updated ? "Succes" : "Fail");
-        }
+        
+        var res = await repo.Create(new StudentDTO(DegreeEnum.Bachelor, 1, "Lukas", 1, "Lukas@microsoft.com",
+        new DateTime(2000, 06, 15), UniversityEnum.ITU, new List<int>()));
+        System.Console.WriteLine(res.Item1 == Status.Updated ? "Succes" : "Fail");
+        
     }

@@ -3,6 +3,7 @@
 @using Core
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
+@inject AuthenticationStateProvider Auth
 
 
 <PageTitle>Home</PageTitle>
@@ -43,9 +44,39 @@
 @code{
 private ProjectDTO[]? projects;
 
+private StudentDTO student = new();
+
 protected override async Task OnInitializedAsync()
     {
-        projects = await Http.GetFromJsonAsync<ProjectDTO[]>("api/Projects");
+        var authState = await Auth.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            
+            student.Name = user.Identity.Name!;
+            student.Email = user.Identity.Name!.Split(" ")[0] + "@Microsoft.com";
+            student.Id = 1;
+            student.Degree = DegreeEnum.Bachelor;
+            student.DOB = new DateTime(1990, 1, 1);
+            student.University = UniversityEnum.ITU;
+            student.AppliedProjects = new List<int>();
+            
+            Console.WriteLine(student);
+
+            var createResponse = await Http.PostAsJsonAsync<StudentDTO>("api/Students", student);
+
+            if (createResponse.IsSuccessStatusCode)
+            {
+                var id = await createResponse.Content.ReadFromJsonAsync<int>();
+
+                var uri = $"{NavigationManager.BaseUri}api/Students/{id}";
+
+                //NavigationManager.NavigateTo(uri);
+            }
+
+            projects = await Http.GetFromJsonAsync<ProjectDTO[]>("api/Projects");
+        }
     }
     private void View(){
         var uri = $"{NavigationManager.BaseUri}details";

@@ -19,4 +19,5 @@ builder.Services.AddMsalAuthentication(options =>
     options.ProviderOptions.DefaultAccessTokenScopes.Add("api://f2608120-ed0a-498f-8f25-39c6d17659cb/API.Access");
 });
 
+
 await builder.Build().RunAsync();

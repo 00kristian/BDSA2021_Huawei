@@ -35,7 +35,7 @@ public class StudentsController : ControllerBase
 
     [ProducesResponseType(201)]
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] StudentDTO student) {
+    public async Task<IActionResult> Post(StudentDTO student) {
         var created = await _repo.Create(student);
         if (created.Item1 == Status.Conflict) return Status.Conflict.ToActionResult();
         return CreatedAtAction(nameof(Post), new { created.id }, created.Item2);
