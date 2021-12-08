@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,13 +15,12 @@ namespace Infrastructure
         public async Task<(Status, int id)> Create(StudentDTO student) {
 
             foreach (Student stud in _context.students) {
-                if (stud.Email == student.Email) return (Status.Conflict, -1);
+                if (stud.Email == student.Email) return (Status.Conflict, stud.Id);
             }
                 var entity = new Student
                 {
                     Name = student.Name!,
                     Degree = student.Degree,
-                    Id = student.Id,
                     Email = student.Email!,
                     DOB = student.DOB,
                     University = student.University,
