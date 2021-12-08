@@ -12,7 +12,8 @@ public static class SeedExtensions
         {
             var context = scope.ServiceProvider.GetRequiredService<ProjectBankContext>();
 
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
 
             await SeedProjectsAsync(context);
         }
