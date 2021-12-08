@@ -1,6 +1,7 @@
 ﻿@page "/explore"
 @inject NavigationManager NavigationManager
 
+<div class="padding-div">
 <PageTitle>Matched Projects</PageTitle>
 
 <h1>Matched Projects</h1>
@@ -20,6 +21,7 @@
         <td><button  class="btn button" @onclick="View">Details</button></td>
     </tbody>
 </table>
+</div>
 
 @code{
     private void View(){

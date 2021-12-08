@@ -4,7 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
-
+<div class="padding-div">
 <PageTitle>Home</PageTitle>
 
 @if (projects == null)
@@ -39,6 +39,7 @@
     <h1>Welcome to the Project Bank</h1>
     <p>To view the available projects, please log in.</p>
 }
+</div>
 
 @code{
 private ProjectDTO[]? projects;
