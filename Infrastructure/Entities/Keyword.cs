@@ -8,4 +8,10 @@ public class Keyword
   public ICollection<Project>? Projects {get; set;}
   public ICollection<Preferences>? Preferences {get;set;}
 
+  public Keyword() {}
+
+  public Keyword(string Str) {
+    this.Str = Str;
+  }
+
 }

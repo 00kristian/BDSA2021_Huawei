@@ -77,8 +77,13 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Location")
-                        .HasColumnType("int");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Meetingday")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -93,8 +98,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("StudentId");
 
@@ -235,11 +238,6 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Preferences")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Infrastructure.Student", b =>
-                {
-                    b.Navigation("AppliedProjects");
                 });
 #pragma warning restore 612, 618
         }

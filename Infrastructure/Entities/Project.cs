@@ -18,5 +18,6 @@ namespace Infrastructure
         public LocationEnum Location { get; set; }        
         public bool IsThesis { get; set; }
         public ICollection<Keyword>? Keywords {get;set;}
+        public WorkdayEnum Meetingday {get;set;}
     }
 }

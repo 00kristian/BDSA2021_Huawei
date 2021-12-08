@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    [Migration("20211207171826_keywords")]
-    partial class keywords
+    [Migration("20211208095124_meetingday")]
+    partial class meetingday
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,7 +52,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StudentId")
                         .IsUnique();
 
-                    b.ToTable("Preferences");
+                    b.ToTable("preferences");
                 });
 
             modelBuilder.Entity("Infrastructure.Project", b =>
@@ -80,6 +80,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Location")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Meetingday")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
