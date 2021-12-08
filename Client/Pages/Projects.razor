@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @attribute [Authorize]
 @inject NavigationManager NavigationManager
-
+<div class="padding-div">
 <PageTitle>Projects</PageTitle>
 
 <h1>Your projects</h1>
@@ -24,6 +24,7 @@
         <td><button class="btn button" @onclick="View">Details</button></td>
     </tbody>
 </table>
+</div>
 
 @code{
     private void View(){

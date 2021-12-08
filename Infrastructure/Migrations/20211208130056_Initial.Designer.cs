@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-<<<<<<< HEAD:Infrastructure/Migrations/20211208172418_Initial.Designer.cs
-    [Migration("20211208172418_Initial")]
+    [Migration("20211208130056_Initial")]
     partial class Initial
-=======
-    [Migration("20211208122614_migration")]
-    partial class migration
->>>>>>> origin/main:Infrastructure/Migrations/20211208122614_migration.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
