@@ -43,7 +43,7 @@ namespace Infrastructure
                 Email = s.Email!,
                 DOB = s.DOB,
                 University = s.University,
-                AppliedProjects = s.AppliedProjects.Count > 0 ? s.AppliedProjects.Select(p => p.Id).ToList() : null!}).FirstOrDefaultAsync();
+                AppliedProjects = s.AppliedProjects.Select(p => p.Id).ToList()}).FirstOrDefaultAsync();
 ;
 
             if (s == default(StudentDTO)) return (Status.NotFound, s);
