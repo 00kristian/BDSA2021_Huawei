@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    partial class ProjectBankContextModelSnapshot : ModelSnapshot
+    [Migration("20211207171826_keywords")]
+    partial class keywords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StudentId")
                         .IsUnique();
 
-                    b.ToTable("preferences");
+                    b.ToTable("Preferences");
                 });
 
             modelBuilder.Entity("Infrastructure.Project", b =>
@@ -93,8 +95,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("StudentId");
 
@@ -235,11 +235,6 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Preferences")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Infrastructure.Student", b =>
-                {
-                    b.Navigation("AppliedProjects");
                 });
 #pragma warning restore 612, 618
         }

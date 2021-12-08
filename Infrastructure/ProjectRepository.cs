@@ -13,7 +13,6 @@ namespace Infrastructure
             _context = context;
         }
 
-
         public async Task<IReadOnlyCollection<ProjectDTO>> ReadAll() =>
             await _context.projects.Select(p => new ProjectDTO(){
                 Name = p.Name!,
@@ -24,7 +23,7 @@ namespace Infrastructure
                 Language = p.Language,
                 SkillRequirementDescription = p.SkillRequirementDescription!,
                 SupervisorName = p.SupervisorName!,
-                Location = p.Location!.Str,
+                Location = p.Location,
                 IsThesis = p.IsThesis,
                 Keywords = p.Keywords!.Select(k => k.Str).ToList()!
             }).ToListAsync();
@@ -41,7 +40,7 @@ namespace Infrastructure
                 Language = p.Language,
                 SkillRequirementDescription = p.SkillRequirementDescription!,
                 SupervisorName = p.SupervisorName!,
-                Location = p.Location!.Str,
+                Location = p.Location,
                 IsThesis = p.IsThesis,
                 Keywords = p.Keywords!.Select(k => k.Str).ToList()!
             }).FirstOrDefaultAsync();
@@ -54,27 +53,34 @@ namespace Infrastructure
         public async Task<Status> Update(int id, ProjectDTO project)
 
         {
-            var p = await _context.projects.Where(p => p.Id == id).FirstOrDefaultAsync();
+            var p = await _context.projects.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.Id == id);
 
 
             if (p == default(Project)) return Status.NotFound;
 
             p.Name = project.Name!;
-            p.Id = project.Id;
             p.Description = project.Description!;
             p.DueDate = project.DueDate;
             p.IntendedWorkHours = project.IntendedWorkHours;
             p.Language = project.Language;
             p.SkillRequirementDescription = project.SkillRequirementDescription!;
             p.SupervisorName = project.SupervisorName!;
-            p.Location = new Location() {Str = project.Location};
+            p.Location = project.Location;
             p.IsThesis = project.IsThesis;
-            p.Keywords = project.Keywords!.Select(k => new Keyword(){Str = k}).ToList()!;
-
+            p.Keywords = GetKeywords(project.Keywords).ToList();
 
             _context.SaveChanges();
 
             return Status.Updated;
+        }
+        private IEnumerable<Keyword> GetKeywords(IEnumerable<string> keywords)
+        {
+            var existing = _context.keywords.Where(p => keywords.Contains(p.Str)).ToDictionary(p => p.Str);
+
+            foreach (var k in keywords)
+            {
+                yield return existing.TryGetValue(k, out var p) ? p : new Keyword(){Str = k};
+            }
         }
     }
 }

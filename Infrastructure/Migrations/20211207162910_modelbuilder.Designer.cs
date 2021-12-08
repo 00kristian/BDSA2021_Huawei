@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    partial class ProjectBankContextModelSnapshot : ModelSnapshot
+    [Migration("20211207162910_modelbuilder")]
+    partial class modelbuilder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StudentId")
                         .IsUnique();
 
-                    b.ToTable("preferences");
+                    b.ToTable("Preferences");
                 });
 
             modelBuilder.Entity("Infrastructure.Project", b =>
@@ -77,7 +79,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Location")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -94,7 +96,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("StudentId");
 
@@ -140,15 +142,11 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Str")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Str")
-                        .IsUnique();
-
-                    b.ToTable("keywords");
+                    b.ToTable("Keyword");
                 });
 
             modelBuilder.Entity("KeywordPreferences", b =>
@@ -156,12 +154,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("KeywordsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreferencesId")
+                    b.Property<int>("StudentsId")
                         .HasColumnType("int");
 
-                    b.HasKey("KeywordsId", "PreferencesId");
+                    b.HasKey("KeywordsId", "StudentsId");
 
-                    b.HasIndex("PreferencesId");
+                    b.HasIndex("StudentsId");
 
                     b.ToTable("KeywordPreferences");
                 });
@@ -181,6 +179,22 @@ namespace Infrastructure.Migrations
                     b.ToTable("KeywordProject");
                 });
 
+            modelBuilder.Entity("Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Str")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Location");
+                });
+
             modelBuilder.Entity("Infrastructure.Preferences", b =>
                 {
                     b.HasOne("Infrastructure.Student", "Student")
@@ -194,9 +208,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Project", b =>
                 {
+                    b.HasOne("Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
                     b.HasOne("Infrastructure.Student", null)
                         .WithMany("AppliedProjects")
                         .HasForeignKey("StudentId");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("KeywordPreferences", b =>
@@ -209,7 +229,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Infrastructure.Preferences", null)
                         .WithMany()
-                        .HasForeignKey("PreferencesId")
+                        .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -235,11 +255,6 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Preferences")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Infrastructure.Student", b =>
-                {
-                    b.Navigation("AppliedProjects");
                 });
 #pragma warning restore 612, 618
         }

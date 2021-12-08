@@ -23,7 +23,7 @@ namespace Infrastructure.Tests{
             Keywords = new HashSet<Keyword>{new Keyword(){Str = "Machine Learning"}, new Keyword(){Str = "Python"}},
             SkillRequirementDescription = "Intro to AI",
             SupervisorName = "Kåre",
-            Location = new Location(){Str = "On site"},
+            Location = LocationEnum.Onsite,
             IsThesis = false
         };
 
@@ -37,7 +37,7 @@ namespace Infrastructure.Tests{
             Keywords = new HashSet<Keyword>{new Keyword(){Str = "Algorithm"}},
             SkillRequirementDescription = "Intro to algorithms",
             SupervisorName = "Marie Dahl Esteban-Pedersen Sigurdsson",
-            Location = new Location(){Str = "Online"},
+            Location = LocationEnum.Onsite,
             IsThesis = true
         };
     
@@ -74,7 +74,7 @@ namespace Infrastructure.Tests{
                 Keywords = new List<string>{"Machine Learning", "Python"},
                 SkillRequirementDescription = "Intro to AI",
                 SupervisorName = "Kåre",
-                Location = "On site",
+                Location = LocationEnum.Onsite,
                 IsThesis = false 
             };
 
@@ -127,7 +127,7 @@ namespace Infrastructure.Tests{
                 Keywords = new List<string>{"Machine Learning", "Python"},
                 SkillRequirementDescription = "Intro to machine learning",
                 SupervisorName = "Kåre",
-                Location = "OnSite",
+                Location = LocationEnum.Onsite,
                 IsThesis = true 
             };
 
