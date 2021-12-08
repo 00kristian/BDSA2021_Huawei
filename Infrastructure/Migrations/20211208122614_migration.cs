@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class readdPrefId : Migration
+    public partial class migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,8 +74,9 @@ namespace Infrastructure.Migrations
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SkillRequirementDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SupervisorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsThesis = table.Column<bool>(type: "bit", nullable: false),
+                    Meetingday = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
