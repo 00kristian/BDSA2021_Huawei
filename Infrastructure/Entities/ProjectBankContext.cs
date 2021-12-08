@@ -64,6 +64,13 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         );
 
         modelBuilder
+        .Entity<Project>()
+        .Property(p => p.Meetingday)
+        .HasConversion(
+            v => v.ToString(),
+            v => (WorkdayEnum)Enum.Parse(typeof(WorkdayEnum), v));
+
+        modelBuilder
         .Entity<Preferences>()
         .Property(p => p.Language)
         .HasConversion(
@@ -76,6 +83,13 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         .HasConversion(
             v => v.ToString(),
             v => (LanguageEnum)Enum.Parse(typeof(LanguageEnum), v));
+
+        modelBuilder
+        .Entity<Project>()
+        .Property(p => p.Location)
+        .HasConversion(
+            v => v.ToString(),
+            v => (LocationEnum)Enum.Parse(typeof(LocationEnum), v));
 
         modelBuilder
         .Entity<Student>()

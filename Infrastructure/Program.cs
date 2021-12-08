@@ -7,6 +7,7 @@ var builder = new DbContextOptionsBuilder<ProjectBankContext>();
         
     using (var db = new ProjectBankContextFactory().CreateDbContext(new string[0]))
     {
+        db.Database.EnsureCreated();
         var repo = new StudentRepository(db);
 
         while (true)

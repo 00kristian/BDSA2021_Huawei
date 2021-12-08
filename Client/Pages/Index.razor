@@ -1,12 +1,17 @@
 ﻿@page "/"
 @page "/home"
+@using Core
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 
 
 <PageTitle>Home</PageTitle>
 
-<AuthorizeView>
-<Authorized>
+@if (projects == null)
+{
+    <p><em>Welcome! Log in to see projects.</em></p>
+
+} else {
 <h1>Available Projects</h1>
 
 <p>Here is an overview of all the available projects and theses.</p>
@@ -21,19 +26,27 @@
         </tr>
     </thead>
     <tbody>
-        <td>AI</td>
-        <td>Jens Jensen</td>
-        <td><button class="btn button" @onclick="View">Details</button></td>
+        @foreach (var project in projects)
+        {
+        <tr>
+            <td>@project.Name</td>
+            <td>@project.SupervisorName</td>
+            <td><button class="btn button" @onclick="View">Details</button></td>
+        </tr>
+        }    
     </tbody>
 </table>
-</Authorized>
-<NotAuthorized>
     <h1>Welcome to the Project Bank</h1>
     <p>To view the available projects, please log in.</p>
-</NotAuthorized>
-</AuthorizeView>
+}
 
 @code{
+private ProjectDTO[]? projects;
+
+protected override async Task OnInitializedAsync()
+    {
+        projects = await Http.GetFromJsonAsync<ProjectDTO[]>("api/Projects");
+    }
     private void View(){
         var uri = $"{NavigationManager.BaseUri}details";
         NavigationManager.NavigateTo(uri);

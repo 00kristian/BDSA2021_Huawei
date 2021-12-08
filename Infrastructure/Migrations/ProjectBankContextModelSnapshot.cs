@@ -240,6 +240,9 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Student", b =>
                 {
                     b.Navigation("AppliedProjects");
+
+                    b.Navigation("Preferences")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

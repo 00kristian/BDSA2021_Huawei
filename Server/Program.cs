@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore.Design;
+using Server.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,5 +74,7 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+
+await app.SeedAsync();
 
 app.Run();

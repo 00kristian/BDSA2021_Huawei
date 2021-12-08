@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    [Migration("20211206191827_preferences2")]
-    partial class preferences2
+    [Migration("20211208095247_meetingday2")]
+    partial class meetingday2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,11 +33,26 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Locations")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Workdays")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Preferences");
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.ToTable("preferences");
                 });
 
             modelBuilder.Entity("Infrastructure.Project", b =>
@@ -61,11 +76,15 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Language")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<int>("Location")
                         .HasColumnType("int");
+
+                    b.Property<string>("Meetingday")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -80,8 +99,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("StudentId");
 
@@ -99,8 +116,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Degree")
-                        .HasColumnType("int");
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -108,11 +126,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PreferenceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("University")
-                        .HasColumnType("int");
+                    b.Property<string>("University")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -128,11 +144,15 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Str")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Keyword");
+                    b.HasIndex("Str")
+                        .IsUnique();
+
+                    b.ToTable("keywords");
                 });
 
             modelBuilder.Entity("KeywordPreferences", b =>
@@ -140,12 +160,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("KeywordsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentsId")
+                    b.Property<int>("PreferencesId")
                         .HasColumnType("int");
 
-                    b.HasKey("KeywordsId", "StudentsId");
+                    b.HasKey("KeywordsId", "PreferencesId");
 
-                    b.HasIndex("StudentsId");
+                    b.HasIndex("PreferencesId");
 
                     b.ToTable("KeywordPreferences");
                 });
@@ -165,59 +185,22 @@ namespace Infrastructure.Migrations
                     b.ToTable("KeywordProject");
                 });
 
-            modelBuilder.Entity("Location", b =>
+            modelBuilder.Entity("Infrastructure.Preferences", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("Infrastructure.Student", "Student")
+                        .WithOne("Preferences")
+                        .HasForeignKey("Infrastructure.Preferences", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("PreferencesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Str")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PreferencesId");
-
-                    b.ToTable("Location");
-                });
-
-            modelBuilder.Entity("Workday", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Day")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PreferencesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PreferencesId");
-
-                    b.ToTable("Workday");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Infrastructure.Project", b =>
                 {
-                    b.HasOne("Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("Infrastructure.Student", null)
                         .WithMany("AppliedProjects")
                         .HasForeignKey("StudentId");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("KeywordPreferences", b =>
@@ -230,7 +213,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Infrastructure.Preferences", null)
                         .WithMany()
-                        .HasForeignKey("StudentsId")
+                        .HasForeignKey("PreferencesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -250,30 +233,12 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Location", b =>
-                {
-                    b.HasOne("Infrastructure.Preferences", null)
-                        .WithMany("Locations")
-                        .HasForeignKey("PreferencesId");
-                });
-
-            modelBuilder.Entity("Workday", b =>
-                {
-                    b.HasOne("Infrastructure.Preferences", null)
-                        .WithMany("Workdays")
-                        .HasForeignKey("PreferencesId");
-                });
-
-            modelBuilder.Entity("Infrastructure.Preferences", b =>
-                {
-                    b.Navigation("Locations");
-
-                    b.Navigation("Workdays");
-                });
-
             modelBuilder.Entity("Infrastructure.Student", b =>
                 {
                     b.Navigation("AppliedProjects");
+
+                    b.Navigation("Preferences")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
