@@ -31,13 +31,11 @@
         <tr>
             <td>@project.Name</td>
             <td>@project.SupervisorName</td>
-            <td><button class="btn button" @onclick="View">Details</button></td>
+            <td><button class="btn button" @onclick="()=>View(project)">Details</button></td>
         </tr>
         }    
     </tbody>
 </table>
-    <h1>Welcome to the Project Bank</h1>
-    <p>To view the available projects, please log in.</p>
 }
 </div>
 
@@ -48,8 +46,9 @@ protected override async Task OnInitializedAsync()
     {
         projects = await Http.GetFromJsonAsync<ProjectDTO[]>("api/Projects");
     }
-    private void View(){
-        var uri = $"{NavigationManager.BaseUri}details";
+    private void View(ProjectDTO project){
+        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
         NavigationManager.NavigateTo(uri);
+
     }
 }
