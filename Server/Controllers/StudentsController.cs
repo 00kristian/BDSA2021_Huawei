@@ -33,12 +33,13 @@ public class StudentsController : ControllerBase
         }
     }
 
-    [ProducesResponseType(201)]
+    [ProducesResponseType(409)]
     [HttpPost]
     public async Task<IActionResult> Post(StudentDTO student) {
         var created = await _repo.Create(student);
-        if (created.Item1 == Status.Conflict) return Status.Conflict.ToActionResult();
-        return CreatedAtAction(nameof(Post), new { created.id }, created.Item2);
+        var id = created.Item2;
+        if (created.Item1 == Status.Conflict) return new ConflictObjectResult(id);
+        return CreatedAtAction(nameof(Get), new { id }, id);
     }
 
     [ProducesResponseType(204)]

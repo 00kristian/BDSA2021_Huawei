@@ -105,7 +105,7 @@ namespace Infrastructure.Tests{
 
             //Assert 
             Assert.Equal(Status.Conflict, actual.Item1);
-            Assert.Equal(-1, actual.Item2);
+            Assert.Equal(2, actual.Item2);
         }
 
         [Fact]
