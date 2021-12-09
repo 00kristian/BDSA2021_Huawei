@@ -88,10 +88,10 @@ namespace Infrastructure.Tests{
         }
 
         [Fact]
-        public async void Create_given_existing_email_returns_conflict() {
+        public async void Create_given_existing_name_returns_conflict() {
             //Arrange
             var create = new StudentDTO{
-                Name = "Lady Gaga",
+                Name = "Britney Spears",
                 Id = 1,
                 Degree = DegreeEnum.Master,
                 Email = "ItsBritney@bitch.com",
@@ -119,15 +119,19 @@ namespace Infrastructure.Tests{
                 Email = "AlejanThough@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
                 University = UniversityEnum.RUC,
-                AppliedProjects = null
+                AppliedProjects = new List<int>()
             };
 
             //Act
-            var actual = await _repo.Read(1);
+            var res = await _repo.Read(1);
+            var status = res.Item1;
+            var actual = res.Item2;
 
             //Assert 
-            Assert.Equal(Status.Found, actual.Item1);
-            Assert.Equal(expected, actual.Item2);
+            Assert.Equal(Status.Found, status);
+            Assert.Equal(expected.Degree, actual.Degree);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Name, actual.Name);
         }
 
         [Fact]
@@ -144,13 +148,13 @@ namespace Infrastructure.Tests{
         }
 
         [Fact]
-        public async void Update_updates_name_given_new_name(){
+        public async void Update_updates_mail_given_new_mail(){
             //Arrange
             var update = new StudentDTO{
-                Name = "Lady Gaga",
+                Name = "Alejandro",
                 Id = 1,
                 Degree = DegreeEnum.Master,
-                Email = "AlejanThough@gmail.com",
+                Email = "AlejanThough10000@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
                 University = UniversityEnum.RUC,
                 AppliedProjects = new List<int>()
@@ -163,7 +167,8 @@ namespace Infrastructure.Tests{
             var actual = _context.students.Where(p => p.Id == 1).FirstOrDefault();
             Assert.Equal(Status.Updated, status);
             Assert.Equal(DegreeEnum.Master, actual.Degree);
-            Assert.Equal("Lady Gaga", actual.Name);
+            Assert.Equal("AlejanThough10000@gmail.com", actual.Email);
+            Assert.Equal("Alejandro", actual.Name);
         }
 
         [Fact]

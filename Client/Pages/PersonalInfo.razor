@@ -1,7 +1,8 @@
-@page "/userpage/personalinfo/{userId:int}"
+@page "/userpage/personalinfo"
 @using Core
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
+@inject AppState State
 
 <div class="padding-div" @onkeydown="@Enter">
 <h1>Your personal information</h1>
@@ -37,31 +38,28 @@
 </div>
 
 @code{
-    [Parameter]
-    public int? UserId {get; set;}
+    public int UserId {get; set;}
     private StudentDTO Student;
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
+        UserId = State.UserId;
         if (UserId != 0)
         {
             Student = await Http.GetFromJsonAsync<StudentDTO>($"api/Students/{UserId}");
         }
-
-        await base.OnParametersSetAsync();
     }
 
     public void Enter(KeyboardEventArgs e)
-{
-    if (e.Code == "Enter" || e.Code == "NumpadEnter")
     {
-        Return();
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            Return();
+        }
     }
-}
     private async void Return(){
-
         await Http.PutAsJsonAsync($"api/Students/{UserId}", Student);
 
-        var uri = $"{NavigationManager.BaseUri}userpage/{UserId}";
+        var uri = $"{NavigationManager.BaseUri}userpage";
         NavigationManager.NavigateTo(uri); 
     }
 }

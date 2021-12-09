@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var keyword in @project.Keywords)
+            @foreach (string keyword in @project.Keywords)
             {
                 <tr>
                     <td><h5>@keyword</h5></td>
@@ -31,7 +31,7 @@
 
  @code{
     [Parameter]
-    public int? ProjectId { get; set; }
+    public int ProjectId { get; set; }
 
     private ProjectDTO project;
 
@@ -40,6 +40,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        project.Keywords = new List<string>();
         if (ProjectId != 0)
         {
             project = await Http.GetFromJsonAsync<ProjectDTO>($"api/Projects/{ProjectId}");

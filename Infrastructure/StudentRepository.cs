@@ -15,7 +15,7 @@ namespace Infrastructure
         public async Task<(Status, int id)> Create(StudentDTO student) {
 
             foreach (Student stud in _context.students) {
-                if (stud.Email == student.Email) return (Status.Conflict, stud.Id);
+                if (stud.Name == student.Name) return (Status.Conflict, stud.Id);
             }
                 var entity = new Student
                 {
@@ -32,6 +32,12 @@ namespace Infrastructure
                 await _context.SaveChangesAsync();
 
                 return (Status.Created, entity.Id);
+        }
+
+        //TODO: test
+        public async Task<(Status, int)> ReadIdFromName(string name) {
+            int id = await _context.students.Where(s => s.Name == name).Select(s => s.Id).FirstOrDefaultAsync();
+            return (id == 0 ? Status.NotFound : Status.Found, id);
         }
 
         public async Task<(Status, StudentDTO)> Read(int id)
@@ -56,7 +62,6 @@ namespace Infrastructure
 
             if (s == default(Student)) return Status.NotFound;
 
-            s.Name = student.Name!;
             s.Degree = student.Degree;
             s.Email = student.Email!;
             s.DOB = student.DOB;

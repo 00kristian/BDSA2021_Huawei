@@ -3,8 +3,9 @@
 @inject HttpClient Http
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject AppState State
 
-@page "/userpage/{userId:int}"
+@page "/userpage"
 @inject NavigationManager NavigationManager
 
 <div class="padding-div">
@@ -56,22 +57,24 @@
 </div>
 
 @code{
-  [Parameter]
-  public int? UserId {get; set;}
+  public int UserId {get; set;}
 
   private StudentDTO Student;
 
-  protected override async Task OnParametersSetAsync()
+  protected override async Task OnInitializedAsync()
     {
+      if (!State.LoggedIn) {
+        var uri = $"{NavigationManager.BaseUri}home";
+        NavigationManager.NavigateTo(uri);
+      }
+        UserId = State.UserId;
         if (UserId != 0)
         {
             Student = await Http.GetFromJsonAsync<StudentDTO>($"api/Students/{UserId}");
         }
-
-        await base.OnParametersSetAsync();
   }
   private void Edit(){
-    var uri = $"{NavigationManager.BaseUri}userpage/personalinfo/{UserId}";
+    var uri = $"{NavigationManager.BaseUri}userpage/personalinfo";
     NavigationManager.NavigateTo(uri);
   }
 
