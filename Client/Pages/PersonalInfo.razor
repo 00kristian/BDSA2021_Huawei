@@ -39,9 +39,14 @@
 
 @code{
     public int UserId {get; set;}
+
     private StudentDTO Student;
+
     protected override async Task OnInitializedAsync()
     {
+        if (!State.LoggedIn) {
+            NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
+        }
         UserId = State.UserId;
         if (UserId != 0)
         {

@@ -75,15 +75,15 @@ namespace Infrastructure
 
         public async Task<(Status, PreferencesDTO)> ReadPreferences(int id)
         {
-            var s = await _context.students.FirstOrDefaultAsync(s => s.Id == id);
+            var s = await _context.students.Include(s => s.Preferences).FirstOrDefaultAsync(s => s.Id == id);
 
             if (s == default(Student)) return (Status.NotFound, default(PreferencesDTO));
 
             var prefs = new PreferencesDTO() {
                 Language = s.Preferences.Language,
                 Workdays = s.Preferences.Workdays,
-                Locations = s.Preferences.Locations,
-                Keywords = s.Preferences.Keywords!.Select(w => w.Str).ToList()
+                Location = s.Preferences.Location,
+                Keywords = s.Preferences.Keywords.Select(w => w.Str).ToList()
             };
 
             return(Status.Found, prefs);
@@ -98,7 +98,7 @@ namespace Infrastructure
 
                 s.Preferences.Language = prefs.Language;
                 s.Preferences.Workdays = prefs.Workdays;
-                s.Preferences.Locations = prefs.Locations;
+                s.Preferences.Location = prefs.Location;
                 s.Preferences.Keywords = GetKeywords(prefs.Keywords).ToList();
 
                 await _context.SaveChangesAsync();

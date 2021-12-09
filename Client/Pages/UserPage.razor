@@ -64,8 +64,7 @@
   protected override async Task OnInitializedAsync()
     {
       if (!State.LoggedIn) {
-        var uri = $"{NavigationManager.BaseUri}home";
-        NavigationManager.NavigateTo(uri);
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
       }
         UserId = State.UserId;
         if (UserId != 0)

@@ -23,7 +23,7 @@ namespace Infrastructure.Tests{
             AppliedProjects = null,
             Preferences = new Preferences(){
                 Keywords = new List<Keyword>(){new Keyword(){Str = "AI"}, new Keyword(){Str = "Programming"}},
-                Locations = new List<LocationEnum>(){LocationEnum.Onsite},
+                Location = LocationEnum.Onsite,
                 Workdays = new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday, WorkdayEnum.Friday},
                 Language = LanguageEnum.English
             }
@@ -39,7 +39,7 @@ namespace Infrastructure.Tests{
             AppliedProjects = null,
             Preferences = new Preferences(){
                 Keywords = new List<Keyword>(){new Keyword(){Str = "Doing it again"}},
-                Locations = new List<LocationEnum>(){LocationEnum.Onsite, LocationEnum.Remote},
+                Location = LocationEnum.Onsite,
                 Workdays = new List<WorkdayEnum>(){WorkdayEnum.Friday, WorkdayEnum.Saturday},
                 Language = LanguageEnum.English
             }
@@ -189,7 +189,7 @@ namespace Infrastructure.Tests{
             var prefs = new PreferencesDTO(LanguageEnum.Danish,
             new List<string>(){"AI", "Programming", "Python"},
             new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday},
-            new List<LocationEnum>(){LocationEnum.Remote});
+            LocationEnum.Remote);
 
             //Act
             var status = await _repo.UpdatePreferences(1, prefs);
@@ -200,7 +200,7 @@ namespace Infrastructure.Tests{
             Assert.Equal(3, student.Preferences.Keywords.Count);
             Assert.Equal("Python", student.Preferences.Keywords.Last().Str);
             Assert.Equal(2, student.Preferences.Workdays.Count);
-            Assert.Equal(1, student.Preferences.Locations.Count);
+            Assert.Equal(LocationEnum.Remote, student.Preferences.Location);
             Assert.Equal(LanguageEnum.Danish, student.Preferences.Language);
 
         }
@@ -211,7 +211,7 @@ namespace Infrastructure.Tests{
             var prefs = new PreferencesDTO(LanguageEnum.Danish,
             new List<string>(){"AI", "Programming", "Python"},
             new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday},
-            new List<LocationEnum>(){LocationEnum.Remote});
+            LocationEnum.Remote);
 
             //Act
             var status = await _repo.UpdatePreferences(1093, prefs);
@@ -225,7 +225,7 @@ namespace Infrastructure.Tests{
             //Arrange
             var expected = new PreferencesDTO() {
                 Keywords = new List<string>(){"Doing it again"},
-                Locations = new List<LocationEnum>(){LocationEnum.Onsite, LocationEnum.Remote},
+                Location = LocationEnum.Onsite,
                 Workdays = new List<WorkdayEnum>(){WorkdayEnum.Friday, WorkdayEnum.Saturday},
                 Language = LanguageEnum.English
             };
@@ -240,7 +240,7 @@ namespace Infrastructure.Tests{
             Assert.Equal(expected.Language, prefs.Language);
             Assert.Equal(expected.Language, prefs.Language);
             Assert.True(expected.Keywords.SequenceEqual(prefs.Keywords));
-            Assert.True(expected.Locations.SequenceEqual(prefs.Locations));
+            Assert.Equal(expected.Location, prefs.Location);
             Assert.True(expected.Workdays.SequenceEqual(prefs.Workdays));
         }
 

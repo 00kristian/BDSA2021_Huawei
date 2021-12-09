@@ -10,7 +10,7 @@ namespace Infrastructure
         public int StudentId {get; set;}
         public LanguageEnum Language {get;set;}
         public ICollection<WorkdayEnum> Workdays {get;set;} = new List<WorkdayEnum>();
-        public ICollection<LocationEnum> Locations {get;set;} = new List<LocationEnum>();
-        public ICollection<Keyword>? Keywords {get;set;}
+        public LocationEnum Location {get;set;}
+        public ICollection<Keyword> Keywords {get;set;} = new List<Keyword>();
     }
 }
