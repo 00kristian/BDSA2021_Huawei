@@ -9,5 +9,6 @@ public interface IProjectRepository
 
         Task<(Status, ProjectDTO)> Read(int id);
         Task<Status> Update(int id, ProjectDTO project);
+        Task<IEnumerable<string>> ReadAllKeywords();
     }
 }

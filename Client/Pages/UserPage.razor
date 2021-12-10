@@ -1,5 +1,9 @@
+@using Core
+@using Microsoft.AspNetCore
+@inject HttpClient Http
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject AppState State
 
 @page "/userpage"
 @inject NavigationManager NavigationManager
@@ -22,23 +26,23 @@
   </tr>
   <tr>
     <th>ID</th>
-    <td>?</td>
+    <td>@Student.Id</td>
   </tr>
   <tr>
     <th>Email</th>
-    <td>?</td>
+    <td>@Student.Email</td>
   </tr>
   <tr>
     <th>Date Of Birth</th>
-    <td>?</td>
+    <td>@Student.DOB</td>
   </tr>
   <tr>
     <th>University</th>
-    <td>?</td>
+    <td>@Student.University</td>
   </tr>
   <tr>
     <th>Degree</th>
-    <td>?</td>
+    <td>@Student.Degree</td>
   </tr>
 </table>
 
@@ -53,6 +57,21 @@
 </div>
 
 @code{
+  public int UserId {get; set;}
+
+  private StudentDTO Student;
+
+  protected override async Task OnInitializedAsync()
+    {
+      if (!State.LoggedIn) {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
+      }
+        UserId = State.UserId;
+        if (UserId != 0)
+        {
+            Student = await Http.GetFromJsonAsync<StudentDTO>($"api/Students/{UserId}");
+        }
+  }
   private void Edit(){
     var uri = $"{NavigationManager.BaseUri}userpage/personalinfo";
     NavigationManager.NavigateTo(uri);

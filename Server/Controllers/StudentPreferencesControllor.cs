@@ -35,7 +35,7 @@ public class PreferencesController : ControllerBase
 
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
-    [HttpPut("{id}")]
+    [HttpPut("{studentId}")]
     public async Task<IActionResult> Put(int studentId, [FromBody] PreferencesDTO preferences) =>
         (await _repo.UpdatePreferences(studentId, preferences)).ToActionResult();
 }

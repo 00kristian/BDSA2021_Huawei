@@ -13,6 +13,6 @@ namespace Core{
         ICollection<WorkdayEnum> Workdays,
 
         [Required]
-        ICollection<LocationEnum> Locations
+        LocationEnum Location
     );
 }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,14 +15,12 @@ namespace Infrastructure
         public async Task<(Status, int id)> Create(StudentDTO student) {
 
             foreach (Student stud in _context.students) {
-                if (stud.Email == student.Email) return (Status.Conflict, -1);
+                if (stud.Name == student.Name) return (Status.Conflict, stud.Id);
             }
-            try {
                 var entity = new Student
                 {
                     Name = student.Name!,
                     Degree = student.Degree,
-                    Id = student.Id,
                     Email = student.Email!,
                     DOB = student.DOB,
                     University = student.University,
@@ -38,10 +32,12 @@ namespace Infrastructure
                 await _context.SaveChangesAsync();
 
                 return (Status.Created, entity.Id);
-            } catch (Exception e) {
-                System.Console.WriteLine(e.StackTrace);
-                return (Status.Conflict, -1);
-            }
+        }
+
+        //TODO: test
+        public async Task<(Status, int)> ReadIdFromName(string name) {
+            int id = await _context.students.Where(s => s.Name == name).Select(s => s.Id).FirstOrDefaultAsync();
+            return (id == 0 ? Status.NotFound : Status.Found, id);
         }
 
         public async Task<(Status, StudentDTO)> Read(int id)
@@ -53,7 +49,7 @@ namespace Infrastructure
                 Email = s.Email!,
                 DOB = s.DOB,
                 University = s.University,
-                AppliedProjects = s.AppliedProjects.Count > 0 ? s.AppliedProjects.Select(p => p.Id).ToList() : null!}).FirstOrDefaultAsync();
+                AppliedProjects = s.AppliedProjects.Select(p => p.Id).ToList()}).FirstOrDefaultAsync();
 ;
 
             if (s == default(StudentDTO)) return (Status.NotFound, s);
@@ -66,7 +62,6 @@ namespace Infrastructure
 
             if (s == default(Student)) return Status.NotFound;
 
-            s.Name = student.Name!;
             s.Degree = student.Degree;
             s.Email = student.Email!;
             s.DOB = student.DOB;
@@ -80,15 +75,15 @@ namespace Infrastructure
 
         public async Task<(Status, PreferencesDTO)> ReadPreferences(int id)
         {
-            var s = await _context.students.FirstOrDefaultAsync(s => s.Id == id);
+            var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
 
-            if (s == default(Student)) return (Status.NotFound, default(PreferencesDTO));
+            if (p == default(Preferences)) return (Status.NotFound, default(PreferencesDTO));
 
             var prefs = new PreferencesDTO() {
-                Language = s.Preferences.Language,
-                Workdays = s.Preferences.Workdays,
-                Locations = s.Preferences.Locations,
-                Keywords = s.Preferences.Keywords!.Select(w => w.Str).ToList()
+                Language = p.Language,
+                Workdays = p.Workdays,
+                Location = p.Location,
+                Keywords = p.Keywords.Select(w => w.Str).ToList()
             };
 
             return(Status.Found, prefs);
@@ -97,14 +92,14 @@ namespace Infrastructure
         public async Task<Status> UpdatePreferences(int id, PreferencesDTO prefs)
         {   
             try {
-                var s = await _context.students.Include(s => s.Preferences).FirstOrDefaultAsync(s => s.Id == id);
+                var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
 
-                if (s == default(Student)) return Status.NotFound;
+                if (p == default(Preferences)) return Status.NotFound;
 
-                s.Preferences.Language = prefs.Language;
-                s.Preferences.Workdays = prefs.Workdays;
-                s.Preferences.Locations = prefs.Locations;
-                s.Preferences.Keywords = GetKeywords(prefs.Keywords).ToList();
+                p.Language = prefs.Language;
+                p.Workdays = prefs.Workdays;
+                p.Location = prefs.Location;
+                p.Keywords = GetKeywords(prefs.Keywords).ToList();
 
                 await _context.SaveChangesAsync();
                 return Status.Updated;

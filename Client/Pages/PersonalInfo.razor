@@ -1,40 +1,36 @@
 @page "/userpage/personalinfo"
+@using Core
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject AppState State
 
-<div class="padding-div">
+<div class="padding-div" @onkeydown="@Enter">
 <h1>Your personal information</h1>
 
 <div class="form-group">
-    <label for="studentID"> Please enter your student ID</label>
-    <input type="text" class="form-control" id="studentID">
-</div>
-<div class="form-group">
     <label for="studentEmail"> Please enter your preferred e-mail adress</label>
-     <input type="email" class="form-control" id="studentEmail" placeholder="name@example.com">
+     <input type="email" class="form-control" id="studentEmail" placeholder="name@example.com" @bind="@Student.Email">
 </div>
 <div class="form-group">
     <label for="studentDOB"> Please select your date of birth</label>
-    <input type="date" class="form-control" id="studentDOB">
+    <input type="date" class="form-control" id="studentDOB" @bind="@Student.DOB">
 </div>
 <div class="form-group">
     <label for="studentUni">Please select your university</label>
-    <select class="form-control" id="studentUni">
-      <option>ITU</option>
-      <option>KU</option>
-      <option>DTU</option>
-      <option>AU</option>
-      <option>SDU</option>
-      <option>RUC</option>
-      <option>AAU</option>
-      <option>CBS</option>
+    <select class="form-control" id="studentUni" @bind="@Student.University">
+      @foreach (var uni in Enum.GetValues(typeof(UniversityEnum)))
+        {
+            <option>@uni</option>
+        }
     </select>
 </div>
 <div class="form-group">
     <label for="studentDegree">Please select your degree</label>
-    <select class="form-control" id="studentDegree">
-      <option>BSc</option>
-      <option>MSc</option>
-      <option>PH.D</option>
+    <select class="form-control" id="studentDegree" @bind="@Student.Degree">
+      @foreach (var deg in Enum.GetValues(typeof(DegreeEnum)))
+        {
+            <option>@deg</option>
+        }
     </select>
 </div>
 <br>
@@ -42,8 +38,33 @@
 </div>
 
 @code{
-    private void Return(){
-         var uri = $"{NavigationManager.BaseUri}userpage";
-        NavigationManager.NavigateTo(uri);
+    public int UserId {get; set;}
+
+    private StudentDTO Student;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!State.LoggedIn) {
+            NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
+        }
+        UserId = State.UserId;
+        if (UserId != 0)
+        {
+            Student = await Http.GetFromJsonAsync<StudentDTO>($"api/Students/{UserId}");
+        }
+    }
+
+    public void Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            Return();
+        }
+    }
+    private async void Return(){
+        await Http.PutAsJsonAsync($"api/Students/{UserId}", Student);
+
+        var uri = $"{NavigationManager.BaseUri}userpage";
+        NavigationManager.NavigateTo(uri); 
     }
 }

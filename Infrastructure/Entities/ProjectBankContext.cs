@@ -52,18 +52,6 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         );
 
         modelBuilder
-        .Entity<Preferences>()
-        .Property(p => p.Locations)
-        .HasConversion(
-            v => JsonSerializer.Serialize(v.Select(d => d.ToString()).ToList(), default(JsonSerializerOptions)),
-            v => JsonSerializer.Deserialize<List<string>>(v, default(JsonSerializerOptions))!.Select(d => (LocationEnum)Enum.Parse(typeof(LocationEnum), d)).ToList(),
-            new ValueComparer<ICollection<LocationEnum>>(
-            (c1, c2) => c1!.SequenceEqual(c2!),
-            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-            c => c.ToList())
-        );
-
-        modelBuilder
         .Entity<Project>()
         .Property(p => p.Meetingday)
         .HasConversion(
@@ -76,6 +64,13 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         .HasConversion(
             v => v.ToString(),
             v => (LanguageEnum)Enum.Parse(typeof(LanguageEnum), v));
+
+        modelBuilder
+        .Entity<Preferences>()
+        .Property(p => p.Location)
+        .HasConversion(
+            v => v.ToString(),
+            v => (LocationEnum)Enum.Parse(typeof(LocationEnum), v));
 
         modelBuilder
         .Entity<Project>()
