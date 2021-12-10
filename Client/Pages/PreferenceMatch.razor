@@ -65,10 +65,10 @@
   public LocationEnum Loc;
   protected override async Task OnInitializedAsync()
     {
-        words = new List<Keyword>() {new Keyword("AI"), new Keyword("Python"), new Keyword("ligeffenaf")};
       foreach (WorkdayEnum day in Enum.GetValues(typeof(WorkdayEnum))) {
         Daytable[day] = false;
       }
+      words = (await Http.GetFromJsonAsync<List<string>>("api/Projects/Keywords"))!.Select(k => new Keyword(k)).ToList();
       if (!State.LoggedIn) {
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
       }

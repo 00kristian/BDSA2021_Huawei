@@ -82,5 +82,10 @@ namespace Infrastructure
                 yield return existing.TryGetValue(k, out var p) ? p : new Keyword(){Str = k};
             }
         }
+
+        public async Task<IEnumerable<string>> ReadAllKeywords()
+        {
+            return await _context.keywords.Select(k => k.Str).Distinct().ToListAsync();
+        }
     }
 }
