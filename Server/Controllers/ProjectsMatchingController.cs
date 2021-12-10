@@ -22,10 +22,10 @@ public class MatchingController : ControllerBase
     }
 
     [ProducesResponseType(200)]
-    [HttpGet("{id}")]
-    public async Task<ActionResult<IEnumerable<ProjectDTO>>> Get(int id)
+    [HttpGet("{studentId}")]
+    public async Task<ActionResult<IEnumerable<ProjectDTO>>> Get(int studentId)
     {
-        var res = await _repo.Match(id);
+        var res = await _repo.Match(studentId);
         if (res.Item1 == Status.NotFound) {
             return res.Item1.ToActionResult();
         } else {
