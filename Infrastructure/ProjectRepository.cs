@@ -42,6 +42,7 @@ namespace Infrastructure
                 SupervisorName = p.SupervisorName!,
                 Location = p.Location,
                 IsThesis = p.IsThesis,
+                Meetingday = p.Meetingday,
                 Keywords = p.Keywords!.Select(k => k.Str).ToList()!
             }).FirstOrDefaultAsync();
 
@@ -86,6 +87,32 @@ namespace Infrastructure
         public async Task<IEnumerable<string>> ReadAllKeywords()
         {
             return await _context.keywords.Select(k => k.Str).Distinct().ToListAsync();
+        }
+
+        public async Task<(Status, IEnumerable<ProjectDTO>)> Match(int id)
+        {
+            var prefs = await _context.preferences.FirstOrDefaultAsync(p => p.StudentId == id);
+
+            if (prefs == default(Preferences)) return (Status.NotFound, new List<ProjectDTO>());
+
+            var list = await _context.projects.Include(p => p.Keywords)//.OrderByDescending(p => p.Match(prefs))
+            .Select(p => new ProjectDTO(){
+                Name = p.Name!,
+                Id = p.Id,
+                Description = p.Description!,
+                DueDate = p.DueDate,
+                IntendedWorkHours = p.IntendedWorkHours,
+                Language = p.Language,
+                SkillRequirementDescription = p.SkillRequirementDescription!,
+                SupervisorName = p.SupervisorName!,
+                Location = p.Location,
+                IsThesis = p.IsThesis,
+                Meetingday = p.Meetingday,
+                Keywords = p.Keywords!.Select(k => k.Str).ToList()!,
+                Rating = p.Match(prefs)
+            }).ToListAsync();
+
+            return (Status.Found, list);
         }
     }
 }

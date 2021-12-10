@@ -19,5 +19,21 @@ namespace Infrastructure
         public bool IsThesis { get; set; }
         public ICollection<Keyword>? Keywords {get;set;}
         public WorkdayEnum Meetingday {get;set;}
+
+        public int Match(Preferences preferences) {
+            int matchingRateExtreme = 0;
+            if (this.Language == preferences.Language) matchingRateExtreme += 25;
+            if (this.Location == preferences.Location) matchingRateExtreme += 25;
+            if (preferences.Workdays.Contains(this.Meetingday)) matchingRateExtreme += 25;
+
+            //if (Keywords == null || Keywords.Count == 0 ) return matchingRateExtreme;
+            int keyPoints = 25 / (preferences.Keywords.Count > 0 ? preferences.Keywords.Count : 1);
+            foreach (var k in Keywords!)
+            {
+                if (preferences.Keywords.Contains(k)) matchingRateExtreme += keyPoints;
+            }
+
+            return matchingRateExtreme;
+        }
     }
 }
