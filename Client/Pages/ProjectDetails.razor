@@ -3,7 +3,6 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
- <button class="btn button" @onclick="Return">Back to projects</button>
  <h5><b>Name: </b>@project.Name</h5>
  <h5><b>Id: </b>@project.Id</h5>
  <h5><b>Due date: </b>@project.DueDate</h5>
@@ -11,7 +10,7 @@
  <h5><b>Language: </b>@project.Language</h5>
  <h5><b>Skill requirement: </b>@project.SkillRequirementDescription</h5>
  <h5><b>Supervisor: </b>@project.SupervisorName</h5>
- <h5><b>IsThesis: </b>@project.IsThesis</h5>
+ <h5><b>Thesis? </b>@project.IsThesis</h5>
  <table class='table'>
         <thead>
             <tr>
@@ -27,7 +26,8 @@
             }
         </tbody>
     </table>
-
+ <button class="btn button" @onclick="Return">Apply for project</button>
+ <button class="btn button" @onclick="Return">Back to projects</button>
 
  @code{
     [Parameter]
