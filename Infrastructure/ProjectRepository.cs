@@ -91,7 +91,7 @@ namespace Infrastructure
 
         public async Task<(Status, IEnumerable<ProjectDTO>)> Match(int id)
         {
-            var prefs = await _context.preferences.FirstOrDefaultAsync(p => p.StudentId == id);
+            var prefs = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
 
             if (prefs == default(Preferences)) return (Status.NotFound, new List<ProjectDTO>());
 

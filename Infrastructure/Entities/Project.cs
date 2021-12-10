@@ -26,7 +26,7 @@ namespace Infrastructure
             if (this.Location == preferences.Location) matchingRateExtreme += 25;
             if (preferences.Workdays.Contains(this.Meetingday)) matchingRateExtreme += 25;
 
-            //if (Keywords == null || Keywords.Count == 0 ) return matchingRateExtreme;
+            if (Keywords == null || Keywords.Count == 0 ) return matchingRateExtreme;
             int keyPoints = 25 / (preferences.Keywords.Count > 0 ? preferences.Keywords.Count : 1);
             foreach (var k in Keywords!)
             {
