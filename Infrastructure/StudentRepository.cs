@@ -75,15 +75,15 @@ namespace Infrastructure
 
         public async Task<(Status, PreferencesDTO)> ReadPreferences(int id)
         {
-            var s = await _context.students.Include(s => s.Preferences).FirstOrDefaultAsync(s => s.Id == id);
+            var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
 
-            if (s == default(Student)) return (Status.NotFound, default(PreferencesDTO));
+            if (p == default(Preferences)) return (Status.NotFound, default(PreferencesDTO));
 
             var prefs = new PreferencesDTO() {
-                Language = s.Preferences.Language,
-                Workdays = s.Preferences.Workdays,
-                Location = s.Preferences.Location,
-                Keywords = s.Preferences.Keywords.Select(w => w.Str).ToList()
+                Language = p.Language,
+                Workdays = p.Workdays,
+                Location = p.Location,
+                Keywords = p.Keywords.Select(w => w.Str).ToList()
             };
 
             return(Status.Found, prefs);
@@ -92,14 +92,14 @@ namespace Infrastructure
         public async Task<Status> UpdatePreferences(int id, PreferencesDTO prefs)
         {   
             try {
-                var s = await _context.students.Include(s => s.Preferences).FirstOrDefaultAsync(s => s.Id == id);
+                var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
 
-                if (s == default(Student)) return Status.NotFound;
+                if (p == default(Preferences)) return Status.NotFound;
 
-                s.Preferences.Language = prefs.Language;
-                s.Preferences.Workdays = prefs.Workdays;
-                s.Preferences.Location = prefs.Location;
-                s.Preferences.Keywords = GetKeywords(prefs.Keywords).ToList();
+                p.Language = prefs.Language;
+                p.Workdays = prefs.Workdays;
+                p.Location = prefs.Location;
+                p.Keywords = GetKeywords(prefs.Keywords).ToList();
 
                 await _context.SaveChangesAsync();
                 return Status.Updated;
