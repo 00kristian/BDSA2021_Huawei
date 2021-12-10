@@ -24,12 +24,14 @@
         <tbody>
             @foreach (var project in projects)
             {
-            <tr>
-                <td>@project.Name</td>
-                <td>@project.SupervisorName</td>
-                <td>Match %: @project.Rating</td>
-                <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
-            </tr>
+                @if(project.Rating != 0){
+                <tr>
+                    <td>@project.Name</td>
+                    <td>@project.SupervisorName</td>
+                    <td>Match %: @project.Rating</td>
+                    <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
+                </tr>
+                }
             }    
         </tbody>
     </table>
