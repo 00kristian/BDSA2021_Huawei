@@ -34,6 +34,10 @@ namespace Core{
         bool IsThesis,
 
         [Required]
-        ICollection<string> Keywords 
+        ICollection<string> Keywords,
+
+        WorkdayEnum Meetingday,
+
+        int Rating
     );
 }

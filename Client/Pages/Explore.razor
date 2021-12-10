@@ -1,5 +1,8 @@
 ﻿@page "/explore"
+@using Core
 @inject NavigationManager NavigationManager
+@inject AppState State
+@inject HttpClient Http
 
 <div class="padding-div">
 <PageTitle>Matched Projects</PageTitle>
@@ -7,25 +10,56 @@
 <h1>Matched Projects</h1>
 <p>Here is an overview of the projects and thesis, that match your preferences best.</p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Project</th>
-            <th>Supervisor</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <td>AI</td>
-        <td>Jens Jensen</td>
-        <td><button  class="btn button" @onclick="View">Details</button></td>
-    </tbody>
-</table>
+@if (projects == null) {
+} else {
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Supervisor</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in projects)
+            {
+                @if(project.Rating != 0){
+                <tr>
+                    <td>@project.Name</td>
+                    <td>@project.SupervisorName</td>
+                    <td>Match %: @project.Rating</td>
+                    <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
+                </tr>
+                }
+            }    
+        </tbody>
+    </table>
+}
 </div>
 
 @code{
-    private void View(){
-        var uri = $"{NavigationManager.BaseUri}details";
+    public IEnumerable<ProjectDTO>? projects;
+    public int UserId {get; set;}
+
+  private StudentDTO Student;
+
+  protected override async Task OnInitializedAsync()
+    {
+      if (!State.LoggedIn) {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
+      }
+        UserId = State.UserId;
+        if (UserId != 0)
+        {
+            Student = await Http.GetFromJsonAsync<StudentDTO>($"api/Students/{UserId}");
+            projects = (await Http.GetFromJsonAsync<IEnumerable<ProjectDTO>>($"api/Projects/Matching/{UserId}"))!
+                .OrderByDescending(p => p.Rating).ToList();
+        }
+  }
+    private void View(ProjectDTO project){
+        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
         NavigationManager.NavigateTo(uri);
+
     }
 }
