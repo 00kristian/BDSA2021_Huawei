@@ -36,8 +36,7 @@
     private ProjectDTO project;
 
     string[] workHours = new string[]{"less than 15 hours", "between 15 and 25 hours", "over 25 hour"};
-
-
+    
     protected override async Task OnParametersSetAsync()
     {
         project.Keywords = new List<string>();
