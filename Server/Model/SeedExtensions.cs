@@ -1,3 +1,5 @@
+using System.Threading;
+using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Core;
@@ -12,8 +14,6 @@ public static class SeedExtensions
         {
             var context = scope.ServiceProvider.GetRequiredService<ProjectBankContext>();
 
-            context.Database.EnsureDeleted();
-
             await SeedProjectsAsync(context);
         }
         return host;
@@ -21,6 +21,8 @@ public static class SeedExtensions
 
     private static async Task SeedProjectsAsync(ProjectBankContext context)
     {
+        if (context.projects.Count() > 1) return;
+
         await context.Database.MigrateAsync();
 
         if (!await context.projects.AnyAsync())

@@ -1,9 +1,56 @@
-@page "/details"
+@page "/details/{projectId:int}"
+@using Core
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 
+ <button class="btn button" @onclick="Return">Back to projects</button>
+ <h5 class ="detail"><b>Name: </b>@project.Name</h5>
+ <h5 class ="detail"><b>Id: </b>@project.Id</h5>
+ <h5 class ="detail"><b>Due date: </b>@project.DueDate</h5>
+ <h5 class ="detail"><b>Meeting day: </b>@project.Meetingday</h5>
+ <h5 class ="detail"><b>Inteded work hours: </b>@workHours[@project.IntendedWorkHours]</h5>
+ <h5 class ="detail"><b>Language: </b>@project.Language</h5>
+ <h5 class ="detail"><b>Location: </b>@project.Location</h5>
+ <h5 class ="detail"><b>Skill requirement: </b>@project.SkillRequirementDescription</h5>
+ <h5 class ="detail"><b>Supervisor: </b>@project.SupervisorName</h5>
+ <h5 class ="detail"><b>IsThesis: </b>@project.IsThesis</h5>
+ <table class='table'>
+        <thead>
+            <tr>
+                <th><h5><b>Keywords</b></h5></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (string keyword in @project.Keywords)
+            {
+                <tr>
+                    <td><h5>@keyword</h5></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+ <button class="btn button" @onclick="Return">Apply for project</button>
  <button class="btn button" @onclick="Return">Back to projects</button>
 
  @code{
+    [Parameter]
+    public int ProjectId { get; set; }
+
+    private ProjectDTO project;
+
+    string[] workHours = new string[]{"less than 15 hours", "between 15 and 25 hours", "over 25 hour"};
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        project.Keywords = new List<string>();
+        if (ProjectId != 0)
+        {
+            project = await Http.GetFromJsonAsync<ProjectDTO>($"api/Projects/{ProjectId}");
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
      private void Return(){
          var uri = $"{NavigationManager.BaseUri}home";
         NavigationManager.NavigateTo(uri);

@@ -34,7 +34,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Locations")
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -77,8 +77,13 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Location")
-                        .HasColumnType("int");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Meetingday")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -93,8 +98,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("StudentId");
 
@@ -226,14 +229,6 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ProjectsId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Infrastructure.Student", b =>
-                {
-                    b.Navigation("AppliedProjects");
-
-                    b.Navigation("Preferences")
                         .IsRequired();
                 });
 

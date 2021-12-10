@@ -1,17 +1,75 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica', Helvetica, sans-serif;
 }
 
+h1 {
+    text-align: center;
+    font-family: 'Crimson Pro';
+    color: #F586C5;
+    font-size: 40px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+h3 {
+    font-family: "Crimson Pro";
+    color: #FDE9F4;
+}
+
+p {
+    color: #FDE9F4;
+    font-family: "Helvetica";
+}
+
+/* ---------------------------Tables--------------------------- */
+
+.table {
+    font-family: "Helvetica";
+    color:#FDE9F4;
+}
+
+.detail{
+    color:#FDE9F4;
+}
+
+th { 
+    font-family: "Helvetica";
+    color:#F586C5;
+}
+
+td {
+    font-family: "Helvetica";
+    color:#FDE9F4;
+}
+
+.padding-div {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+/* ---------------------------Search--------------------------- */
 .button{
-    background-color: #6A7B76 !important;
-    color: #EAE6E5;
+    background-color: #F586C5;
+    color: #FDE9F4;
     margin-bottom: 10px;
+    border-radius: 4px;
+    width: 25%;
+}
+
+.search-field {
+    background-color: #FDE9F4;
+    padding: 6px;
+    border: none;     
+    margin-top: 15px; /* RET HER!! */
+    margin-right: 16px;
+    font-size: 15px;
+    border-radius: 5px;
 }
 
 .name{
-    color: #EAE6E5;
+    color: #FDE9F4;
     padding-top: 15px;
 }
 
@@ -20,7 +78,7 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #6A7B76; 
+    color: #FDE9F4; 
 }
 
 .btn-primary {

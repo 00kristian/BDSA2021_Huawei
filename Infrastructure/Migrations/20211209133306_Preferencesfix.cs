@@ -4,7 +4,7 @@
 
 namespace Infrastructure.Migrations
 {
-    public partial class preferencesvaluecomparer : Migration
+    public partial class Preferencesfix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

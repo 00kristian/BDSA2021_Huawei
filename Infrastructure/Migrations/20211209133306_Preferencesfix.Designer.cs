@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    [Migration("20211207162910_modelbuilder")]
-    partial class modelbuilder
+    [Migration("20211209133306_Preferencesfix")]
+    partial class Preferencesfix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,7 +52,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StudentId")
                         .IsUnique();
 
-                    b.ToTable("Preferences");
+                    b.ToTable("preferences");
                 });
 
             modelBuilder.Entity("Infrastructure.Project", b =>
@@ -79,8 +79,13 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Meetingday")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -95,8 +100,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("StudentId");
 
@@ -142,11 +145,15 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Str")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Keyword");
+                    b.HasIndex("Str")
+                        .IsUnique();
+
+                    b.ToTable("keywords");
                 });
 
             modelBuilder.Entity("KeywordPreferences", b =>
@@ -154,12 +161,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("KeywordsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentsId")
+                    b.Property<int>("PreferencesId")
                         .HasColumnType("int");
 
-                    b.HasKey("KeywordsId", "StudentsId");
+                    b.HasKey("KeywordsId", "PreferencesId");
 
-                    b.HasIndex("StudentsId");
+                    b.HasIndex("PreferencesId");
 
                     b.ToTable("KeywordPreferences");
                 });
@@ -179,22 +186,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("KeywordProject");
                 });
 
-            modelBuilder.Entity("Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Str")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Location");
-                });
-
             modelBuilder.Entity("Infrastructure.Preferences", b =>
                 {
                     b.HasOne("Infrastructure.Student", "Student")
@@ -208,15 +199,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Project", b =>
                 {
-                    b.HasOne("Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("Infrastructure.Student", null)
                         .WithMany("AppliedProjects")
                         .HasForeignKey("StudentId");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("KeywordPreferences", b =>
@@ -229,7 +214,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Infrastructure.Preferences", null)
                         .WithMany()
-                        .HasForeignKey("StudentsId")
+                        .HasForeignKey("PreferencesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
+<link href="Client/Shared/LoginDisplay.razor.css" rel="stylesheet">
 <AuthorizeView>
     <Authorized>
         <p class="name">Hello, @context.User.Identity?.Name!</p>
@@ -14,6 +15,7 @@
     </NotAuthorized>
 </AuthorizeView>
 
+<CascadingAuthenticationState>
 @code{
     private async Task BeginLogout(MouseEventArgs args)
     {
@@ -21,3 +23,4 @@
         Navigation.NavigateTo("authentication/logout");
     }
 }
+</CascadingAuthenticationState>

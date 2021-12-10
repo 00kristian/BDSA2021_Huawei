@@ -23,7 +23,7 @@ namespace Infrastructure.Tests{
             AppliedProjects = null,
             Preferences = new Preferences(){
                 Keywords = new List<Keyword>(){new Keyword(){Str = "AI"}, new Keyword(){Str = "Programming"}},
-                Locations = new List<LocationEnum>(){LocationEnum.Onsite},
+                Location = LocationEnum.Onsite,
                 Workdays = new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday, WorkdayEnum.Friday},
                 Language = LanguageEnum.English
             }
@@ -39,7 +39,7 @@ namespace Infrastructure.Tests{
             AppliedProjects = null,
             Preferences = new Preferences(){
                 Keywords = new List<Keyword>(){new Keyword(){Str = "Doing it again"}},
-                Locations = new List<LocationEnum>(){LocationEnum.Onsite, LocationEnum.Remote},
+                Location = LocationEnum.Onsite,
                 Workdays = new List<WorkdayEnum>(){WorkdayEnum.Friday, WorkdayEnum.Saturday},
                 Language = LanguageEnum.English
             }
@@ -88,10 +88,10 @@ namespace Infrastructure.Tests{
         }
 
         [Fact]
-        public async void Create_given_existing_email_returns_conflict() {
+        public async void Create_given_existing_name_returns_conflict() {
             //Arrange
             var create = new StudentDTO{
-                Name = "Lady Gaga",
+                Name = "Britney Spears",
                 Id = 1,
                 Degree = DegreeEnum.Master,
                 Email = "ItsBritney@bitch.com",
@@ -105,7 +105,7 @@ namespace Infrastructure.Tests{
 
             //Assert 
             Assert.Equal(Status.Conflict, actual.Item1);
-            Assert.Equal(-1, actual.Item2);
+            Assert.Equal(2, actual.Item2);
         }
 
         [Fact]
@@ -119,15 +119,19 @@ namespace Infrastructure.Tests{
                 Email = "AlejanThough@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
                 University = UniversityEnum.RUC,
-                AppliedProjects = null
+                AppliedProjects = new List<int>()
             };
 
             //Act
-            var actual = await _repo.Read(1);
+            var res = await _repo.Read(1);
+            var status = res.Item1;
+            var actual = res.Item2;
 
             //Assert 
-            Assert.Equal(Status.Found, actual.Item1);
-            Assert.Equal(expected, actual.Item2);
+            Assert.Equal(Status.Found, status);
+            Assert.Equal(expected.Degree, actual.Degree);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Name, actual.Name);
         }
 
         [Fact]
@@ -144,13 +148,13 @@ namespace Infrastructure.Tests{
         }
 
         [Fact]
-        public async void Update_updates_name_given_new_name(){
+        public async void Update_updates_mail_given_new_mail(){
             //Arrange
             var update = new StudentDTO{
-                Name = "Lady Gaga",
+                Name = "Alejandro",
                 Id = 1,
                 Degree = DegreeEnum.Master,
-                Email = "AlejanThough@gmail.com",
+                Email = "AlejanThough10000@gmail.com",
                 DOB = new DateTime(2009, 4, 4),
                 University = UniversityEnum.RUC,
                 AppliedProjects = new List<int>()
@@ -163,7 +167,8 @@ namespace Infrastructure.Tests{
             var actual = _context.students.Where(p => p.Id == 1).FirstOrDefault();
             Assert.Equal(Status.Updated, status);
             Assert.Equal(DegreeEnum.Master, actual.Degree);
-            Assert.Equal("Lady Gaga", actual.Name);
+            Assert.Equal("AlejanThough10000@gmail.com", actual.Email);
+            Assert.Equal("Alejandro", actual.Name);
         }
 
         [Fact]
@@ -184,7 +189,7 @@ namespace Infrastructure.Tests{
             var prefs = new PreferencesDTO(LanguageEnum.Danish,
             new List<string>(){"AI", "Programming", "Python"},
             new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday},
-            new List<LocationEnum>(){LocationEnum.Remote});
+            LocationEnum.Remote);
 
             //Act
             var status = await _repo.UpdatePreferences(1, prefs);
@@ -195,7 +200,7 @@ namespace Infrastructure.Tests{
             Assert.Equal(3, student.Preferences.Keywords.Count);
             Assert.Equal("Python", student.Preferences.Keywords.Last().Str);
             Assert.Equal(2, student.Preferences.Workdays.Count);
-            Assert.Equal(1, student.Preferences.Locations.Count);
+            Assert.Equal(LocationEnum.Remote, student.Preferences.Location);
             Assert.Equal(LanguageEnum.Danish, student.Preferences.Language);
 
         }
@@ -206,7 +211,7 @@ namespace Infrastructure.Tests{
             var prefs = new PreferencesDTO(LanguageEnum.Danish,
             new List<string>(){"AI", "Programming", "Python"},
             new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday},
-            new List<LocationEnum>(){LocationEnum.Remote});
+            LocationEnum.Remote);
 
             //Act
             var status = await _repo.UpdatePreferences(1093, prefs);
@@ -220,7 +225,7 @@ namespace Infrastructure.Tests{
             //Arrange
             var expected = new PreferencesDTO() {
                 Keywords = new List<string>(){"Doing it again"},
-                Locations = new List<LocationEnum>(){LocationEnum.Onsite, LocationEnum.Remote},
+                Location = LocationEnum.Onsite,
                 Workdays = new List<WorkdayEnum>(){WorkdayEnum.Friday, WorkdayEnum.Saturday},
                 Language = LanguageEnum.English
             };
@@ -235,7 +240,7 @@ namespace Infrastructure.Tests{
             Assert.Equal(expected.Language, prefs.Language);
             Assert.Equal(expected.Language, prefs.Language);
             Assert.True(expected.Keywords.SequenceEqual(prefs.Keywords));
-            Assert.True(expected.Locations.SequenceEqual(prefs.Locations));
+            Assert.Equal(expected.Location, prefs.Location);
             Assert.True(expected.Workdays.SequenceEqual(prefs.Workdays));
         }
 
