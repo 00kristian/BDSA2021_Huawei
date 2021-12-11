@@ -4,7 +4,6 @@ using Infrastructure;
 
 namespace Infrastructure
 {
-
     public class Project
     {
         public string? Name {get; set;}
@@ -29,8 +28,11 @@ namespace Infrastructure
             if (Keywords == null || Keywords.Count == 0 ) return matchingRateExtreme;
             int keyPoints = 25 / (preferences.Keywords.Count > 0 ? preferences.Keywords.Count : 1);
             foreach (var k in Keywords!)
-            {
-                if (preferences.Keywords.Contains(k)) matchingRateExtreme += keyPoints;
+            {   
+                foreach (var key in preferences.Keywords)
+                {
+                    if (key.Str == k.Str) matchingRateExtreme += keyPoints;
+                }
             }
 
             return matchingRateExtreme;
