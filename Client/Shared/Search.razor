@@ -1,17 +1,30 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager NavigationManager
 
 <AuthorizeView>
     <Authorized>
-                <form class="search-form">
-					<input class="search-field" type="text" placeholder="Search for a keyword" size="15">
-                    <button class="button"type="submit">
+            
+                <input class="search-field" type="text" name="keyword" @bind="searchString" placeholder="Search for a keyword" size="15">
+                <button class="button"type="submit" @onclick="()=>View()">
                         <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
-                    </button>
-				</form>  
+                </button>
+            
+				  
     </Authorized>
     <NotAuthorized>
         
     </NotAuthorized>
 </AuthorizeView>
 
+
+@code{
+    private String? searchString;
+    
+    private void View(){
+        var uri = $"{NavigationManager.BaseUri}searchresult/{searchString}";
+        NavigationManager.NavigateTo(uri);
+
+    }
+
+}

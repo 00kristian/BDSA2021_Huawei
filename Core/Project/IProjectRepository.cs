@@ -11,5 +11,6 @@ public interface IProjectRepository
         Task<Status> Update(int id, ProjectDTO project);
         Task<IEnumerable<string>> ReadAllKeywords();
         Task<(Status, IEnumerable<ProjectDTO>)> Match(int id);
+        Task<IReadOnlyCollection<ProjectDTO>> Search(string searchString);
     }
 }

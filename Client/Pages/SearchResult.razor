@@ -1,0 +1,63 @@
+@page "/searchresult/{searchString?}"
+@using Core
+@inject NavigationManager NavigationManager
+@inject AppState State
+@inject HttpClient Http
+
+<div class="padding-div">
+<PageTitle>searched</PageTitle>
+@if (projects == null) {
+    <p>
+        No results
+    </p>
+} else {
+<p>
+    Search String: @searchString
+</p>
+
+<h1>Successful search</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Supervisor</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in projects)
+        {
+        <tr>
+            <td>@project.Name</td>
+            <td>@project.SupervisorName</td>
+            <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
+        </tr>
+        }    
+    </tbody>
+</table>
+}
+
+
+</div>
+
+@code {
+    [Parameter]
+    public string? searchString { get; set; }
+
+    private ProjectDTO[]? projects;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (searchString != null && searchString.Length != 0) {
+            projects = (await Http.GetFromJsonAsync<IEnumerable<ProjectDTO>>($"api/Projects/Search/{searchString}"))!.ToArray();
+        }
+        
+
+        await base.OnParametersSetAsync();
+    }
+
+    private void View(ProjectDTO project){
+        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
+        NavigationManager.NavigateTo(uri);
+    }
+}
