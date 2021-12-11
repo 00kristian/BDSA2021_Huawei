@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject AppState State
 @inject HttpClient Http
+@inject AuthenticationStateProvider Auth
 
 <div class="padding-div">
 <PageTitle>Recommended Projects</PageTitle>
@@ -42,21 +43,41 @@
 
 @code{
     public IEnumerable<ProjectDTO>? projects;
-    public int UserId {get; set;}
 
-  private StudentDTO Student;
+    private StudentDTO student = new();
 
   protected override async Task OnInitializedAsync()
     {
-        
-      if (!State.LoggedIn) {
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
-      }
-        UserId = State.UserId;
-        if (UserId != 0)
+        var authState = await Auth.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity!.IsAuthenticated)
         {
-            Student = await Http.GetFromJsonAsync<StudentDTO>($"api/Students/{UserId}");
-            projects = (await Http.GetFromJsonAsync<IEnumerable<ProjectDTO>>($"api/Projects/Matching/{UserId}"))!
+            if (!State.LoggedIn) {
+
+                student.Name = user.Identity.Name!;
+                student.Email = user.Identity.Name!.Split(" ")[0] + "@Microsoft.com";
+                student.Degree = DegreeEnum.Bachelor;
+                student.DOB = new DateTime(1990, 1, 1);
+                student.University = UniversityEnum.ITU;
+                student.AppliedProjects = new List<int>();
+
+                var createResponse = await Http.PostAsJsonAsync<StudentDTO>("api/Students", student);
+
+                var id = await createResponse.Content.ReadFromJsonAsync<int>();
+
+                State.LoggedIn = true;
+                State.UserId = id;
+
+                if (createResponse.IsSuccessStatusCode)
+                {
+                    var uri = $"{NavigationManager.BaseUri}userpage";
+
+                    NavigationManager.NavigateTo(uri);
+                }
+            }
+
+            projects = (await Http.GetFromJsonAsync<IEnumerable<ProjectDTO>>($"api/Projects/Matching/{State.UserId}"))!
                 .OrderByDescending(p => p.Rating).ToList();
         }
   }
