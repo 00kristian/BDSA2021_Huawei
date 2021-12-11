@@ -114,5 +114,10 @@ namespace Infrastructure
 
             return (Status.Found, list);
         }
+
+        public async Task<IReadOnlyCollection<ProjectDTO>> Search(string searchString)
+        {
+            return await ReadAll();
+        }
     }
 }
