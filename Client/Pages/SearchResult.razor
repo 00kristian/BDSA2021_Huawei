@@ -1,4 +1,4 @@
-@page "/searchresult"
+@page "/searchresult/{searchString?}"
 @using Core
 @inject NavigationManager NavigationManager
 @inject AppState State
@@ -8,6 +8,15 @@
 <PageTitle>searched</PageTitle>
 
 <h1>Successful search</h1>
+<p>
+    Search String: @searchString
+</p>
+
 
 
 </div>
+
+@code {
+    [Parameter]
+    public string? searchString { get; set; }
+}

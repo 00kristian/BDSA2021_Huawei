@@ -4,12 +4,12 @@
 
 <AuthorizeView>
     <Authorized>
-            <form method="get">
-                <input class="search-field" type="text" name="keyword" placeholder="Search for a keyword" size="15">
+            
+                <input class="search-field" type="text" name="keyword" @bind="searchString" placeholder="Search for a keyword" size="15">
                 <button class="button"type="submit" @onclick="()=>View()">
                         <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
                 </button>
-            </form>
+            
 				  
     </Authorized>
     <NotAuthorized>
@@ -17,15 +17,12 @@
     </NotAuthorized>
 </AuthorizeView>
 
+
 @code{
-    //name="SearchString"
-    //@onclick="()=>View()"
-    //var searchTerm = Request.QueryString["searchGenre"];
+    private String? searchString;
     
     private void View(){
-        //string searchterm = Request.Form[SearchString];
-
-        var uri = $"{NavigationManager.BaseUri}searchresult/";
+        var uri = $"{NavigationManager.BaseUri}searchresult/{searchString}";
         NavigationManager.NavigateTo(uri);
 
     }
