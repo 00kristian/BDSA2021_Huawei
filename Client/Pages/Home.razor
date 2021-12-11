@@ -8,7 +8,7 @@
 <div class="padding-div">
 <PageTitle>Recommended Projects</PageTitle>
 
-<h1>Matched Projects</h1>
+<h1>Recommended Projects</h1>
 <p>Here is an overview of the projects and thesis, that match your preferences best.</p>
 
 @if (projects == null) {
@@ -48,6 +48,7 @@
 
   protected override async Task OnInitializedAsync()
     {
+        
       if (!State.LoggedIn) {
         NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
       }

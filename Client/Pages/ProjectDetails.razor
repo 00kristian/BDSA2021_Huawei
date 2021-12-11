@@ -1,10 +1,16 @@
 @page "/details/{projectId:int}"
 @using Core
+@using Radzen
+@using Radzen.Blazor
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @inject AppState State
 @inject IJSRuntime JSRuntime
+@inject DialogService DialogService
 
+@if(Student == null){
+
+}else{
  <h1>@project.Name</h1>
  <h5 class ="detail"><b>Due date: </b>@project.DueDate.ToShortDateString()</h5>
  <h5 class ="detail"><b>Id: </b>@project.Id</h5>
@@ -30,9 +36,11 @@
             }
         </tbody>
     </table>
- <button class="btn button" @onclick="ApplyForProject">Apply for project</button>
+@if(!((StudentDTO) Student).AppliedProjects.Contains(ProjectId)){
+    <button class="btn button" @onclick="ApplyForProject">Apply for project</button>
+}
  <button class="btn button" @onclick="Return">Back to projects</button>
-
+}
  @code{
     [Parameter]
     public int ProjectId { get; set; }
@@ -41,7 +49,7 @@
 
     public int UserId {get; set;}
 
-    private StudentDTO Student;
+    private StudentDTO? Student;
 
     string[] workHours = new string[]{"less than 15 hours", "between 15 and 25 hours", "over 25 hour"};
 
@@ -70,9 +78,13 @@
     }
 
     private async void ApplyForProject(){
-        Student.AppliedProjects.Add(project.Id);
-        //await JSRuntime.InvokeAsync<object>("Alert", "Project applied for");
-        await Http.PutAsJsonAsync($"api/Students/{UserId}", Student);
+        if ((bool)(await DialogService.Confirm("Are you sure you want to apply for this project?",
+         project.Name, new ConfirmOptions() { OkButtonText = "Apply", CancelButtonText = "No Thanks" }))) {
+            ((StudentDTO) Student!).AppliedProjects.Add(project.Id);
+            await Http.PutAsJsonAsync($"api/Students/{UserId}", Student);
+            Return();
+        }   
+
     }
 
      private void Return(){
