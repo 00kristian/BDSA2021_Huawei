@@ -21,6 +21,7 @@ public class ProjectsController : ControllerBase
         _repo = repo;
     }
 
+
     [ProducesResponseType(200)]
     [HttpGet(Name = "GetProjects")]
     public async Task<IEnumerable<ProjectDTO>> Get()
@@ -28,11 +29,13 @@ public class ProjectsController : ControllerBase
         return await _repo.ReadAll(); 
     }
 
+
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] ProjectDTO proj) =>
     (await _repo.Update(id, proj)).ToActionResult();
+
 
     [ProducesResponseType(404)]
     [ProducesResponseType(typeof(ProjectDTO), 200)]

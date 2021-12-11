@@ -74,6 +74,8 @@ namespace Infrastructure
 
             return Status.Updated;
         }
+
+        //Private helper method for the rest of the methods
         private IEnumerable<Keyword> GetKeywords(IEnumerable<string> keywords)
         {
             var existing = _context.keywords.Where(p => keywords.Contains(p.Str)).ToDictionary(p => p.Str);

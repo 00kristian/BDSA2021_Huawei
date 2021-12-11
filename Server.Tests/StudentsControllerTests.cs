@@ -103,5 +103,26 @@ public class StudentsControllerTests
         Assert.IsType<CreatedAtActionResult>(actual);
         Assert.Equal(2, students.Count);
     }
+
+    [Fact]
+    public async void Post_returns_StatusConclict_because_name_already_is_in_database()
+    {
+        // Given
+        var logger = new Mock<ILogger<StudentsController>>();
+        var repository = new Mock<IStudentRepository>();
+        var students = new List<StudentDTO>{s1};
+         StudentDTO s3 = new StudentDTO(DegreeEnum.Bachelor, 2, "Jesus Kristus", 1, "Hvilket@hav.com", new DateTime(1999, 8, 1), UniversityEnum.ITU, null!);
+        repository.Setup(m => m.Create(s3)).ReturnsAsync(() => (Status.Conflict, 1) );
+        var controller = new StudentsController(logger.Object, repository.Object);
+
+
+        // When
+        var actual = await controller.Post(s3);
+    
+        // Then
+        Assert.IsType<ConflictObjectResult>(actual);
+        Assert.Equal(1,students.Count);
+    
+    }
 }
 }
