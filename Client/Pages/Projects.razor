@@ -1,34 +1,74 @@
 ﻿@page "/projects"
+@using Core
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @attribute [Authorize]
 @inject NavigationManager NavigationManager
+@inject AppState State
+@inject HttpClient Http
+
 <div class="padding-div">
 <PageTitle>Projects</PageTitle>
 
 <h1>Your projects</h1>
 
 <p>Here you can find the projects and theses that you have applied for.</p>
+<p>If you want to cancel your application for a specific project please write an email to the supervisor</p>
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>Project</th>
-            <th>Supervisor</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <td>AI</td>
-        <td>Jens Jensen</td>
-        <td><button class="btn button" @onclick="View">Details</button></td>
-    </tbody>
-</table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Supervisor</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in projects)
+            {
+                <tr>
+                    <td>@project.Name</td>
+                    <td>@project.SupervisorName</td>
+                    <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
+                </tr>
+            }    
+        </tbody>
+    </table>
 </div>
 
+
 @code{
-    private void View(){
-        var uri = $"{NavigationManager.BaseUri}details";
+
+    public int UserId {get; set;}
+
+    private ICollection<ProjectDTO> projects = new List<ProjectDTO>();
+
+    private StudentDTO Student;
+
+     protected override async Task OnInitializedAsync()
+    {
+        
+      if (!State.LoggedIn) {
+        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
+      }
+        UserId = State.UserId;
+        if (UserId != 0)
+        {
+            Student = await Http.GetFromJsonAsync<StudentDTO>($"api/Students/{UserId}");
+            foreach(var projectId in Student.AppliedProjects){
+                var project = await Http.GetFromJsonAsync<ProjectDTO>($"api/Projects/{projectId}"
+                );
+                projects.Add(project);
+            }
+
+        }
+  }
+
+    private async Task<ProjectDTO> getProjectFromId(int id) => await Http.GetFromJsonAsync<ProjectDTO>($"api/Projects/{id}");
+    
+    private void View(ProjectDTO project){
+        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
         NavigationManager.NavigateTo(uri);
+
     }
 }

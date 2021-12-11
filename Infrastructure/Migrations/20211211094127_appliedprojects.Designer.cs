@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectBankContext))]
-    partial class ProjectBankContextModelSnapshot : ModelSnapshot
+    [Migration("20211211094127_appliedprojects")]
+    partial class appliedprojects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,10 +93,15 @@ namespace Infrastructure.Migrations
                     b.Property<string>("SkillRequirementDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SupervisorName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("projects");
                 });
@@ -179,21 +186,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("KeywordProject");
                 });
 
-            modelBuilder.Entity("ProjectStudent", b =>
-                {
-                    b.Property<int>("ApplicationsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AppliedProjectsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ApplicationsId", "AppliedProjectsId");
-
-                    b.HasIndex("AppliedProjectsId");
-
-                    b.ToTable("ProjectStudent");
-                });
-
             modelBuilder.Entity("Infrastructure.Preferences", b =>
                 {
                     b.HasOne("Infrastructure.Student", "Student")
@@ -203,6 +195,13 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Infrastructure.Project", b =>
+                {
+                    b.HasOne("Infrastructure.Student", null)
+                        .WithMany("AppliedProjects")
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("KeywordPreferences", b =>
@@ -235,23 +234,10 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjectStudent", b =>
-                {
-                    b.HasOne("Infrastructure.Student", null)
-                        .WithMany()
-                        .HasForeignKey("ApplicationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Infrastructure.Project", null)
-                        .WithMany()
-                        .HasForeignKey("AppliedProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Infrastructure.Student", b =>
                 {
+                    b.Navigation("AppliedProjects");
+
                     b.Navigation("Preferences")
                         .IsRequired();
                 });
