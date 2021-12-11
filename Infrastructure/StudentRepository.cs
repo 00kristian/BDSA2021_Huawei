@@ -24,7 +24,7 @@ namespace Infrastructure
                     Email = student.Email!,
                     DOB = student.DOB,
                     University = student.University,
-                    AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
+                    AppliedProjects = await _context.projects.Include(p => p.Applications).Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
                 };
 
                 _context.students.Add(entity);
@@ -42,7 +42,7 @@ namespace Infrastructure
 
         public async Task<(Status, StudentDTO)> Read(int id)
         {
-            var s = await _context.students.Where(s => s.Id == id).Select(s => new StudentDTO(){
+            var s = await _context.students.Include(s => s.AppliedProjects).Where(s => s.Id == id).Select(s => new StudentDTO(){
                 Degree = s.Degree,
                 Name = s.Name!,
                 Id = s.Id,
@@ -66,7 +66,7 @@ namespace Infrastructure
             s.Email = student.Email!;
             s.DOB = student.DOB;
             s.University = student.University;
-            s.AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync();
+            s.AppliedProjects = await _context.projects.Include(p => p.Applications).Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync();
 
             await _context.SaveChangesAsync();
 
