@@ -151,5 +151,23 @@ namespace Infrastructure.Tests{
             //Assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public async void ReadAllKeyWords_returns_all_keywords_in_the_database()
+        {
+            // Given
+            var keywords = await _repo.ReadAllKeywords();
+            // When
+
+            // Then
+            Assert.Collection(keywords,
+                keyword => Assert.Equal("Machine Learning", keyword),
+                keyword => Assert.Equal("Python", keyword),
+                keyword => Assert.Equal("Algorithm", keyword)
+            );
+            
+        }
+
+        
     }
 }
