@@ -35,6 +35,10 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         .WithMany(k => k.Preferences);
 
         modelBuilder.Entity<Student>()
+        .HasMany<Project>(s => s.AppliedProjects)
+        .WithMany(p => p.Applications);
+
+        modelBuilder.Entity<Student>()
         .HasOne(a => a.Preferences)
         .WithOne(b => b.Student)
         .HasForeignKey<Preferences>(b => b.StudentId);
@@ -99,5 +103,6 @@ public class ProjectBankContext : DbContext, IProjectBankContext
         .HasConversion(
             v => v.ToString(),
             v => (UniversityEnum)Enum.Parse(typeof(UniversityEnum), v));
+        
     }
 }}

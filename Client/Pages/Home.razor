@@ -1,52 +1,52 @@
 ﻿@page "/"
-@page "/home"
+@page "/Home"
 @using Core
-@using System.Security.Claims
 @inject NavigationManager NavigationManager
+@inject AppState State
 @inject HttpClient Http
 @inject AuthenticationStateProvider Auth
-@inject AppState State
 
 <div class="padding-div">
-<PageTitle>Home</PageTitle>
+<PageTitle>Recommended Projects</PageTitle>
 
-@if (projects == null)
-{
-    <p><em>Welcome! Log in to see projects.</em></p>
+<h1>Recommended Projects</h1>
+<p>Here is an overview of the projects and thesis, that match your preferences best.</p>
 
+@if (projects == null) {
 } else {
-<h1>Available Projects</h1>
 
-<p>Here is an overview of all the available projects and theses. For a better suited match, go to the Explore page.</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Project</th>
-            <th>Supervisor</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var project in projects)
-        {
-        <tr>
-            <td>@project.Name</td>
-            <td>@project.SupervisorName</td>
-            <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
-        </tr>
-        }    
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Supervisor</th>
+                <th>Rating</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in projects)
+            {
+                @if(project.Rating != 0){
+                <tr>
+                    <td>@project.Name</td>
+                    <td>@project.SupervisorName</td>
+                    <td>Match %: @project.Rating</td>
+                    <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
+                </tr>
+                }
+            }    
+        </tbody>
+    </table>
 }
 </div>
 
 @code{
-private ProjectDTO[]? projects;
+    public IEnumerable<ProjectDTO>? projects;
 
-private StudentDTO student = new();
+    private StudentDTO student = new();
 
-protected override async Task OnInitializedAsync()
+  protected override async Task OnInitializedAsync()
     {
         var authState = await Auth.GetAuthenticationStateAsync();
         var user = authState.User;
@@ -76,10 +76,11 @@ protected override async Task OnInitializedAsync()
                     NavigationManager.NavigateTo(uri);
                 }
             }
-            
-            projects = await Http.GetFromJsonAsync<ProjectDTO[]>("api/Projects");
+
+            projects = (await Http.GetFromJsonAsync<IEnumerable<ProjectDTO>>($"api/Projects/Matching/{State.UserId}"))!
+                .OrderByDescending(p => p.Rating).ToList();
         }
-    }
+  }
     private void View(ProjectDTO project){
         var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
         NavigationManager.NavigateTo(uri);

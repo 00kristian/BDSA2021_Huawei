@@ -14,10 +14,5 @@ namespace Infrastructure
 
         public UniversityEnum University {get; set;}
         public ICollection<Project> AppliedProjects {get; set;} = new List<Project>();
-
-        public void ApplyForProject(Project p)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

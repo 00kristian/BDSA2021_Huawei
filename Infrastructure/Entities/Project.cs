@@ -19,6 +19,7 @@ namespace Infrastructure
         public bool IsThesis { get; set; }
         public ICollection<Keyword>? Keywords {get;set;}
         public WorkdayEnum Meetingday {get;set;}
+        public ICollection<Student>? Applications {get;set;}
 
         public int Match(Preferences preferences) {
             int matchingRateExtreme = 0;
