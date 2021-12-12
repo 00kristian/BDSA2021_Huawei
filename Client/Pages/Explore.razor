@@ -7,7 +7,7 @@
 @inject AppState State
 
 <div class="padding-div">
-<PageTitle>Home</PageTitle>
+<PageTitle>Explore</PageTitle>
 
 @if (projects == null)
 {
@@ -16,7 +16,7 @@
 } else {
 <h1>Available Projects</h1>
 
-<p>Here is an overview of all the available projects and theses. For a better suited match, go to the Explore page.</p>
+<p>Here is an overview of all the available projects and theses. For a better suited match, go to the Home page.</p>
 
 <table class="table">
     <thead>
@@ -44,8 +44,6 @@
 private ProjectDTO[]? projects;
 
 public int UserId {get; set;}
-
-    private StudentDTO Student;
 
 protected override async Task OnInitializedAsync()
     {

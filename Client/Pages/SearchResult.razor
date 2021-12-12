@@ -7,15 +7,11 @@
 <div class="padding-div">
 <PageTitle>searched</PageTitle>
 @if (projects == null) {
-    <p>
-        No results
-    </p>
+    <p>No results</p>
+}else if (projects.Count() == 0){
+    <p>No projects matched your search</p>
 } else {
-<p>
-    Search String: @searchString
-</p>
-
-<h1>Successful search</h1>
+<h1>Successful search: @searchString</h1>
 <table class="table">
     <thead>
         <tr>

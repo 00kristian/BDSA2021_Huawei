@@ -7,10 +7,18 @@
 @inject AuthenticationStateProvider Auth
 
 <div class="padding-div">
-<PageTitle>Recommended Projects</PageTitle>
 
-<h1>Recommended Projects</h1>
-<p>Here is an overview of the projects and thesis, that match your preferences best.</p>
+<AuthorizeView>
+    <Authorized>
+        <PageTitle>Home</PageTitle>
+        <h1>Recommended Projects</h1>
+        <p>Here is an overview of the projects and theses, that matches your preferences best.</p>
+    </Authorized>
+    <NotAuthorized>
+        <PageTitle>Project Bank</PageTitle>
+        <p>You need to log in to see the projects</p>
+    </NotAuthorized>
+</AuthorizeView>
 
 @if (projects == null) {
 } else {

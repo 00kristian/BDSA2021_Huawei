@@ -120,7 +120,7 @@ namespace Infrastructure
         public async Task<IReadOnlyCollection<ProjectDTO>> Search(string searchString)
         {
             return await _context.projects.Include(p => p.Keywords)
-            .Where(p => p.Name!.Contains(searchString) || p.SupervisorName!.Contains(searchString) ||
+            .Where(p => p.SupervisorName!.Contains(searchString) ||
             p.Keywords!.Select(k => k.Str).Contains(searchString))
             .Select(p => new ProjectDTO() {
                 Name = p.Name!,
