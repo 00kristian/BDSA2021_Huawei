@@ -165,9 +165,74 @@ namespace Infrastructure.Tests{
                 keyword => Assert.Equal("Python", keyword),
                 keyword => Assert.Equal("Algorithm", keyword)
             );
-            
         }
 
-        
+        [Fact]
+        public async void Search_given_Keyword_returns_project_with_keyword() {
+            //Arrange
+            var expected = new ProjectDTO{
+                Name = "AI-Project",
+                Id = 1,
+                Description = "If you like artificial intelligence this project is for you",
+                DueDate = new System.DateTime(2021,12,30),
+                IntendedWorkHours = 50,
+                Language = LanguageEnum.English,
+                Keywords = new List<string>{"Machine Learning", "Python"},
+                SkillRequirementDescription = "Intro to AI",
+                SupervisorName = "Kåre",
+                Location = LocationEnum.Onsite,
+                IsThesis = false 
+            };
+            
+            //Act
+            var actual = (await _repo.Search("Python")).First();
+
+            //Assert
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.DueDate, actual.DueDate);
+            Assert.True(expected.Keywords.SequenceEqual(actual.Keywords));
+            Assert.Equal(expected.Language, actual.Language);
+            Assert.Equal(expected.IntendedWorkHours, actual.IntendedWorkHours);
+            Assert.Equal(expected.SkillRequirementDescription, actual.SkillRequirementDescription);
+            Assert.Equal(expected.SupervisorName, actual.SupervisorName);
+            Assert.Equal(expected.IsThesis, actual.IsThesis);
+            Assert.Equal(expected.Location, actual.Location);
+        }
+
+        [Fact]
+        public async void Search_given_Supervisorname_returns_project_with_supervisor() {
+            //Arrange
+            var expected = new ProjectDTO(){
+                Name = "Algorithms-Thesis",
+                Id = 2,
+                Description = "If you like Algorithms this thesis is for you",
+                DueDate = new System.DateTime(2021,12,25),
+                IntendedWorkHours = 100,
+                Language = LanguageEnum.English,
+                Keywords = new List<string>{"Algorithm"},
+                SkillRequirementDescription = "Intro to algorithms",
+                SupervisorName = "Marie Dahl Esteban-Pedersen Sigurdsson",
+                Location = LocationEnum.Onsite,
+                IsThesis = true
+            };
+                
+            //Act
+            var actual = (await _repo.Search("Marie Dahl")).First();
+
+            //Assert
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.DueDate, actual.DueDate);
+            Assert.True(expected.Keywords.SequenceEqual(actual.Keywords));
+            Assert.Equal(expected.Language, actual.Language);
+            Assert.Equal(expected.IntendedWorkHours, actual.IntendedWorkHours);
+            Assert.Equal(expected.SkillRequirementDescription, actual.SkillRequirementDescription);
+            Assert.Equal(expected.SupervisorName, actual.SupervisorName);
+            Assert.Equal(expected.IsThesis, actual.IsThesis);
+            Assert.Equal(expected.Location, actual.Location);
+        }
     }
 }
