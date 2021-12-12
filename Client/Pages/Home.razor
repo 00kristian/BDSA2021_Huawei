@@ -1,6 +1,7 @@
 ﻿@page "/"
 @page "/Home"
 @using Core
+@using MyComponentNamespace
 @inject NavigationManager NavigationManager
 @inject AppState State
 @inject HttpClient Http
@@ -22,32 +23,10 @@
 
 @if (projects == null) {
 } else {
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Project</th>
-                <th>Supervisor</th>
-                <th>Rating</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var project in projects)
-            {
-                @if(project.Rating != 0){
-                <tr>
-                    <td>@project.Name</td>
-                    <td>@project.SupervisorName</td>
-                    <td>Match %: @project.Rating</td>
-                    <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
-                </tr>
-                }
-            }    
-        </tbody>
-    </table>
+<Pager AllProjects="@projects" ShowRating="true"></Pager>
 }
-</div>
+
+</div> 
 
 @code{
     public IEnumerable<ProjectDTO>? projects;

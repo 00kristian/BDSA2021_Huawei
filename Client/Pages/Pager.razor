@@ -1,0 +1,54 @@
+@namespace MyComponentNamespace
+@using Core
+@inject HttpClient Http
+
+    <RadzenDataList WrapItems="true" AllowPaging="false" Data="@projects" TItem="ProjectDTO">
+        <Template Context="project">
+            <RadzenCard Style="width:300px;">
+                <div class="d-flex flex-row align-items-center">
+                    <RadzenImage Path="https://cdn.bloggersdelight.dk/wp-content/blogs.dir/533365/files/2021/02/astleyxix4kx1.jpg" Class="rounded-circle float-left mr-3" Style="width: 80px; height: 80px;" />
+                    <div>
+                        <h4 class="mb-0">@(project.Name)</h4>
+                        <div>@project.SupervisorName</div>
+                        <div style="font-size: .8em">@(project.Description)</div>
+                        @if (ShowRating) {
+                            <div>@project.Rating % Match</div>
+                        }
+                    </div>
+                </div>
+                <hr style="border: none; background-color: rgba(0,0,0,.08); height: 1px; margin: 1rem 0;" />
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <RadzenButton> Details </RadzenButton>
+                    </div>
+                </div>
+            </RadzenCard>
+        </Template>
+    </RadzenDataList>
+    <RadzenPager ShowPagingSummary="true" PagingSummaryFormat="@pagingSummaryFormat" Count="count" PageSize="@pageSize" PageNumbersCount="10" PageChanged="@PageChanged" />
+@code {
+    string pagingSummaryFormat = "Displaying page {0} of {1} (total {2} records)";
+    int pageSize = 6;
+    int count;
+    private ProjectDTO[]? projects;
+    [Parameter]
+    public IEnumerable<ProjectDTO>? AllProjects {get; set;}
+    [Parameter]
+    public bool ShowRating {get; set;}
+
+    protected override void OnInitialized()
+    {
+        count = AllProjects!.Count();
+        projects = GetProjects(0, pageSize);
+    }
+
+    void PageChanged(PagerEventArgs args)
+    {
+        projects = GetProjects(args.Skip, args.Top);
+    }
+
+    ProjectDTO[] GetProjects(int skip, int take)
+    {
+        return AllProjects!.Skip(skip).Take(take).ToArray();
+    }
+}

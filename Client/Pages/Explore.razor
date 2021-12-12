@@ -1,6 +1,7 @@
 ﻿@page "/Explore"
 @using Core
 @using System.Security.Claims
+@using MyComponentNamespace
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @inject AuthenticationStateProvider Auth
@@ -18,25 +19,7 @@
 
 <p>Here is an overview of all the available projects and theses. For a better suited match, go to the Home page.</p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Project</th>
-            <th>Supervisor</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var project in projects)
-        {
-        <tr>
-            <td>@project.Name</td>
-            <td>@project.SupervisorName</td>
-            <td><button style="width:100px" class="btn button" @onclick="()=>View(project)">Details</button></td>
-        </tr>
-        }    
-    </tbody>
-</table>
+<Pager AllProjects="@projects" ShowRating="false"></Pager>
 }
 </div>
 
