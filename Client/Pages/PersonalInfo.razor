@@ -4,8 +4,12 @@
 @inject HttpClient Http
 @inject AppState State
 
-<div class="padding-div" @onkeydown="@Enter">
+
 <h1>Your personal information</h1>
+
+<EditForm Model="@Student" OnValidSubmit="@Return">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
 <div class="form-group">
     <label for="studentEmail"> Please enter your preferred e-mail adress</label>
@@ -33,9 +37,11 @@
         }
     </select>
 </div>
+
 <br>
-<button class="btn button" @onclick="Return">Submit</button>
-</div>
+<button type="submit" class="btn button">Submit</button>
+
+</EditForm>
 
 @code{
     public int UserId {get; set;}
