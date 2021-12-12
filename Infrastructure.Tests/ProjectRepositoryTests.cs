@@ -54,6 +54,7 @@ namespace Infrastructure.Tests{
                 project1,
                 project2
             );
+            
 
             context.SaveChanges();
             _context = context;
@@ -199,6 +200,54 @@ namespace Infrastructure.Tests{
             Assert.Equal(expected.SupervisorName, actual.SupervisorName);
             Assert.Equal(expected.IsThesis, actual.IsThesis);
             Assert.Equal(expected.Location, actual.Location);
+        }
+
+        [Fact]
+
+        public async void Match_returns_notFound_given_non_existing_studentID()
+        {
+            // Given
+            var expected = Status.NotFound;
+            
+            // When
+            var actual = await _repo.Match(33);
+            // Then
+
+            Assert.Equal(expected, actual.Item1);
+
+            
+        }
+
+        [Fact]
+        public async void Match_returns_statusFound_given_existing_studentID()
+        {
+            // Given
+            var expected = Status.Found;
+
+            Student student1 = new Student{
+            Name = "Alejandro",
+            Id = 1,
+            Degree = DegreeEnum.Master,
+            Email = "AlejanThough@gmail.com",
+            DOB = new DateTime(2009, 4, 4),
+            University = UniversityEnum.RUC,
+            AppliedProjects = null,
+            Preferences = new Preferences(){
+                Keywords = new List<Keyword>(){new Keyword(){Str = "AI"}, new Keyword(){Str = "Programming"}},
+                Location = LocationEnum.Onsite,
+                Workdays = new List<WorkdayEnum>(){WorkdayEnum.Monday, WorkdayEnum.Tuesday, WorkdayEnum.Friday},
+                Language = LanguageEnum.English
+            }
+         };
+            _context.students.Add(student1);
+            _context.SaveChanges();
+        
+        
+            // When
+            var actual = await _repo.Match(1); 
+        
+            // Then
+            Assert.Equal(expected, actual.Item1);
         }
 
         [Fact]
