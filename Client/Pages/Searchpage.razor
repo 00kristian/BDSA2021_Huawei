@@ -1,0 +1,43 @@
+@using Core
+@using Microsoft.AspNetCore
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject AppState State
+
+@page "/searchpage"
+@inject NavigationManager NavigationManager
+
+<div class="padding-div">
+<PageTitle>Search page</PageTitle>
+
+<h1>Search</h1>
+
+<AuthorizeView>
+    <Authorized>
+            
+        <input class="search-field" type="text" name="keyword" @bind="searchString" placeholder="Search for a keyword" size="15">
+        <div class ="search-button-for-mobile">
+        <button class="button"type="submit" @onclick="()=>View()">
+            <span class="oi oi-magnifying-glass" aria-hidden="true"></span>
+        </button>
+        </div>    
+				  
+    </Authorized>
+    <NotAuthorized>
+        
+    </NotAuthorized>
+</AuthorizeView>
+
+</div>
+
+@code{
+    private String? searchString;
+    
+    private void View(){
+        var uri = $"{NavigationManager.BaseUri}searchresult/{searchString}";
+        NavigationManager.NavigateTo(uri);
+
+    }
+
+}
