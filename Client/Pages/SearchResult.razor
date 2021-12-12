@@ -35,9 +35,4 @@
 
         await base.OnParametersSetAsync();
     }
-
-    private void View(ProjectDTO project){
-        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
-        NavigationManager.NavigateTo(uri);
-    }
 }

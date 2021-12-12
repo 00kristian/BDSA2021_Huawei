@@ -1,6 +1,8 @@
 @namespace MyComponentNamespace
 @using Core
+@inject NavigationManager NavigationManager
 @inject HttpClient Http
+
 
     <RadzenDataList WrapItems="true" AllowPaging="false" Data="@projects" TItem="ProjectDTO">
         <Template Context="project">
@@ -19,7 +21,7 @@
                 <hr style="border: none; background-color: rgba(0,0,0,.08); height: 1px; margin: 1rem 0;" />
                 <div class="row">
                     <div class="col-md-4 text-right">
-                        <RadzenButton> Details </RadzenButton>
+                        <Button class="btn" @onclick="()=>View(project)"> Details </Button>
                     </div>
                 </div>
             </RadzenCard>
@@ -50,5 +52,10 @@
     ProjectDTO[] GetProjects(int skip, int take)
     {
         return AllProjects!.Skip(skip).Take(take).ToArray();
+    }
+
+    private void View(ProjectDTO project){
+        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
+        NavigationManager.NavigateTo(uri);
     }
 }

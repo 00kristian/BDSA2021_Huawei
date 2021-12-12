@@ -68,9 +68,4 @@
                 .OrderByDescending(p => p.Rating).ToList();
         }
   }
-    private void View(ProjectDTO project){
-        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
-        NavigationManager.NavigateTo(uri);
-
-    }
 }

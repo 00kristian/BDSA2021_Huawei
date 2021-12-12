@@ -52,9 +52,4 @@
 
     private async Task<ProjectDTO> getProjectFromId(int id) => await Http.GetFromJsonAsync<ProjectDTO>($"api/Projects/{id}");
     
-    private void View(ProjectDTO project){
-        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
-        NavigationManager.NavigateTo(uri);
-
-    }
 }

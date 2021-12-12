@@ -37,9 +37,4 @@ protected override async Task OnInitializedAsync()
         projects = await Http.GetFromJsonAsync<ProjectDTO[]>("api/Projects");
         
     }
-    private void View(ProjectDTO project){
-        var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
-        NavigationManager.NavigateTo(uri);
-
-    }
 }
