@@ -133,6 +133,7 @@ namespace Infrastructure.Tests{
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Name, actual.Name);
         }
+        
 
         [Fact]
         public async void Read_given_non_existing_id_returns_NotFound() {
@@ -146,6 +147,49 @@ namespace Infrastructure.Tests{
             Assert.Equal(expected, actual.Item2);
             Assert.Equal(Status.NotFound, actual.Item1);
         }
+
+        [Fact]
+        public async void ReadIdFromName_given_existing_name_returns_student()
+        {
+            // Given
+            var expected = new StudentDTO{
+                Name = "Alejandro",
+                Id = 1,
+                Degree = DegreeEnum.Master,
+                Email = "AlejanThough@gmail.com",
+                DOB = new DateTime(2009, 4, 4),
+                University = UniversityEnum.RUC,
+                AppliedProjects = new List<int>()
+            };
+            
+        
+            // When
+            var res = await _repo.ReadIdFromName("Alejandro");
+            var status = res.Item1;
+            var actual = res.Item2;
+        
+            // Then
+            Assert.Equal(Status.Found, status);
+        }
+
+        [Fact]
+        public async void TestName()
+        {
+            // Given
+            var expected = Status.NotFound;
+        
+            // When
+
+            var actual = await _repo.ReadIdFromName("Bamse");
+        
+            // Then
+
+            Assert.Equal(expected,actual.Item1);
+            Assert.Equal(0, actual.Item2);
+
+
+        }
+
 
         [Fact]
         public async void Update_updates_mail_given_new_mail(){

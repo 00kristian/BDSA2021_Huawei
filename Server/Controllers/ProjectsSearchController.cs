@@ -1,0 +1,30 @@
+
+using Core;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
+
+namespace Server.Controllers;
+
+//[Authorize]
+//[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+[ApiController]
+[Route("api/Projects/[controller]")]
+public class SearchController : ControllerBase
+{
+    private readonly ILogger<ProjectsController> _logger;
+    private IProjectRepository _repo;
+
+    public SearchController(ILogger<ProjectsController> logger, IProjectRepository repo)
+    {
+        _logger = logger;
+        _repo = repo;
+    }
+
+    [ProducesResponseType(200)]
+    [HttpGet("{searchString}")]
+    public async Task<IEnumerable<ProjectDTO>> Get(string searchString)
+    {
+        return await _repo.Search(searchString); 
+    }
+}

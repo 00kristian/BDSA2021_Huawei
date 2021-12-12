@@ -74,6 +74,8 @@ namespace Infrastructure
 
             return Status.Updated;
         }
+
+        //Private helper method for the rest of the methods
         private IEnumerable<Keyword> GetKeywords(IEnumerable<string> keywords)
         {
             var existing = _context.keywords.Where(p => keywords.Contains(p.Str)).ToDictionary(p => p.Str);
@@ -113,6 +115,27 @@ namespace Infrastructure
             }).ToListAsync();
 
             return (Status.Found, list);
+        }
+
+        public async Task<IReadOnlyCollection<ProjectDTO>> Search(string searchString)
+        {
+            return await _context.projects.Include(p => p.Keywords)
+            .Where(p => p.Name!.Contains(searchString) || p.SupervisorName!.Contains(searchString) ||
+            p.Keywords!.Select(k => k.Str).Contains(searchString))
+            .Select(p => new ProjectDTO() {
+                Name = p.Name!,
+                Id = p.Id,
+                Description = p.Description!,
+                DueDate = p.DueDate,
+                IntendedWorkHours = p.IntendedWorkHours,
+                Language = p.Language,
+                SkillRequirementDescription = p.SkillRequirementDescription!,
+                SupervisorName = p.SupervisorName!,
+                Location = p.Location,
+                IsThesis = p.IsThesis,
+                Meetingday = p.Meetingday,
+                Keywords = p.Keywords!.Select(k => k.Str).ToList()!
+            }).ToListAsync();
         }
     }
 }

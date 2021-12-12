@@ -1,23 +1,21 @@
-﻿@page "/Explore"
+@page "/searchresult/{searchString?}"
 @using Core
-@using System.Security.Claims
 @inject NavigationManager NavigationManager
-@inject HttpClient Http
-@inject AuthenticationStateProvider Auth
 @inject AppState State
+@inject HttpClient Http
 
 <div class="padding-div">
-<PageTitle>Home</PageTitle>
-
-@if (projects == null)
-{
-    <p><em>Welcome! Log in to see projects.</em></p>
-
+<PageTitle>searched</PageTitle>
+@if (projects == null) {
+    <p>
+        No results
+    </p>
 } else {
-<h1>Available Projects</h1>
+<p>
+    Search String: @searchString
+</p>
 
-<p>Here is an overview of all the available projects and theses. For a better suited match, go to the Explore page.</p>
-
+<h1>Successful search</h1>
 <table class="table">
     <thead>
         <tr>
@@ -38,27 +36,28 @@
     </tbody>
 </table>
 }
+
+
 </div>
 
-@code{
-private ProjectDTO[]? projects;
+@code {
+    [Parameter]
+    public string? searchString { get; set; }
 
-public int UserId {get; set;}
+    private ProjectDTO[]? projects;
 
-    private StudentDTO Student;
-
-protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        if (!State.LoggedIn) {
-        NavigationManager.NavigateTo($"{NavigationManager.BaseUri}home");
-      }
-            
-        projects = await Http.GetFromJsonAsync<ProjectDTO[]>("api/Projects");
+        if (searchString != null && searchString.Length != 0) {
+            projects = (await Http.GetFromJsonAsync<IEnumerable<ProjectDTO>>($"api/Projects/Search/{searchString}"))!.ToArray();
+        }
         
+
+        await base.OnParametersSetAsync();
     }
+
     private void View(ProjectDTO project){
         var uri = $"{NavigationManager.BaseUri}details/{project.Id}";
         NavigationManager.NavigateTo(uri);
-
     }
 }

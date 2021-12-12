@@ -14,6 +14,7 @@ namespace Infrastructure
 
         public async Task<(Status, int id)> Create(StudentDTO student) {
 
+            //This is tested
             foreach (Student stud in _context.students) {
                 if (stud.Name == student.Name) return (Status.Conflict, stud.Id);
             }
@@ -24,7 +25,7 @@ namespace Infrastructure
                     Email = student.Email!,
                     DOB = student.DOB,
                     University = student.University,
-                    AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
+                    AppliedProjects = await _context.projects.Include(p => p.Applications).Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync()
                 };
 
                 _context.students.Add(entity);
@@ -34,7 +35,6 @@ namespace Infrastructure
                 return (Status.Created, entity.Id);
         }
 
-        //TODO: test
         public async Task<(Status, int)> ReadIdFromName(string name) {
             int id = await _context.students.Where(s => s.Name == name).Select(s => s.Id).FirstOrDefaultAsync();
             return (id == 0 ? Status.NotFound : Status.Found, id);
@@ -42,7 +42,7 @@ namespace Infrastructure
 
         public async Task<(Status, StudentDTO)> Read(int id)
         {
-            var s = await _context.students.Where(s => s.Id == id).Select(s => new StudentDTO(){
+            var s = await _context.students.Include(s => s.AppliedProjects).Where(s => s.Id == id).Select(s => new StudentDTO(){
                 Degree = s.Degree,
                 Name = s.Name!,
                 Id = s.Id,
@@ -51,7 +51,7 @@ namespace Infrastructure
                 University = s.University,
                 AppliedProjects = s.AppliedProjects.Select(p => p.Id).ToList()}).FirstOrDefaultAsync();
 ;
-
+            //This function is tested
             if (s == default(StudentDTO)) return (Status.NotFound, s);
             else return (Status.Found, s);
         }
@@ -60,13 +60,14 @@ namespace Infrastructure
         {
             var s = await _context.students.Where(s => s.Id == id).FirstOrDefaultAsync();
 
+            //This is tested
             if (s == default(Student)) return Status.NotFound;
 
             s.Degree = student.Degree;
             s.Email = student.Email!;
             s.DOB = student.DOB;
             s.University = student.University;
-            s.AppliedProjects = await _context.projects.Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync();
+            s.AppliedProjects = await _context.projects.Include(p => p.Applications).Where(p => student.AppliedProjects.Contains(p.Id)).ToListAsync();
 
             await _context.SaveChangesAsync();
 
@@ -76,7 +77,8 @@ namespace Infrastructure
         public async Task<(Status, PreferencesDTO)> ReadPreferences(int id)
         {
             var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
-
+            
+            //This is tested
             if (p == default(Preferences)) return (Status.NotFound, default(PreferencesDTO));
 
             var prefs = new PreferencesDTO() {
@@ -94,6 +96,7 @@ namespace Infrastructure
             try {
                 var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
 
+                //This is tested
                 if (p == default(Preferences)) return Status.NotFound;
 
                 p.Language = prefs.Language;
@@ -109,6 +112,7 @@ namespace Infrastructure
             }
         }
 
+        //Helper function to the other methods 
         private IEnumerable<Keyword> GetKeywords(IEnumerable<string> keywords)
         {
             var existing = _context.keywords.Where(p => keywords.Contains(p.Str)).ToDictionary(p => p.Str);
