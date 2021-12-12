@@ -11,7 +11,9 @@
 <PageTitle>Projects</PageTitle>
 
 <h1>Your projects</h1>
-
+@if(projects.Count == 0){
+    <p>You haven't applied for any projects yet</p>
+}else {
 <p>Here you can find the projects and theses that you have applied for.</p>
 <p>If you want to cancel your application for a specific project please write an email to the supervisor</p>
 
@@ -34,6 +36,7 @@
             }    
         </tbody>
     </table>
+}
 </div>
 
 
