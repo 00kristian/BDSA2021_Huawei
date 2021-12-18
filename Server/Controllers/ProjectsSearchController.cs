@@ -12,10 +12,10 @@ namespace Server.Controllers;
 [Route("api/Projects/[controller]")]
 public class SearchController : ControllerBase
 {
-    private readonly ILogger<ProjectsController> _logger;
+    private readonly ILogger<SearchController> _logger;
     private IProjectRepository _repo;
 
-    public SearchController(ILogger<ProjectsController> logger, IProjectRepository repo)
+    public SearchController(ILogger<SearchController> logger, IProjectRepository repo)
     {
         _logger = logger;
         _repo = repo;

@@ -250,10 +250,7 @@ namespace Infrastructure.Tests{
             Assert.Equal(expected, actual.Item1);
         }
 
-    
-
-        
-
+        [Fact]
         public async void Search_given_Supervisorname_returns_project_with_supervisor() {
             //Arrange
             var expected = new ProjectDTO(){
@@ -286,6 +283,5 @@ namespace Infrastructure.Tests{
             Assert.Equal(expected.IsThesis, actual.IsThesis);
             Assert.Equal(expected.Location, actual.Location);
         }
-
     }
 }
