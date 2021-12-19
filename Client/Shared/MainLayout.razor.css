@@ -2,8 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color:#414C8A ;
-
+    background-color:#414C8A;
 }
 
 main {
@@ -23,7 +22,6 @@ main {
     display: flex;
     align-items: center;
 }
-
 
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
@@ -54,6 +52,10 @@ main {
 
     .top-row ::deep a, .top-row ::deep .btn-link {
         margin-left: 0;
+    }
+
+    .top-row{
+        display:none;
     }
 }
 
