@@ -31,6 +31,11 @@ p {
 }
 
 .detail{
+    font-size: smaller;
+    color:#FBD3E9;
+}
+
+.detail2{
     color:#FDE9F4;
 }
 
@@ -251,7 +256,7 @@ a, .btn-link {
 }
 
 .rz-dialog-titlebar {
-    background-color: #F586C5;
+    background-color: #414C8A;
 }
 
 .rz-dialog-wrapper .rz-dialog-content {
@@ -263,7 +268,7 @@ a, .btn-link {
 }
 
 .rz-dialog-title {
-    color: #3B457E;
+    color: #FBD3E9;
 }
 
 .rz-button.btn-primary, .btn-primary.rz-paginator-element {
@@ -277,5 +282,5 @@ a, .btn-link {
 }
 
 .rz-dialog-titlebar-close .rzi-times:before {
-    color: #3B457E;
+    color: #FDE9F4;
 }
