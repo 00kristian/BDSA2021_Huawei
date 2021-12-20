@@ -131,3 +131,26 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+    @media(max-width:640px){
+        
+        body {
+            background-color: #414C8A;
+        }
+        
+        .search-field {
+            width: 100%;
+        }
+
+        .button {
+            margin-top: 4%;
+            align-items: center;
+            width:100%;
+            padding-top: 2%;
+            padding-bottom: 2%;
+        }
+
+        .search-button-for-mobile {
+            text-align: center;
+        }
+    }
