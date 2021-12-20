@@ -17,9 +17,11 @@
         </button>
     </div>
 </div>
-
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <div class="smallDropDown">
     <nav class="flex-column">
+        <div style="height: 69px;">
+        </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="home" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
@@ -61,12 +63,13 @@
         </div>
         <div class="nav-item px-3" id="only-on-mobile">
             <AuthorizeView>
-            <NavLink class="nav-link" onclick="BeginLogout">
-                <span class="oi oi-door-closed" aria-hidden="true"></span> Sign Out
-            </NavLink>
+            <button class="nav-link btn btn-link" @onclick="BeginLogout">
+                <span class="oi oi-account-logout" aria-hidden="true">
+                </span>Log out</button>
             </AuthorizeView>
         </div>
     </nav>
+    </div>
 </div>
 </div>
 

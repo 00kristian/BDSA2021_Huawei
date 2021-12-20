@@ -12,15 +12,15 @@
 
 }else{
  <h1>@project.Name</h1>
- <h5 class ="detail"><b>Due date: </b>@project.DueDate.ToShortDateString()</h5>
- <h5 class ="detail"><b>Id: </b>@project.Id</h5>
- <h5 class ="detail"><b>Meeting day with supervisor: </b>@project.Meetingday</h5>
- <h5 class ="detail"><b>Intended work hours: </b>@workHours[@project.IntendedWorkHours]</h5>
- <h5 class ="detail"><b>Language: </b>@project.Language</h5>
- <h5 class ="detail"><b>Location: </b>@project.Location</h5>
- <h5 class ="detail"><b>Skill requirement: </b>@project.SkillRequirementDescription</h5>
- <h5 class ="detail"><b>Supervisor: </b>@project.SupervisorName</h5>
- <h5 class ="detail"><b>Format: </b>@(project.IsThesis ? "Thesis" : "Project")</h5>
+ <h5 class ="detail"><b class="detail2">Description: </b>@project.Description</h5>
+ <h5 class ="detail"><b class="detail2">Due date: </b>@project.DueDate.ToShortDateString()</h5>
+ <h5 class ="detail"><b class="detail2">Meeting day with supervisor: </b>@project.Meetingday</h5>
+ <h5 class ="detail"><b class="detail2">Intended work hours: </b>@workHours[@project.IntendedWorkHours]</h5>
+ <h5 class ="detail"><b class="detail2">Language: </b>@project.Language</h5>
+ <h5 class ="detail"><b class="detail2">Location: </b>@project.Location</h5>
+ <h5 class ="detail"><b class="detail2">Skill requirement: </b>@project.SkillRequirementDescription</h5>
+ <h5 class ="detail"><b class="detail2">Supervisor: </b>@project.SupervisorName</h5>
+ <h5 class ="detail"><b class="detail2">Format: </b>@(project.IsThesis ? "Thesis" : "Project")</h5>
  <table class='table'>
         <thead>
             <tr>
@@ -37,7 +37,7 @@
         </tbody>
     </table>
 @if(!((StudentDTO) Student).AppliedProjects.Contains(ProjectId)){
-    <button class="btn button" @onclick="ApplyForProject">Apply for project</button>
+    <button style="margin-right: 2rem;" class="btn button" @onclick="ApplyForProject">Apply for project</button>
 }
  <button class="btn button" @onclick="Return">Back to home</button>
 }

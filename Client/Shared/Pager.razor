@@ -3,18 +3,17 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
-
     <RadzenDataList WrapItems="true" AllowPaging="false" Data="@projects" TItem="ProjectDTO">
         <Template Context="project">
             <RadzenCard Style="width:300px; background-color:#3B457E;border-style:none;" class="cards">
-                <div class="d-flex flex-row align-items-center">
+                <div class="d-flex flex-row align-items-center pCard">
 @*                     <RadzenImage Path="https://cdn.bloggersdelight.dk/wp-content/blogs.dir/533365/files/2021/02/astleyxix4kx1.jpg" Class="rounded-circle float-left mr-3" Style="width: 80px; height: 80px;" />
  *@                    <div>
-                        <h4 class="mb-0">@(project.Name)</h4>
-                        <div class="supervisor">@project.SupervisorName</div>
-                        <div class="proj">@(project.Description)</div>
+                        <h4 class="pTitle mb-0">@(project.Name)</h4>
+                        <p class="supervisor">@project.SupervisorName</p>
+                        <p class="proj">@(project.Description)</p>
                         @if (ShowRating) {
-                            <div class="match-pro">@project.Rating % Match</div>
+                            <div class="match-pro">@project.Rating% Match</div>
                         }
                     </div>
                 </div>
