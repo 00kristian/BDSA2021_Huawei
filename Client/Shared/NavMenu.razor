@@ -63,9 +63,9 @@
         </div>
         <div class="nav-item px-3" id="only-on-mobile">
             <AuthorizeView>
-            <NavLink class="nav-link" onclick="BeginLogout">
-                <span class="oi oi-door-closed" aria-hidden="true"></span> Sign Out
-            </NavLink>
+            <button class="nav-link btn btn-link" @onclick="BeginLogout">
+                <span class="oi oi-account-logout" aria-hidden="true">
+                </span>Log out</button>
             </AuthorizeView>
         </div>
     </nav>
