@@ -17,6 +17,8 @@ main {
     background-color: #3B457E;
     border-bottom: 1px solid #3B457E ;
 
+    position: fixed;
+
     justify-content: flex-end;
     height: 3.5rem;
     display: flex;
@@ -56,6 +58,12 @@ main {
 
     .top-row{
         display:none;
+    }
+
+    .top-block {
+        height: 3.5rem;
+        background-color: #3B457E ;
+        width: 100%;
     }
 }
 
