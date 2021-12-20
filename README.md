@@ -1,8 +1,8 @@
 # BDSA2021_Huawei Project Bank
 
-This is 
+This is the group Huawei's exam assignement.
 
-# How to run the project.
+# How to run the project
 
 1. Open Docker and make sure you have no container running on port 1433.
 
@@ -12,4 +12,14 @@ This is
 
 4. Once the downloads is done, hold down ctrl and press the localhost displayed in the terminal.
 
-5. Log in using your itu mail e.g. jens@itu.dk.  
+5. Log in using your itu mail e.g. jens@itu.dk. In case you are not able to log in here is a guest user:
+Mail: guest@krbjproject.onmicrosoft.com
+Password: Titanic123
+
+# How to use the Project Bank
+
+When logged in you are on the user page. For optimal use fill out your project preferences. If preferences filled out you'll be able to see the projects you match highest with on the home page.
+
+The explore page will show all available projects. To apply for a project press the details button and then apply for project. In the projects page you'll be able to see the projects have applied for.
+
+To search for a project search for keywords or name of the supervisor.
