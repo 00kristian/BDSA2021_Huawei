@@ -86,9 +86,40 @@ td {
     color:#FBD3E9;
 }
 
+.pCard {
+    /* white-space: nowrap;
+    overflow: hidden;
+     */
+    display:inline-block;
+    text-overflow: ellipsis;
+    display: block;
+} 
+
+.pTitle {
+    overflow:hidden;
+    line-height: 2rem;
+    height: 2rem;
+    -webkit-box-orient: vertical;
+    display:inline-block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+}
+
 .proj {
     font-size: .8em; 
     color:#FDE9F4;
+
+    overflow:hidden;
+    line-height: 1rem;
+    max-height: 2rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
 }
 
 .supervisor {
@@ -180,3 +211,71 @@ a, .btn-link {
             text-align: center;
         }
     }
+
+.rz-paginator {
+    background-color:#3B457E;
+}
+
+.rz-paginator-summary {
+    color: #FBD3E9;
+}
+
+.rz-paginator-first {
+    background-color: #FBD3E9;
+    color: #3B457E;
+}
+
+.rz-paginator-prev {
+    background-color: #FBD3E9;
+    color: #3B457E;
+}
+
+.rz-paginator-page {
+    background-color: #FDE9F4;
+    color: #F586C5;
+}
+
+.rz-paginator-page.rz-state-active {
+    background-color: #FBD3E9;
+    color: #414C8A;
+}
+
+.rz-paginator-next {
+    background-color: #F586C5;
+    color: #FDE9F4;
+}
+
+.rz-paginator-last {
+    background-color: #F586C5;
+    color: #FDE9F4;
+}
+
+.rz-dialog-titlebar {
+    background-color: #F586C5;
+}
+
+.rz-dialog-wrapper .rz-dialog-content {
+    background-color: #FBD3E9;
+}
+
+.rz-dialog-wrapper .rz-dialog-content p{
+    color: #414C8A;
+}
+
+.rz-dialog-title {
+    color: #3B457E;
+}
+
+.rz-button.btn-primary, .btn-primary.rz-paginator-element {
+    background-color: #F586C5;
+    color: #414C8A;
+}
+
+.rz-button.btn-secondary, .btn-secondary.rz-paginator-element {
+    background-color: #3B457E;
+    color: #FBD3E9;
+}
+
+.rz-dialog-titlebar-close .rzi-times:before {
+    color: #3B457E;
+}
