@@ -1,18 +1,18 @@
 .navbar-toggler {
     background-color: #3B457E;
-    z-index: 100;
-}
+/*     z-index: 100;
+ */}
 
 .top-row {
     height: 3.5rem;
     background-color: #3B457E ;
     width: 100%;
-    z-index: 100;
-}
+/*     z-index: 100;
+ */}
 
 .container-fluid {
     position: fixed;
-    z-index: 100;
+    /* z-index: 100; */
     background-color: #3B457E;
 }
 
@@ -36,7 +36,7 @@
 .navbar-brand {
     font-size: 1.9rem;
     font-family: "Carter One";
-    color: #FDE9F4;
+    color: #FBD3E9;
 }
 
 .logo {
@@ -113,5 +113,10 @@
 
     #only-on-mobile{
         display:block;
+    }
+
+    .entire-nav-system {
+        position:sticky;
+        z-index: 1;
     }
 }

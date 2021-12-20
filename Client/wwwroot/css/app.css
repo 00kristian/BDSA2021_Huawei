@@ -73,6 +73,32 @@ td {
     padding-top: 15px;
 }
 
+/* ---------------------------Pager--------------------------- */
+
+/* .cards {
+    width:300px;
+    background-color:#3B457E;
+    border-style:none;
+} */
+
+
+.mb-0 {
+    color:#FBD3E9;
+}
+
+.proj {
+    font-size: .8em; 
+    color:#FDE9F4;
+}
+
+.supervisor {
+    color:#F586C5;
+}
+
+.match-pro{
+    color:#FDE9F4;
+}
+
 h1:focus {
     outline: none;
 }
