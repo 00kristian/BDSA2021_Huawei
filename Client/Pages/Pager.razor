@@ -6,15 +6,15 @@
 
     <RadzenDataList WrapItems="true" AllowPaging="false" Data="@projects" TItem="ProjectDTO">
         <Template Context="project">
-            <RadzenCard Style="width:300px;">
+            <RadzenCard Style="width:300px; background-color:#3B457E;border-style:none;" class="cards">
                 <div class="d-flex flex-row align-items-center">
-                    <RadzenImage Path="https://cdn.bloggersdelight.dk/wp-content/blogs.dir/533365/files/2021/02/astleyxix4kx1.jpg" Class="rounded-circle float-left mr-3" Style="width: 80px; height: 80px;" />
-                    <div>
+@*                     <RadzenImage Path="https://cdn.bloggersdelight.dk/wp-content/blogs.dir/533365/files/2021/02/astleyxix4kx1.jpg" Class="rounded-circle float-left mr-3" Style="width: 80px; height: 80px;" />
+ *@                    <div>
                         <h4 class="mb-0">@(project.Name)</h4>
-                        <div>@project.SupervisorName</div>
-                        <div style="font-size: .8em">@(project.Description)</div>
+                        <div class="supervisor">@project.SupervisorName</div>
+                        <div class="proj">@(project.Description)</div>
                         @if (ShowRating) {
-                            <div>@project.Rating % Match</div>
+                            <div class="match-pro">@project.Rating % Match</div>
                         }
                     </div>
                 </div>
