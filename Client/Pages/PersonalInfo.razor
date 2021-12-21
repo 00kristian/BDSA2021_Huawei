@@ -12,15 +12,17 @@
     <ValidationSummary />
 
 <div class="form-group">
-    <label for="studentEmail"> Please enter your preferred e-mail adress</label>
+    <label for="studentEmail" class="detail2"> Please enter your preferred e-mail adress</label>
      <input type="email" class="form-control" id="studentEmail" placeholder="name@example.com" @bind="@Student.Email">
 </div>
+<br>
 <div class="form-group">
-    <label for="studentDOB"> Please select your date of birth</label>
+    <label for="studentDOB" class="detail2"> Please select your date of birth</label>
     <input type="date" class="form-control" id="studentDOB" @bind="@Student.DOB">
 </div>
+<br>
 <div class="form-group">
-    <label for="studentUni">Please select your university</label>
+    <label for="studentUni" class="detail2">Please select your university</label>
     <select class="form-control" id="studentUni" @bind="@Student.University">
       @foreach (var uni in Enum.GetValues(typeof(UniversityEnum)))
         {
@@ -28,8 +30,9 @@
         }
     </select>
 </div>
+<br>
 <div class="form-group">
-    <label for="studentDegree">Please select your degree</label>
+    <label for="studentDegree" class="detail2">Please select your degree</label>
     <select class="form-control" id="studentDegree" @bind="@Student.Degree">
       @foreach (var deg in Enum.GetValues(typeof(DegreeEnum)))
         {

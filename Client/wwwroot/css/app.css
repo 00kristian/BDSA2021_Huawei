@@ -276,3 +276,74 @@ a, .btn-link {
 .rz-dialog-titlebar-close .rzi-times:before {
     color: #FDE9F4;
 }
+
+.cbox {
+    background-color: #F586C5;
+}
+
+.rz-multiselect, .rz-dropdown {
+    background-color: #FDE9F4;
+}
+
+.rz-dropdown-item, .rz-menuitem, .rz-autocomplete-list-item, .rz-multiselect-item, .rz-dropdown-items li, .rz-autocomplete-items li, .rz-multiselect-items li {
+    background-color: #FDE9F4;
+}
+
+.rz-multiselect-header {
+    background-color: #FDE9F4;
+}
+
+body:not(.rz-default-scrollbars) ::-webkit-scrollbar-thumb {
+    background: #3B457E;
+}
+
+body:not(.rz-default-scrollbars) ::-webkit-scrollbar {
+    background-color: #FDE9F4;
+}
+
+.rz-chkbox-box {
+    background-color: #FBD3E9;
+}
+
+.rz-chkbox-box.rz-state-active {
+    background-color: #414C8A;
+}
+
+.rz-dropdown-item.rz-state-highlight, .rz-state-highlight.rz-menuitem, .rz-state-highlight.rz-autocomplete-list-item, .rz-state-highlight.rz-multiselect-item, .rz-dropdown-items li.rz-state-highlight, .rz-autocomplete-items li.rz-state-highlight, .rz-multiselect-items li.rz-state-highlight {
+    background-color: #F586C5;
+}
+
+.rz-dropdown-item:hover, .rz-menuitem:hover, .rz-autocomplete-list-item:hover, .rz-multiselect-item:hover, .rz-dropdown-items li:hover, .rz-autocomplete-items li:hover, .rz-multiselect-items li:hover {
+    background-color: #F586C5;
+}
+
+.rz-dropdown-item.rz-state-highlight:hover, .rz-state-highlight.rz-menuitem:hover, .rz-state-highlight.rz-autocomplete-list-item:hover, .rz-state-highlight.rz-multiselect-item:hover, .rz-dropdown-items li.rz-state-highlight:hover, .rz-autocomplete-items li.rz-state-highlight:hover, .rz-multiselect-items li.rz-state-highlight:hover {
+    background-color: #F586C5;
+}
+.rz-chkbox-box.rz-state-active:hover {
+    background-color: #3B457E;
+}
+
+.rz-dropdown span, input, label {
+    color: #3B457E;
+}
+
+.rz-multiselect-item span, input, label {
+    color: #3B457E;
+}
+
+.rz-multiselect-filter-container span, input, label {
+    color: #3B457E;
+}
+
+.rz-dropdown-filter, .rz-multiselect-filter-container .rz-inputtext {
+    color: #3B457E;
+}
+
+.rz-dropdown-label {
+    color: #3B457E;
+}
+
+.form-control {
+    background-color: #FDE9F4;
+}

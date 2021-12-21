@@ -9,42 +9,42 @@
 <div class="padding-div" >
 <h1>Your preferences</h1>
 
-<p>Which days are you able to meet with your supervisor?</p>
+<p style="height:10px">Which days are you able to meet with your supervisor?</p>
 <div class="form-check">
   @foreach (WorkdayEnum day in Enum.GetValues(typeof(WorkdayEnum)))
     {
-        <input type="checkbox" @bind="@Daytable[day]" />@day<br />
+        <input class="cbox" type="checkbox" @bind="@Daytable[day]" /> <b class="detail2"> @day </b> <br />
     }
 </div>
 
 <br>
 
-<p>Which language do you prefer?</p>
+<p style="height:10px">Which language do you prefer?</p>
   
   <EditForm Model="Lang">
    <InputRadioGroup @bind-Value="Lang">
 	@foreach (LanguageEnum lang in Enum.GetValues(typeof(LanguageEnum)))
 	{
-	 <InputRadio Value="lang" /> @lang 
+	 <InputRadio Value="lang" /> <b class="detail2" style="padding-right: 1rem;"> @lang </b>
 	}
    </InputRadioGroup>
   </EditForm>
 
 <br>
 
-<p>Do you prefer to work online or on-site?</p>
+<p style="height:10px">Do you prefer to work online or on-site?</p>
 <EditForm Model="Loc">
    <InputRadioGroup @bind-Value="Loc">
 	@foreach (LocationEnum loc in Enum.GetValues(typeof(LocationEnum)))
 	{
-	 <InputRadio Value="loc" />  @loc
+	 <InputRadio Value="loc" />  <b class="detail2" style="padding-right: 1rem;"> @loc </b>
 	}
    </InputRadioGroup>
   </EditForm>
-<br>
+  <br>
 
-<p>Select the subjects you are interested in</p>
-<div class="col-xl-6 mb-5">
+<p style="height:10px">Select the subjects you are interested in</p>
+<div class="col-xl-6 mb-4">
   <RadzenDropDown AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
       @bind-Value=@multipleValues Multiple="true" Placeholder="Select..." Data=@words TextProperty="Str" ValueProperty="Str"
     Style="width:300px" />
