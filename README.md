@@ -1,6 +1,6 @@
 # BDSA2021_Huawei Project Bank
 
-This is the group Huawei's exam assignement.
+This is the group Huawei's exam assignment.
 
 # How to run the project
 
