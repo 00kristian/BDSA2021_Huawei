@@ -122,6 +122,7 @@
         background-color: #414C8A;
         width: 100%;
         z-index: 2;
+        border-bottom: 2px solid #3B457E;
     }
 
     #only-on-mobile{
