@@ -20,29 +20,29 @@
     <th>Name</th>
     <AuthorizeView>
         <Authorized>
-            <td>@context.User.Identity?.Name</td>
+            <td><b class="detail2">@context.User.Identity?.Name</b></td>
         </Authorized>
     </AuthorizeView>
   </tr>
   <tr>
     <th>ID</th>
-    <td>@Student.Id</td>
+    <td><b class="detail2">@Student.Id </b></td>
   </tr>
   <tr>
     <th>Email</th>
-    <td>@Student.Email</td>
+    <td><b class="detail2">@Student.Email</b></td>
   </tr>
   <tr>
     <th>Date Of Birth</th>
-    <td>@Student.DOB.ToShortDateString()</td>
+    <td><b class="detail2">@Student.DOB.ToShortDateString()</b></td>
   </tr>
   <tr>
     <th>University</th>
-    <td>@Student.University</td>
+    <td><b class="detail2">@Student.University</b></td>
   </tr>
   <tr>
     <th>Degree</th>
-    <td>@Student.Degree</td>
+    <td><b class="detail2">@Student.Degree</b></td>
   </tr>
 </table>
 

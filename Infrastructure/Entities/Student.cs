@@ -3,7 +3,7 @@ using Infrastructure;
 namespace Infrastructure
 {
 
-    public class Student : IPerson
+    public class Student
     {
         public DegreeEnum Degree {get; set;}
         public Preferences Preferences {get; set;} = new Preferences();
