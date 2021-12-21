@@ -22,7 +22,6 @@ builder.Services.Configure<JwtBearerOptions>(
         options.TokenValidationParameters.NameClaimType = "name";
     });
 //Dependency injection magic
-//Change LiteProjectBankContext to ProjectBankContext to use real database
 builder.Services.AddDbContext<ProjectBankContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectBankDB"),
 builder => {
     builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);

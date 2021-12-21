@@ -80,21 +80,13 @@ td {
 
 /* ---------------------------Pager--------------------------- */
 
-/* .cards {
-    width:300px;
-    background-color:#3B457E;
-    border-style:none;
-} */
-
 
 .mb-0 {
     color:#FBD3E9;
 }
 
 .pCard {
-    /* white-space: nowrap;
-    overflow: hidden;
-     */
+
     display:inline-block;
     text-overflow: ellipsis;
     display: block;

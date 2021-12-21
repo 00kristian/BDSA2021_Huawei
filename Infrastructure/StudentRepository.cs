@@ -14,7 +14,6 @@ namespace Infrastructure
 
         public async Task<(Status, int id)> Create(StudentDTO student) {
 
-            //This is tested
             foreach (Student stud in _context.students) {
                 if (stud.Name == student.Name) return (Status.Conflict, stud.Id);
             }
@@ -51,7 +50,6 @@ namespace Infrastructure
                 University = s.University,
                 AppliedProjects = s.AppliedProjects.Select(p => p.Id).ToList()}).FirstOrDefaultAsync();
 ;
-            //This function is tested
             if (s == default(StudentDTO)) return (Status.NotFound, s);
             else return (Status.Found, s);
         }
@@ -60,7 +58,6 @@ namespace Infrastructure
         {
             var s = await _context.students.Where(s => s.Id == id).FirstOrDefaultAsync();
 
-            //This is tested
             if (s == default(Student)) return Status.NotFound;
 
             s.Degree = student.Degree;
@@ -78,7 +75,6 @@ namespace Infrastructure
         {
             var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
             
-            //This is tested
             if (p == default(Preferences)) return (Status.NotFound, default(PreferencesDTO));
 
             var prefs = new PreferencesDTO() {
@@ -96,7 +92,6 @@ namespace Infrastructure
             try {
                 var p = await _context.preferences.Include(p => p.Keywords).FirstOrDefaultAsync(p => p.StudentId == id);
 
-                //This is tested
                 if (p == default(Preferences)) return Status.NotFound;
 
                 p.Language = prefs.Language;
