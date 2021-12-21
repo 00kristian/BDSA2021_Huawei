@@ -62,4 +62,9 @@
     {
         return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
     }
+
+    protected override void OnParametersSet()
+    {   
+        StateHasChanged(); 
+    }
 }

@@ -25,13 +25,13 @@
     public string? searchString { get; set; }
 
     private ProjectDTO[]? projects;
-
+    
     protected override async Task OnParametersSetAsync()
     {
+        projects = null;
         if (searchString != null && searchString.Length != 0) {
             projects = (await Http.GetFromJsonAsync<IEnumerable<ProjectDTO>>($"api/Projects/Search/{searchString}"))!.ToArray();
         }
-        
 
         await base.OnParametersSetAsync();
     }
