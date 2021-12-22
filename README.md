@@ -8,7 +8,7 @@ This is the group Huawei's exam assignment.
 
 2. Make sure you have ef toolet installed on your pc otherwise here is the cmd line for downloading it: dotnet tool install --global dotnet-ef
 
-3. Run the powershell command "./start-application.ps1" in the root directory.
+3. Run the powershell command "./start-application.ps1" in the root directory. (In case an error occurs try typing in "dotnet run" in the terminal from the Server folder)
 
 4. Once the downloads is done, hold down ctrl and press the localhost displayed in the terminal.
 
